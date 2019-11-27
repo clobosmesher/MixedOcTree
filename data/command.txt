@@ -1,0 +1,3 @@
+./mesher_roi -d sutureHC_skin.mdl -r hypo-01.mdl 6 -r hypo-02.mdl 6 -r hypo-03.mdl 6 -r hypo-04.mdl 6 -r hypo-05.mdl 6 -r hypo-06.mdl 6 -r hypo-07.mdl 6 -r hypo-08.mdl 6 -r hypo-09.mdl 6 -a 5 -u shc_k_regsA5R6 -v -m
+
+./mesher_roi -d sutureHC.mdl -r sut-01.mdl 6 -r sut-02.mdl 6 -r sut-03.mdl 6 -r sut-04.mdl 6 -r sut-05.mdl 6 -r sut-06.mdl 6 -r sut-07.mdl 6 -r sut-08.mdl 6 -a 5 -u shc_regsA5R6 -v -m

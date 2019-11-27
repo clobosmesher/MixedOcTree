@@ -1,0 +1,27 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 Input:\
+-d for mdl extension\
+-o for off extension (geomview)\
+\
+Output name:\
+-u name\
+\
+Refinements:\
+-s for surface refinement, eg: -s 6\
+-a for all the octants in the Octree: eg. -a 5\
+-r for another surface mesh that must intersect the input domain: -r filename.mdl 5\
+-b for hexahedra refinement regions defined each with min and max coordinates of the box. All must be noted in a text file. e.g.:\
+\
+n_regions 1\
+\
+0 0 0 #min x, y, z\
+100 100 100 #max x, y, z\
+\
+5 #refinement level for that box.\
+\
+}
