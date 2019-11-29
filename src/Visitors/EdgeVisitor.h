@@ -22,23 +22,27 @@
 
 #include "../OctreeEdge.h"
 #include "../Point3D.h"
+#include "../EdgeInfo.h"
 
-#include <set>
+#include <map>
 #include <vector>
+#include <limits>
 
 #include "Visitor.h"
 
 using Clobscode::OctreeEdge;
+using Clobscode::EdgeInfo;
 using Clobscode::Point3D;
-using std::set;
+using std::map;
 using std::vector;
 
 namespace Clobscode
 {
     class EdgeVisitor : public Visitor{
+    
     public:
-        static void insertEdges(Octant *o, set<OctreeEdge> &edges);
-        static void getEdge(Octant *o, const unsigned int &idx, OctreeEdge &e);
+        static void insertEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
+        static void removeOctFromEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
     };
 
 }

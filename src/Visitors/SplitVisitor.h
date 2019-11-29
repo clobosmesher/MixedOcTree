@@ -21,22 +21,24 @@
 #define SplitVisitor_h 1
 
 #include <list>
-#include <set>
+#include <map>
 #include <vector>
 
 #include "../MeshPoint.h"
 #include "../Point3D.h"
 #include "../OctreeEdge.h"
+#include "../EdgeInfo.h"
 
 #include "Visitor.h"
 
 
 using Clobscode::MeshPoint;
 using Clobscode::OctreeEdge;
+using Clobscode::EdgeInfo;
 using Clobscode::Point3D;
 using std::vector;
 using std::list;
-using std::set;
+using std::map;
 
 
 namespace Clobscode
@@ -56,17 +58,27 @@ namespace Clobscode
 
         void setPoints(vector<MeshPoint> &points);
         void setNewPts(list<Point3D> &new_pts);
-        void setEdges(set<OctreeEdge> &edges);
+        void setMapEdges(map<OctreeEdge, EdgeInfo> &MapEdges);
         void setNewEles(vector<vector<unsigned int> > &new_eles);
+        void setStartIndex(const unsigned int &sidx);
         void setClipping(vector<vector<Point3D> > &clipping);
+        void setProcessedOctVector(vector<Octant> &proOctVec);
+        void setMapProcessed(map<unsigned int, unsigned int> &proOctMap);
+        void setToBalanceList(list<pair<unsigned int,unsigned int> > &unBalanced);
 
     protected:
         //references
         vector<MeshPoint> *points;
         list<Point3D> *new_pts;
-        set<OctreeEdge> *edges;
+        map<OctreeEdge, EdgeInfo> *MapEdges;
         vector<vector<unsigned int> > *new_eles;
         vector<vector<Point3D> > *clipping;
+        vector<Octant> *proOctVec;
+        map<unsigned int, unsigned int> *proOctMap;
+        list<pair<unsigned int,unsigned int> > *unBalanced;
+        
+        unsigned int idx;
+        
 
         bool splitEdge(const unsigned int &idx1,
                        const unsigned int &idx2,

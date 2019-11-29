@@ -26,6 +26,7 @@
 #include "RefinementInputSurfaceRegion.h"
 #include "RefinementAllRegion.h"
 #include "Point3D.h"
+#include "EdgeInfo.h"
 #include <string>
 #include <cctype>
 #include <time.h>
@@ -36,6 +37,7 @@ using std::cout;
 using std::cerr;
 using std::vector;
 using std::string;
+using std::map;
 using Clobscode::RefinementRegion;
 using Clobscode::RefinementCubeRegion;
 using Clobscode::RefinementSurfaceRegion;
@@ -104,7 +106,7 @@ int main(int argc,char** argv){
     //for reading an octant mesh as starting point.
     vector<MeshPoint> oct_points;
     vector<Octant> oct_octants;
-    set<OctreeEdge> oct_edges;
+    map<OctreeEdge, EdgeInfo> edge_map;
     vector<unsigned int> oct_ele_link;
     GeometricTransform gt;
     
@@ -227,7 +229,7 @@ int main(int argc,char** argv){
             case 'c':
                 octant_start = true;
                 Services::ReadOctreeMesh(argv[i+1], oct_points, oct_octants,
-                                         oct_edges,oct_ele_link,gt,cminrl,omaxrl);
+                                         edge_map,oct_ele_link,gt,cminrl,omaxrl);
                 if (ref_level<omaxrl) {
                     ref_level = omaxrl;
                 }
@@ -283,7 +285,7 @@ int main(int argc,char** argv){
         output = mesher.generateMesh(inputs.at(0),ref_level,out_name,all_regions);
     }
     else {
-        mesher.setInitialState(oct_points,oct_octants,oct_edges);
+        mesher.setInitialState(oct_points,oct_octants,edge_map);
         if (omaxrl<ref_level) {
             omaxrl = ref_level;
         }

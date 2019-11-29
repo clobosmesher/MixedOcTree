@@ -57,8 +57,8 @@ namespace Clobscode
 
 	public:
 		
-		Octant(vector<unsigned int> &epts, 
-			   const unsigned short &ref_level);
+		Octant(vector<unsigned int> &epts, const unsigned short &ref_level,
+               const unsigned int &o_id);
 		
 		virtual ~Octant();
 
@@ -101,6 +101,8 @@ namespace Clobscode
 		virtual bool isSurface();
 		
 		virtual void setIntersectedFaces(list<unsigned int> &ifcs);
+        
+        virtual const unsigned int&getIndex();
 
     protected:
         
@@ -112,14 +114,20 @@ namespace Clobscode
 		//the tree structure (octree). Used for optimization
 		unsigned short ref_level;
 		
+        //the quad unique identifier
+        unsigned int o_id;
+        
 		Point3D projection_influence;
-		unsigned short n_influences;
+        unsigned short n_influences;
 		bool influence_commit;
 		bool surface;
 		
 		double max_dis;
 	};
 	
+    inline const unsigned int&Octant::getIndex() {
+        return o_id;
+    }
 	
 	inline vector<unsigned int> &Octant::getPoints(){
 		return pointindex;

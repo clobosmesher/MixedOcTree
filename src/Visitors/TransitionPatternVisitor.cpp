@@ -26,7 +26,7 @@ namespace Clobscode
     TransitionPatternVisitor::TransitionPatternVisitor() {
         points = NULL;
         new_pts = NULL;
-        edges = NULL;
+        MapEdges = NULL;
         max_ref_level = NULL;
         apply_pattern = false;
     }
@@ -34,7 +34,7 @@ namespace Clobscode
     TransitionPatternVisitor::TransitionPatternVisitor(bool apply_pattern) {
         points = NULL;
         new_pts = NULL;
-        edges = NULL;
+        MapEdges = NULL;
         max_ref_level = NULL;
         this->apply_pattern = apply_pattern;
     }
@@ -47,8 +47,8 @@ namespace Clobscode
         this->new_pts = &new_pts;
     }
 
-    void TransitionPatternVisitor::setEdges(const set<OctreeEdge> &edges) {
-        this->edges = &edges;
+    void TransitionPatternVisitor::setMapEdges(map<OctreeEdge, EdgeInfo> &MapEdges) {
+        this->MapEdges = &MapEdges;
     }
 
     void TransitionPatternVisitor::setMaxRefLevel(const unsigned short &max_ref_level) {
@@ -61,9 +61,18 @@ namespace Clobscode
 
 
     bool TransitionPatternVisitor::visit(Octant *o) {
+        
+        
+        return true;
+        
+        
+        
+        
+        
+        
         //cout << "TransitionPatternVisitor" << endl;
         //applyTransitionPattern
-        if (apply_pattern)
+        /*if (apply_pattern)
         {
             if (new_pts == NULL)
                 throw std::runtime_error(std::string("TransitionPatternVisitor: need new_pts (calling apply instead of check?)"));
@@ -346,6 +355,6 @@ namespace Clobscode
             patterns::TransitionTemplate tt (nodes,mid_nodes);
             //find out if the pattern is implemented
             return tt.getNewElements(nodes,mid_nodes,*points,local_new_pts,new_eles);
-        }
+        }*/
     }
 }

@@ -23,22 +23,17 @@ namespace Clobscode
 {
 	
 	OctreeEdge::OctreeEdge(){
-		info.assign(3,0);
+        info[0] = info[1] = 0;
 	}
 	
 	OctreeEdge::OctreeEdge(const unsigned int &point1, const unsigned int &point2){
-		info.assign(3,0);
-		if (point1<point2) {
-			info[0]=point1;
-			info[1]=point2;
-		}
-		else {
-			info[1]=point1;
-			info[0]=point2;
-		}
-
-		//info[2]=0;
+        assign(point1,point2);
 	}
+    
+    OctreeEdge::OctreeEdge(const unsigned int &p1, const unsigned int &p2, const bool &forced) {
+        info[0] = p1;
+        info[1] = p2;
+    }
 	
 	OctreeEdge::~OctreeEdge(){
 		
@@ -55,35 +50,9 @@ namespace Clobscode
 		}
 	}
 	
-	bool OctreeEdge::split(set<OctreeEdge> &allOctreeEdges, unsigned int maxp){
-		
-		pair<set<OctreeEdge>::iterator , bool> result;
-		//create possible new OctreeEdge
-		OctreeEdge ne1(info[0],maxp);
-		
-		cout << "trying to insert " << ne1 << "\n";
-		
-		result = allOctreeEdges.insert(ne1);
-		
-		
-		if (!result.second) {
-			cout << "cannot split this OctreeEdge " << *this << "\n";
-			return false;
-		}
-		else {
-			
-			OctreeEdge ne2(info[1],maxp);
-			allOctreeEdges.insert(ne2);
-			cout << "OctreeEdge " << *this << " was split\n";
-		}
-		return true;
-
-	}
-	
 	ostream& operator<<(ostream& o, const OctreeEdge &e){
 		o << e[0] << " ";
-		o << e[1] << " ";
-		o << e[2];
+        o << e[1];
 		return o;
 	}
 	
@@ -108,7 +77,6 @@ namespace Clobscode
 	void OctreeEdge::operator=(const OctreeEdge &e){
 		info[0]=e[0];
 		info[1]=e[1];
-		info[2]=e[2];
 	}
 	
 }

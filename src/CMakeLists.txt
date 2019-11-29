@@ -7,8 +7,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
-set(SOURCE_FILES Main MeshPoint Point3D TriMesh Octant OctreeEdge HexRotation
-        SurfTemplate1 SurfTemplate2 SurfTemplate3 SurfTemplate4
+set(SOURCE_FILES Main MeshPoint Point3D TriMesh Octant OctreeEdge EdgeInfo 
+	HexRotation SurfTemplate1 SurfTemplate2 SurfTemplate3 SurfTemplate4
         SurfTemplate5 SurfTemplate6 SurfTemplate7
         Mesher GridMesher TransitionPoint PatternFactory TransitionTemplate
         TransitionCube SurfPair SurfEdge SurfEdgeContainer SurfTriangle
@@ -18,7 +18,6 @@ set(SOURCE_FILES Main MeshPoint Point3D TriMesh Octant OctreeEdge HexRotation
 	SurfaceEdge GeometricTransform Face FaceContainer
         Visitors/Visitor Visitors/SplitVisitor Visitors/EdgeVisitor 
 	Visitors/IntersectionsVisitor
-        Visitors/OneIrregularVisitor Visitors/PointMovedVisitor
         Visitors/TransitionPatternVisitor Visitors/SurfaceTemplatesVisitor
         Visitors/RemoveSubElementsVisitor)
 

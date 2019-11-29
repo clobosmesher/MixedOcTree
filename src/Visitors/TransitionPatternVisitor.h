@@ -47,6 +47,7 @@
 
 using Clobscode::MeshPoint;
 using Clobscode::OctreeEdge;
+using Clobscode::EdgeInfo;
 using Clobscode::TriMesh;
 using std::list;
 using std::set;
@@ -63,14 +64,15 @@ namespace Clobscode
 
         void setPoints(vector<MeshPoint> &points);
         void setNewPoints(list<Point3D> &new_pts);
-        void setEdges(const set<OctreeEdge> &edges);
+        void setMapEdges(map<OctreeEdge, EdgeInfo> &MapEdges);
         void setMaxRefLevel(const unsigned short &max_ref_level);
         void setApplyMode(bool apply_pattern);
 
     private:
+        
         vector<MeshPoint> *points;
         list<Point3D> *new_pts;
-        const set<OctreeEdge> *edges;
+        map<OctreeEdge, EdgeInfo> *MapEdges;
         const unsigned short *max_ref_level;
         bool apply_pattern;
 

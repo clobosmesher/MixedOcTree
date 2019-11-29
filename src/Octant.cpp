@@ -26,20 +26,21 @@ namespace Clobscode
 	
 	//--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
-	Octant::Octant(vector<unsigned int> &epts, 
-				   const unsigned short &ref_level){
+	Octant::Octant(vector<unsigned int> &epts, const unsigned short &ref_level,
+                   const unsigned int &o_id):o_id(o_id), ref_level(ref_level),
+                   n_influences(0), influence_commit(false) {
 		
         pointindex.assign(8,0);
 		//for optimization
-		(*this).ref_level = ref_level;
+		//(*this).ref_level = ref_level;
         
         for (unsigned int i=0; i<8; i++) {
             pointindex[i] = epts[i];
         }
         
 		sub_elements.assign(1,pointindex);
-		n_influences = 0;
-		influence_commit = false;
+		//n_influences = 0;
+		//influence_commit = false;
 	}
 	
 	//--------------------------------------------------------------------------------

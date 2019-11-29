@@ -21,14 +21,9 @@
 #define OctreeEdge_h 1
 
 #include <iostream>
-#include <vector>
-#include <set>
 
-using std::vector;
 using std::ostream;
-using std::set;
 using std::cout;
-using std::pair;
 
 namespace Clobscode
 {
@@ -42,18 +37,21 @@ namespace Clobscode
 		OctreeEdge();
 		
 		OctreeEdge(const unsigned int &idx1, const unsigned int &idx2);
+        
+        OctreeEdge(const unsigned int &idx1, const unsigned int &idx2, const bool &forced);
 		
 		virtual ~OctreeEdge();
 		
 		virtual void assign(const unsigned int &idx1, const unsigned int &idx2);
 		
+        
+        //To remove
 		virtual void updateMidPoint(const unsigned int &idx);
-		
-		virtual bool split(set<OctreeEdge> &allOctreeEdges, unsigned int maxp);
 		
 		virtual void setMidPoint(unsigned int &mid);
 		
-		//virtual unsigned int &operator[](unsigned const int &pos);
+        
+        
 		
 		virtual unsigned int operator[](unsigned const int &pos) const;
 		
@@ -70,9 +68,8 @@ namespace Clobscode
 		
 	protected:
 		
-		vector<unsigned int> info;
+		unsigned int info [2];
 		
-		//set<OctreeEdge>::iterator mypointer;
 	};
 	
 	/*inline unsigned int &OctreeEdge::operator[](unsigned const int &pos){
@@ -80,15 +77,18 @@ namespace Clobscode
 	}*/
 	
 	inline void OctreeEdge::updateMidPoint(const unsigned int &idx){
-		info[2] = idx;
+		//info[2] = idx;
 	}
 
 	inline unsigned int OctreeEdge::operator[](unsigned const int &pos) const{
-		return info.at(pos);
+        if (pos==0) {
+            return info[0];
+        }
+        return info[1];
 	}
 	
 	inline void OctreeEdge::setMidPoint(unsigned int &mid){
-		info[2] = mid;
+		//info[2] = mid;
 	}
 	
 }

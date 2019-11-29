@@ -32,10 +32,11 @@
 #include "OctreeEdge.h"
 #include "FaceContainer.h"
 #include "Visitors/EdgeVisitor.h"
+#include "EdgeInfo.h"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include <set>
+#include <map>
 
 
 using Clobscode::Point3D;
@@ -352,7 +353,7 @@ namespace Clobscode
         //-------------------------------------------------------------------
         static bool ReadOctreeMesh(std::string name, vector<MeshPoint> &points,
                                    vector<Octant> &octants,
-                                   set<OctreeEdge> &edges,
+                                   map<OctreeEdge, EdgeInfo> &edge_map,
                                    vector<unsigned int> &ele_oct_ref,
                                    GeometricTransform &gt,
                                    unsigned short &minrl,
@@ -395,10 +396,7 @@ namespace Clobscode
                 std::fscanf(file,"%i",&e1);
                 std::fscanf(file,"%i",&e2);
                 std::fscanf(file,"%i",&e3);
-                OctreeEdge oe(e1,e2);
-                unsigned int mid = (unsigned int)e3;
-                oe.setMidPoint(mid);
-                edges.insert(oe);
+                edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,0,0));
             }
             
             //read the element octant link
@@ -444,7 +442,7 @@ namespace Clobscode
                     std::fscanf(file,"%i",&ni);
                     ofcs.push_back(ni);
                 }
-                Octant octant (opts,orl);
+                Octant octant (opts,orl,i);
                 octant.setIntersectedFaces(ofcs);
                 octants.push_back(octant);
                 
@@ -483,7 +481,7 @@ namespace Clobscode
         //-------------------------------------------------------------------
         static bool WriteOctreeMesh(std::string name, vector<MeshPoint> &points,
                                     vector<Octant> &octants,
-                                    set<OctreeEdge> &edges,
+                                    map<OctreeEdge, EdgeInfo> &edges,
                                     const unsigned int &nels,
                                     GeometricTransform &gt){
             
@@ -507,11 +505,11 @@ namespace Clobscode
             }
             fprintf(f,"\n");
             
-            //write edeges
-            for(my_edge=edges.begin();my_edge!=edges.end();my_edge++){
-                OctreeEdge me = *my_edge;
-                fprintf(f,"%i %i %i\n",me[0],me[1],me[2]);
+            //write edges
+            for (const auto qe: edges) {
+                fprintf(f,"%i %i %i\n",qe.first[0],qe.first[1],(qe.second)[0]);
             }
+            
             fprintf(f,"\n");
             
             //pair sub-elements with octant index.

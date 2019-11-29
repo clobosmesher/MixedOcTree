@@ -31,8 +31,6 @@
 
 #include "Visitors/SplitVisitor.h"
 #include "Visitors/IntersectionsVisitor.h"
-#include "Visitors/OneIrregularVisitor.h"
-#include "Visitors/PointMovedVisitor.h"
 #include "Visitors/TransitionPatternVisitor.h"
 #include "Visitors/SurfaceTemplatesVisitor.h"
 #include "Visitors/RemoveSubElementsVisitor.h"
@@ -73,7 +71,7 @@ namespace Clobscode
 
         
         virtual void setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
-                                     set<OctreeEdge> &eedgs);
+                                     map<OctreeEdge, EdgeInfo> &edge_map);
         
 	protected:
         
@@ -83,7 +81,9 @@ namespace Clobscode
                                   const unsigned short &minrl, const unsigned short &omaxrl);
 		
 		virtual void generateOctreeMesh(const unsigned short &rl, TriMesh &input,
-                                        list<RefinementRegion *> &all_reg, const string &name);
+                                        list<RefinementRegion *> &all_reg, const string &name,
+                                        const unsigned short &minrl,
+                                        const unsigned short &givenmaxrl=0);
 
 		virtual bool isItIn(TriMesh &mesh, list<unsigned int> &faces, vector<Point3D> &coords);
 
@@ -121,7 +121,7 @@ namespace Clobscode
 		
 		vector<MeshPoint> points;
 		vector<Octant> octants;
-		set<OctreeEdge> octreeEdges;
+		map<OctreeEdge, EdgeInfo> MapEdges;
 		list<RefinementRegion *> regions;
 
 
@@ -129,10 +129,10 @@ namespace Clobscode
 	};
     
     inline void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
-                                        set<OctreeEdge> &eedgs) {
+                                        map<OctreeEdge, EdgeInfo> &edge_map) {
         octants = eocts;
         points = epts;
-        octreeEdges = eedgs;
+        MapEdges = edge_map;
     }
 	
 	
