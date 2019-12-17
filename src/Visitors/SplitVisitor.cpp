@@ -83,79 +83,77 @@ namespace Clobscode
         
         const unsigned int myrl = o->getRefinementLevel()+1;
         
-        unsigned int parent = o->getIndex();
-        
         //inserting node 8 between nodes 0 and 1
-        if (splitEdge(all_pts[0],all_pts[1],idx,idx+1,1,myrl,n_pts,all_pts[8],parent)) {
+        if (splitEdge(all_pts[0],all_pts[1],idx,idx+1,1,myrl,n_pts,all_pts[8])) {
             //the coordinates of node 8 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (min[0],min[1],avg[2]));
         }
         
         //inserting node 9 between nodes 1 and 2
-        if (splitEdge(all_pts[1],all_pts[2],idx+1,idx+2,4,myrl,n_pts,all_pts[9],parent)) {
+        if (splitEdge(all_pts[1],all_pts[2],idx+1,idx+2,4,myrl,n_pts,all_pts[9])) {
             //the coordinates of node 9 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],min[1],max[2]));
         }
         //inserting node 10 between nodes 2 and 3
-        if (splitEdge(all_pts[3],all_pts[2],idx+3,idx+2,2,myrl,n_pts,all_pts[10],parent)) {
+        if (splitEdge(all_pts[3],all_pts[2],idx+3,idx+2,2,myrl,n_pts,all_pts[10])) {
             //the coordinates of node 10 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (max[0],min[1],avg[2]));
         }
         //inserting node 11 between nodes 3 and 0
-        if (splitEdge(all_pts[0],all_pts[3],idx,idx+3,1,myrl,n_pts,all_pts[11],parent)) {
+        if (splitEdge(all_pts[0],all_pts[3],idx,idx+3,1,myrl,n_pts,all_pts[11])) {
             //the coordinates of node 11 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],min[1],min[2]));
         }
 
         //inserting node 12 between nodes 0 and 4
-        if (splitEdge(all_pts[0],all_pts[4],idx,idx+4,1,myrl,n_pts,all_pts[12],parent)) {
+        if (splitEdge(all_pts[0],all_pts[4],idx,idx+4,1,myrl,n_pts,all_pts[12])) {
             //the coordinates of node 12 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (min[0],avg[1],min[2]));
         }
         //inserting node 13 between nodes 1 and 5
-        if (splitEdge(all_pts[1],all_pts[5],idx+1,idx+5,2,myrl,n_pts,all_pts[13],parent)) {
+        if (splitEdge(all_pts[1],all_pts[5],idx+1,idx+5,2,myrl,n_pts,all_pts[13])) {
             //the coordinates of node 13 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (min[0],avg[1],max[2]));
         }
         //inserting node 14 between nodes 2 and 6
-        if (splitEdge(all_pts[2],all_pts[6],idx+2,idx+6,3,myrl,n_pts,all_pts[14],parent)) {
+        if (splitEdge(all_pts[2],all_pts[6],idx+2,idx+6,3,myrl,n_pts,all_pts[14])) {
             //the coordinates of node 14 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (max[0],avg[1],max[2]));
         }
         //inserting node 15 between nodes 3 and 7
-        if (splitEdge(all_pts[3],all_pts[7],idx+3,idx+7,4,myrl,n_pts,all_pts[15],parent)) {
+        if (splitEdge(all_pts[3],all_pts[7],idx+3,idx+7,4,myrl,n_pts,all_pts[15])) {
             //the coordinates of node 15 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (max[0],avg[1],min[2]));
         }
 
         //inserting node 16 between nodes 4 and 5
-        if (splitEdge(all_pts[4],all_pts[5],idx+4,idx+5,4,myrl,n_pts,all_pts[16],parent)) {
+        if (splitEdge(all_pts[4],all_pts[5],idx+4,idx+5,4,myrl,n_pts,all_pts[16])) {
             //the coordinates of node 16 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (min[0],max[1],avg[2]));
         }
         //inserting node 17 between nodes 5 and 6
-        if (splitEdge(all_pts[5],all_pts[6],idx+5,idx+6,3,myrl,n_pts,all_pts[17],parent)) {
+        if (splitEdge(all_pts[5],all_pts[6],idx+5,idx+6,3,myrl,n_pts,all_pts[17])) {
             //the coordinates of node 17 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],max[1],max[2]));
         }
         //inserting node 18 between nodes 6 and 7
-        if (splitEdge(all_pts[7],all_pts[6],idx+7,idx+6,3,myrl,n_pts,all_pts[18],parent)) {
+        if (splitEdge(all_pts[7],all_pts[6],idx+7,idx+6,3,myrl,n_pts,all_pts[18])) {
             //the coordinates of node 18 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (max[0],max[1],avg[2]));
         }
         //inserting node 19 between nodes 7 and 0
-        if (splitEdge(all_pts[4],all_pts[7],idx+4,idx+7,2,myrl,n_pts,all_pts[19],parent)) {
+        if (splitEdge(all_pts[4],all_pts[7],idx+4,idx+7,2,myrl,n_pts,all_pts[19])) {
             //the coordinates of node 19 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],max[1],min[2]));
@@ -173,13 +171,6 @@ namespace Clobscode
         //below the current one. This info will be used only in the case that
         //octant haven't been split.
         if (splitFaceType1(mide1,octs1,ne0->second[4],n_pts,all_pts[20])) {
-            if (all_pts[20]==987) {
-                cout << "Octant " << parent << " splitting bottom face with neighbor";
-                for (unsigned int m=1; m<5; m++) {
-                    cout << " " << ne0->second[m];
-                }
-                cout << "\n";
-            }
             //the coordinates of node 20 must be computed and added to
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],min[1],avg[2]));
@@ -200,8 +191,6 @@ namespace Clobscode
         //inserting node 22 between 9-17 and 13-14
         vector<unsigned int> mide3 ({all_pts[9],all_pts[14],all_pts[17],all_pts[13]});
         vector<unsigned int> octs3 ({idx+1,idx+2,idx+6,idx+5});
-        //vector<unsigned int> mide3 ({all_pts[14],all_pts[17],all_pts[13],all_pts[9]});
-        //vector<unsigned int> octs3 ({idx+2,idx+6,idx+5,idx+1});
         auto ne6 = MapEdges->find(OctreeEdge (all_pts[2],all_pts[6]));
         //ne6->second[4] contains the index of the neighbor Octant that is
         //in front of the current one. This info will be used only in the case that
@@ -212,8 +201,6 @@ namespace Clobscode
             new_pts->push_back(Point3D (avg[0],avg[1],max[2]));
         }
         //inserting node 23 between 10-18 and 14-15
-        //vector<unsigned int> mide4 ({all_pts[10],all_pts[15],all_pts[18],all_pts[14]});
-        //vector<unsigned int> octs4 ({idx+2,idx+3,idx+7,idx+6});
         vector<unsigned int> mide4 ({all_pts[15],all_pts[18],all_pts[14],all_pts[10]});
         vector<unsigned int> octs4 ({idx+3,idx+7,idx+6,idx+2});
         //ne6->second[2] contains the index of the neighbor Octant that is
@@ -239,8 +226,6 @@ namespace Clobscode
         }
         
         //inserting node 25 between 16-18 and 17-19
-        //vector<unsigned int> mide6 ({all_pts[17],all_pts[18],all_pts[19],all_pts[16]});
-        //vector<unsigned int> octs6 ({idx+5,idx+6,idx+7,idx+4});
         vector<unsigned int> mide6 ({all_pts[16],all_pts[17],all_pts[18],all_pts[19]});
         vector<unsigned int> octs6 ({idx+4,idx+5,idx+6,idx+7});
         //ne11->second[1] contains the index of the neighbor Octant that is
@@ -251,39 +236,11 @@ namespace Clobscode
             //new_pts list of points
             new_pts->push_back(Point3D (avg[0],max[1],avg[2]));
         }
-        else {
-            if (parent==82) {
-                cout << "Splitting 82\n";
-                cout << MapEdges->find(OctreeEdge (all_pts[16],all_pts[25]))->second << "\n";
-                cout << MapEdges->find(OctreeEdge (all_pts[17],all_pts[25]))->second << "\n";
-                cout << MapEdges->find(OctreeEdge (all_pts[18],all_pts[25]))->second << "\n";
-                cout << MapEdges->find(OctreeEdge (all_pts[19],all_pts[25]))->second << "\n";
-                
-            }
-        }
         
         //of course all the intern edges and mid point were never inserted
         //before, so this task is performed without asking
         new_pts->push_back(Point3D (avg[0],avg[1],avg[2]));
         all_pts[26] = n_pts;
-        
-        
-        
-        unsigned int p933 = 40, p987 = 40;
-        for (unsigned int k=0; k<27; k++) {
-            if (all_pts[k]==933) {
-                p933 = k;
-            }
-            if (all_pts[k]==987) {
-                p987 = k;
-            }
-        }
-        
-        if (p933!=40 && p987!=40) {
-            cout << parent << " has point 933 in pos " << p933 << " and 987 in " << p987 << "\n";
-        }
-        
-
         
         //Insert internal parent edges
         vector<unsigned int> nes1 ({0,idx+2,idx+3,idx,idx+1});
@@ -454,8 +411,7 @@ namespace Clobscode
     bool SplitVisitor::splitEdge(const unsigned int &idx1, const unsigned int &idx2,
                                  const unsigned int &sub1, const unsigned int &sub2,
                                  const unsigned int &pos, const unsigned int &myrl,
-                                 unsigned int &c_n_pts, unsigned int &mid_idx,
-                                 unsigned int &o_idx){
+                                 unsigned int &c_n_pts, unsigned int &mid_idx){
         
         
         auto help = MapEdges->find(OctreeEdge (idx1,idx2));
@@ -468,31 +424,8 @@ namespace Clobscode
             auto e1 = MapEdges->find(OctreeEdge (idx1,mid_idx));
             e1->second[pos] = sub1;
             
-            if ((idx1==933 && idx2==987) || (idx2==933 && idx1==987)) {
-                cout << "    * Edge (" << idx1 << "," << idx2 << ") was split when splitting";
-                cout << " octant " << o_idx << "\n";
-                cout << "      * Main edge Neighbors";
-                for (unsigned int i=1; i<5; i++) {
-                    cout << " " << help->second[i];
-                }
-                cout << "\n";
-                cout << "      * Neighbors sub1";
-                for (unsigned int i=1; i<5; i++) {
-                    cout << " " << e1->second[i];
-                }
-                cout << "\n";
-            }
-            
             auto e2 = MapEdges->find(OctreeEdge (idx2,mid_idx));
             e2->second[pos] = sub2;
-            
-            if ((idx1==933 && idx2==987) || (idx2==933 && idx1==987)) {
-                cout << "      * Neighbors sub2";
-                for (unsigned int i=1; i<5; i++) {
-                    cout << " " << e2->second[i];
-                }
-                cout << "\n\n";
-            }
             
             //Important note. It is possible that edges (idxX,mid_idx) have been already
             //split. In order to mantain updated info, it is necessary to check for
@@ -528,44 +461,15 @@ namespace Clobscode
         //get initial edge neighbor octants
         vector<unsigned int> neighbors = help->second.getNeighborOcts();
         
-        if ((idx1==933 && idx2==987) || (idx2==933 && idx1==987)) {
-            cout << "    * Splitting an edge (" << idx1 << "," << idx2 << ")";
-            cout << " by Octant " << o_idx << "\n";
-            cout << "      * Neighbors";
-            for (unsigned int i=1; i<5; i++) {
-                cout << " " << neighbors[i];
-            }
-            cout << "\n";
-        }
-        
-        
         //the sub-edges are not split:
         neighbors[0] = 0;
         //the neighbors of sub-edges should be the same as parent, changing only
         //in pos with sub1 and sub2 respectively.
         neighbors[pos] = sub1;
         MapEdges->emplace(OctreeEdge (idx1,mid_idx,true), EdgeInfo (neighbors));
-       
-        
-        if ((idx1==933 && idx2==987) || (idx2==933 && idx1==987)) {
-            cout << "      * Sub Neighbors1";
-            for (unsigned int i=1; i<5; i++) {
-                cout << " " << neighbors[i];
-            }
-            cout << "\n";
-        }
-        
         
         neighbors[pos] = sub2;
         MapEdges->emplace(OctreeEdge (idx2,mid_idx,true), EdgeInfo (neighbors));
-        
-        if ((idx1==933 && idx2==987) || (idx2==933 && idx1==987)) {
-            cout << "      * Sub Neighbors2";
-            for (unsigned int i=1; i<5; i++) {
-                cout << " " << neighbors[i];
-            }
-            cout << "\n";
-        }
         
         unsigned int nn = std::numeric_limits<unsigned int>::max();
         

@@ -78,8 +78,7 @@ namespace Clobscode
         bool splitEdge(const unsigned int &idx1, const unsigned int &idx2,
                        const unsigned int &sub1, const unsigned int &sub2,
                        const unsigned int &pos, const unsigned int &myrl,
-                       unsigned int &c_n_pts, unsigned int &mid_idx,
-                       unsigned int &o_idx);
+                       unsigned int &c_n_pts, unsigned int &mid_idx);
 
         bool splitFaceType1(const vector<unsigned int> &fpts,
                             const vector<unsigned int> &sons,

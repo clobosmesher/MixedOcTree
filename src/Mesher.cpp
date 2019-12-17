@@ -644,8 +644,6 @@ namespace Clobscode
                 }
             }
             
-            //cout << "* Octants to refine " << refine_tmp.size() << "\n";
-            
             //now we can start to refine those needing it.
             for (auto oct: refine_tmp) {
                     
@@ -710,8 +708,6 @@ namespace Clobscode
             //Erase the list to refine
             refine_tmp.erase(refine_tmp.begin(),refine_tmp.end());
             
-            //cout << "* To balance " << toBalance.size() << "\n";
-        
             //Refine non balanced Octs
             while (!toBalance.empty()) {
                 
@@ -821,7 +817,7 @@ namespace Clobscode
             new_pts.clear();
             
             
-            auto bug = MapEdges.find(OctreeEdge (933,987));
+            /*auto bug = MapEdges.find(OctreeEdge (933,987));
             
             if (bug!=MapEdges.end()) {
                 cout << " State of (933,987)";
@@ -851,7 +847,7 @@ namespace Clobscode
                     }
                     cout << "\n";
                 }
-            }
+            }*/
             
             
             
