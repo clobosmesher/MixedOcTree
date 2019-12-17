@@ -17,7 +17,7 @@ set(SOURCE_FILES Main MeshPoint Point3D TriMesh Octant OctreeEdge EdgeInfo
         FaceDiagonal SurfPrism SurfPyramid SurfHexahedron SurfTetrahedron 
 	SurfaceEdge GeometricTransform Face FaceContainer
         Visitors/Visitor Visitors/SplitVisitor Visitors/EdgeVisitor 
-	Visitors/IntersectionsVisitor
+	Visitors/IntersectionsVisitor Visitors/OneIrregularVisitor
         Visitors/TransitionPatternVisitor Visitors/SurfaceTemplatesVisitor
         Visitors/RemoveSubElementsVisitor)
 

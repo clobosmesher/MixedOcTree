@@ -114,7 +114,7 @@ namespace Clobscode
 		//the tree structure (octree). Used for optimization
 		unsigned short ref_level;
 		
-        //the quad unique identifier
+        //the octant unique identifier
         unsigned int o_id;
         
 		Point3D projection_influence;

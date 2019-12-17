@@ -23,12 +23,8 @@
 namespace Clobscode
 {
 
-    SurfaceTemplatesVisitor::SurfaceTemplatesVisitor() {
-        meshpts = NULL;
-        newpts = NULL;
-        input = NULL;
-        e_idx = NULL;
-    }
+    SurfaceTemplatesVisitor::SurfaceTemplatesVisitor():meshpts(NULL),newpts(NULL),input(NULL),e_idx(NULL)
+    { }
 
 
     void SurfaceTemplatesVisitor::setPoints(vector<MeshPoint> &meshpts) {
@@ -151,13 +147,9 @@ namespace Clobscode
 
                 SurfHexahedron h(sub_elements[i]);
 
-                vector<vector<unsigned int> > new_sub_eles = h.getSubElements(*meshpts,
-                                                                              *newpts,
-                                                                              *input,
-                                                                              *e_idx,
-                                                                              o->possibles,
-                                                                              o->continuity,
-                                                                              o->intersected_faces);
+                vector<vector<unsigned int> > new_sub_eles;
+                new_sub_eles = h.getSubElements(*meshpts, *newpts, *input, *e_idx, o->possibles,
+                                                o->continuity, o->intersected_faces);
 
                 for (unsigned int j=0; j<new_sub_eles.size(); j++) {
                     new_eles_lst.push_back(new_sub_eles[j]);

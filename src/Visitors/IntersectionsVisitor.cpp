@@ -28,22 +28,11 @@
 
 namespace Clobscode
 {
-    IntersectionsVisitor::IntersectionsVisitor() {
-        mesh = NULL;
-        points = NULL;
-        faces = NULL;
-        coords = NULL;
-        select_faces = false;
-    }
+    IntersectionsVisitor::IntersectionsVisitor(): mesh(NULL),points(NULL),faces(NULL),coords(NULL),select_faces(false)
+    { }
 
-
-    IntersectionsVisitor::IntersectionsVisitor(bool select_faces) {
-        mesh = NULL;
-        points = NULL;
-        faces = NULL;
-        coords = NULL;
-        this->select_faces = select_faces;
-    }
+    IntersectionsVisitor::IntersectionsVisitor(bool select_faces):mesh(NULL),points(NULL),faces(NULL),coords(NULL),select_faces(select_faces)
+    { }
 
     void IntersectionsVisitor::setTriMesh(TriMesh &mesh) {
         this->mesh = &mesh;

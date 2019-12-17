@@ -33,10 +33,10 @@ namespace Clobscode {
 
     class Visitor {
 
-    public:
-        Visitor() { }
+        public:
+            Visitor() { }
 
-        virtual bool visit(Octant *o) { return false; }
+            virtual bool visit(Octant *o) { return false; }
     };
 
 

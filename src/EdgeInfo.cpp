@@ -29,22 +29,29 @@ namespace Clobscode
 {
 
 	EdgeInfo::EdgeInfo(){
+        info.assign(5,std::numeric_limits<unsigned int>::max());
         info[0] = 0;
-        info[1] = std::numeric_limits<unsigned int>::max();
-        info[2] = std::numeric_limits<unsigned int>::max();
 	}
+    
+    EdgeInfo::EdgeInfo(const vector<unsigned int> &info) {
+        this->info = info;
+    }
 	
     EdgeInfo::EdgeInfo(const unsigned int &mid_idx, const unsigned int &q1,
-                       const unsigned int &q2) {
-        info[0] = mid_idx;
-        info[1] = q1;
-        info[2] = q2;
+                       const unsigned int &q2, const unsigned int &q3,
+                       const unsigned int &q4) {
+        info.reserve(5);
+        info.push_back(mid_idx);
+        info.push_back(q1);
+        info.push_back(q2);
+        info.push_back(q3);
+        info.push_back(q4);
     }
     
     EdgeInfo::EdgeInfo(const unsigned int &pos, const unsigned int &value) {
+        info.assign(5,std::numeric_limits<unsigned int>::max());
         info[0] = 0;
         info[pos] = value;
-        info[3-pos] = std::numeric_limits<unsigned int>::max();
     }
     
     EdgeInfo::~EdgeInfo() {
@@ -54,7 +61,9 @@ namespace Clobscode
 	ostream& operator<<(ostream& o, const EdgeInfo &e){
 		o << e[0] << " ";
         o << e[1] << " ";
-        o << e[2];
+        o << e[2] << " ";
+        o << e[3] << " ";
+        o << e[4];
 		return o;
 	}
 }

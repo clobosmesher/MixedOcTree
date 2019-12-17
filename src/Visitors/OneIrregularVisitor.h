@@ -17,36 +17,40 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/gpl.txt>
  */
 
-#ifndef EdgeVisitor_h
-#define EdgeVisitor_h 1
+#ifndef OneIrregularVisitor_h
+#define OneIrregularVisitor_h 1
 
+//#include "../MeshPoint.h"
 #include "../OctreeEdge.h"
-#include "../Point3D.h"
 #include "../EdgeInfo.h"
+//#include "../Point3D.h"
+//#include "../SurfTriangle.h"
+//#include "../TriMesh.h"
 
+#include <list>
 #include <map>
 #include <vector>
-#include <limits>
 
 #include "Visitor.h"
-
-using Clobscode::OctreeEdge;
-using Clobscode::EdgeInfo;
-using Clobscode::Point3D;
-using std::map;
-using std::vector;
+#include "EdgeVisitor.h"
 
 namespace Clobscode
 {
-    class EdgeVisitor : public Visitor{
-    
+    class OneIrregularVisitor : public Visitor {
     public:
-        static void insertEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
-        static void removeOctFromEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
-        static void getEdge(Octant *o, const unsigned int &idx, OctreeEdge &e);
+        OneIrregularVisitor();
+
+        bool visit(Octant *o);
+
+        void setMapEdges(map<OctreeEdge, EdgeInfo> &MapEdges);
+        void setMaxRefLevel(const unsigned short &max_ref_level);
+
+    protected:
+        map<OctreeEdge, EdgeInfo> *edges;
+        const unsigned short *max_ref_level;
     };
 
 }
 
 
-#endif //EdgeVisitor_h
+#endif //MESHER_ROI_ONEIRREGULARVISITOR_H

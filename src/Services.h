@@ -152,7 +152,7 @@ namespace Clobscode
                                 vector<Clobscode::TriMesh> &clobs_inputs){
             
             char word [256];
-            int np, nf;
+            unsigned int np, nf;
             double x,y,z;
             bool skel = false;
             vector<vector<unsigned int> > allfaces;
@@ -185,9 +185,9 @@ namespace Clobscode
             }
             
             //read number of points
-            fscanf(file,"%i",&np);
+            fscanf(file,"%u",&np);
             //read number of faces
-            fscanf(file,"%i",&nf);
+            fscanf(file,"%u",&nf);
             
             if (!skel) {
                 //read number of edges [info not needed].
@@ -213,11 +213,11 @@ namespace Clobscode
             //number of face points
             int nfp;
             for( int i=0;i<nf;i++){
-                std::fscanf(file,"%i",&nfp);
+                std::fscanf(file,"%u",&nfp);
                 
                 std::vector<unsigned int> fpts(nfp,0);
                 for(unsigned int j=0;j<nfp;j++){
-                    std::fscanf(file,"%i",&fpts[j]);
+                    std::fscanf(file,"%u",&fpts[j]);
                 }
                 allfaces.push_back(fpts);
                 //read any other data in the line
@@ -237,7 +237,7 @@ namespace Clobscode
 								  vector<Clobscode::TriMesh> &clobs_inputs){
 
 			char word [256];
-			int cant;
+			unsigned int cant;
 			double x,y,z;
 			vector<vector<unsigned int> > allfaces;
 			vector<Point3D> tri_pts;
@@ -258,7 +258,7 @@ namespace Clobscode
 				if(!strcmp(word,"ARRAY1<POINT3D>]\0"))
 					break;
 			}
-			std::fscanf(file,"%i",&cant);
+			std::fscanf(file,"%u",&cant);
 			
 			if(cant<=0)
 				return false;
@@ -287,7 +287,7 @@ namespace Clobscode
 				
 				if(!strcmp(word,"ARRAY1<STRING>]\0")){
 					//std::fscanf(file,"%s",word);
-					std::fscanf(file,"%i",&cant);
+					std::fscanf(file,"%u",&cant);
 					break;
 				}
 			}
@@ -298,11 +298,11 @@ namespace Clobscode
 			for( int i=0;i<cant;i++){
 				std::vector<unsigned int> fpts(3,0);
 				for(unsigned int j=0;j<3;j++){
-					std::fscanf(file,"%i",&fpts[j]);
+					std::fscanf(file,"%u",&fpts[j]);
 				}
 				//read some unnecessary integers
 				for(unsigned int j=0;j<3;j++)
-					std::fscanf(file,"%i",&dust);
+					std::fscanf(file,"%u",&dust);
 				
 				allfaces.push_back(fpts);
 			}
@@ -372,10 +372,10 @@ namespace Clobscode
             }
             
             //read header
-            std::fscanf(file,"%i",&np);
-            std::fscanf(file,"%i",&ne);
-            std::fscanf(file,"%i",&no);
-            std::fscanf(file,"%i",&nl);
+            std::fscanf(file,"%u",&np);
+            std::fscanf(file,"%u",&ne);
+            std::fscanf(file,"%u",&no);
+            std::fscanf(file,"%u",&nl);
             
             //read each node
             points.reserve(np);
@@ -393,17 +393,17 @@ namespace Clobscode
             
             //read edges
             for(unsigned int i=0;i<ne;i++){
-                std::fscanf(file,"%i",&e1);
-                std::fscanf(file,"%i",&e2);
-                std::fscanf(file,"%i",&e3);
-                edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,0,0));
+                std::fscanf(file,"%u",&e1);
+                std::fscanf(file,"%u",&e2);
+                std::fscanf(file,"%u",&e3);
+                edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,0,0,0,0));
             }
             
             //read the element octant link
             ele_oct_ref.reserve(nl);
             unsigned int checksum = 0;
             for (unsigned int i=0; i<no; i++) {
-                std::fscanf(file,"%i",&elem);
+                std::fscanf(file,"%u",&elem);
                 for (unsigned int j=0; j<elem; j++) {
                     ele_oct_ref.push_back(i);
                 }
@@ -433,13 +433,13 @@ namespace Clobscode
                 }
                 
                 for (unsigned int j=0; j<nop; j++) {
-                    std::fscanf(file,"%i",&ni);
+                    std::fscanf(file,"%u",&ni);
                     opts.push_back(ni);
                 }
-                std::fscanf(file,"%i",&orl);
-                std::fscanf(file,"%i",&nof);
+                std::fscanf(file,"%u",&orl);
+                std::fscanf(file,"%u",&nof);
                 for (unsigned int j=0; j<nof; j++) {
-                    std::fscanf(file,"%i",&ni);
+                    std::fscanf(file,"%u",&ni);
                     ofcs.push_back(ni);
                 }
                 Octant octant (opts,orl,i);
@@ -507,7 +507,9 @@ namespace Clobscode
             
             //write edges
             for (const auto qe: edges) {
-                fprintf(f,"%i %i %i\n",qe.first[0],qe.first[1],(qe.second)[0]);
+                fprintf(f,"%u %u %u\n",qe.first[0],qe.first[1],(qe.second)[0]);
+                
+                //read neighbor Octants
             }
             
             fprintf(f,"\n");
@@ -607,18 +609,18 @@ namespace Clobscode
             fprintf(f,"\n# face idenfiers\n");
             for (unsigned int i=0; i<nf; i++) {
                 vector<unsigned int> fIdx = fcs.getFace(i).getPoints();
-                fprintf(f,"%i",(int)fIdx.size());
+                fprintf(f,"%u",(int)fIdx.size());
                 for (auto id:fIdx) {
-                    fprintf(f," %i",id);
+                    fprintf(f," %u",id);
                 }
                 fprintf(f,"\n");
             }
             //write elements face indexes
             fprintf(f,"\n# polyhedra idenfication\n");
             for (auto ef:elFcs) {
-                fprintf(f,"%i",(int)ef.size());
+                fprintf(f,"%u",(int)ef.size());
                 for (auto id:ef) {
-                    fprintf(f," %i",id);
+                    fprintf(f," %u",id);
                 }
                 fprintf(f,"\n");
             }
@@ -645,7 +647,7 @@ namespace Clobscode
             
             unsigned int n = points.size();
             
-            fprintf(f,"MIXED\n%i %i\n\n",(int)points.size(),(int)elements.size());
+            fprintf(f,"MIXED\n%u %u\n\n",(int)points.size(),(int)elements.size());
             
             //write points
             for(unsigned int i=0;i<points.size();i++){
@@ -672,7 +674,7 @@ namespace Clobscode
                 }
                 
                 for (unsigned int j= 0; j<np; j++) {
-                    fprintf(f," %i", epts.at(j));
+                    fprintf(f," %u", epts.at(j));
                 }
                 
                 fprintf(f,"\n");
@@ -714,7 +716,7 @@ namespace Clobscode
 			n = elements.size();
 			
 			fprintf(f,"\n%s\n","[Elements, ARRAY1<STRING>]");
-			fprintf(f,"%i\n\n",n);
+			fprintf(f,"%u\n\n",n);
 			
 			//get all the elements in a std::vector
 			for (unsigned int i=0; i<n; i++) {
@@ -734,7 +736,7 @@ namespace Clobscode
 				}
 				
 				for (unsigned int j= 0; j<np; j++) {
-					fprintf(f," %i", epts.at(j));
+					fprintf(f," %u", epts.at(j));
 				}
 				
 				fprintf(f," 1000.0 0.45 1.0\n");
@@ -780,13 +782,13 @@ namespace Clobscode
                 conectivity+=elements[i].size()+1;
             }
             
-            fprintf(f,"\n\nCELLS %i %i\n",(int)elements.size(),conectivity);
+            fprintf(f,"\n\nCELLS %u %u\n",(int)elements.size(),conectivity);
             
             //get all the elements in a std::vector
             for (unsigned int i=0; i<elements.size(); i++) {
                 std::vector<unsigned int> epts = elements[i];
                 unsigned int np = epts.size();
-                fprintf(f,"%i", np);
+                fprintf(f,"%u", np);
                 
                 if (np==6) {
                     unsigned int aux = epts[1];
@@ -798,7 +800,7 @@ namespace Clobscode
                 }
                 
                 for (unsigned int j= 0; j<np; j++) {
-                    fprintf(f," %i", epts.at(j));
+                    fprintf(f," %u", epts.at(j));
                 }
                 
                 fprintf(f,"\n");
@@ -869,7 +871,7 @@ namespace Clobscode
                 unsigned int np = epts.size();
                 
                 //if (np==8 || np==4) {
-                    fprintf(f,"CONVEX %i    ",i);
+                    fprintf(f,"CONVEX %u    ",i);
                 //}
 
                 
@@ -907,7 +909,7 @@ namespace Clobscode
                 
                 //if (np==8 || np==4) {
                     for (unsigned int j= 0; j<np; j++) {
-                        fprintf(f," %i", epts.at(j));
+                        fprintf(f," %u", epts.at(j));
                     }
                 
                     fprintf(f,"\n");

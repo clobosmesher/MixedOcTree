@@ -249,11 +249,11 @@ namespace Clobscode
     void Mesher::splitOctants(const unsigned short &rl, TriMesh &input,
                               list<unsigned int> &roctli,
                               list<RefinementRegion *> &all_reg, const string &name,
-                              const unsigned short &minrl, const unsigned short &omaxrl){
+                              const unsigned short &minrl, const unsigned short &givenmaxrl){
         
         //The list of candidate Octants to refine and the tmp version of
         //adding those how are still candidates for the next iteration.
-        list<Octant> candidates, new_candidates, clean_processed;
+        list<Octant> candidates, new_candidates, clean_processed, refine_tmp;
         
         //The Octs that don't need further refinement.
         vector<Octant> processed;
@@ -290,10 +290,17 @@ namespace Clobscode
         sv.setMapProcessed(idx_pos_map);
         sv.setToBalanceList(toBalance);
         
+        unsigned short max_rl;
+        if (givenmaxrl==0) {
+            max_rl = rl;
+        }
+        else {
+            max_rl = givenmaxrl;
+        }
+        
         //----------------------------------------------------------
         //refine once each Octrant in the list
         //----------------------------------------------------------
-        unsigned int cindex = 0;
         
         //note: roctli must be a sorted index list.
         if (!roctli.empty()) {
@@ -308,77 +315,83 @@ namespace Clobscode
                 
                 if (octidx == roctli.end() || qua_pos!=*octidx) {
                     idx_pos_map[oct.getIndex()] = processed.size();
-                    //cout << Oct.getIndex() << endl;
                     processed.push_back(oct);
                 }
                 else {
-                    
                     //we advance to next Octrant in the list for the next
                     //iteration.
                     octidx++;
+                    refine_tmp.push_back(oct);
+                }
+                qua_pos++;
+            }
+            
+            for (auto oct: refine_tmp) {
                     
-                    //start refinement process for current Octant.
-                    list<unsigned int> inter_faces = oct.getIntersectedFaces();
-                    unsigned short orl = oct.getRefinementLevel();
-                    
-                    vector<vector<Point3D> > clipping_coords;
-                    sv.setClipping(clipping_coords);
-                    
-                    vector<vector<unsigned int> > split_elements;
-                    sv.setNewEles(split_elements);
-                    sv.setStartIndex(new_o_idx);
-                    
-                    oct.accept(&sv);
-                    
-                    if (inter_faces.empty()) {
-                        for (unsigned int j=0; j<split_elements.size(); j++) {
-                            Octant o (split_elements[j],orl+1,new_o_idx++);
+                //start refinement process for current Octant.
+                list<unsigned int> inter_faces = oct.getIntersectedFaces();
+                unsigned short orl = oct.getRefinementLevel();
+                
+                vector<vector<Point3D> > clipping_coords;
+                sv.setClipping(clipping_coords);
+                
+                vector<vector<unsigned int> > split_elements;
+                sv.setNewEles(split_elements);
+                sv.setStartIndex(new_o_idx);
+                
+                oct.accept(&sv);
+                
+                if (inter_faces.empty()) {
+                    for (unsigned int j=0; j<split_elements.size(); j++) {
+                        Octant o (split_elements[j],orl+1,new_o_idx++);
+                        new_candidates.push_back(o);
+                    }
+                }
+                else {
+                    for (unsigned int j=0; j<split_elements.size(); j++) {
+                        Octant o (split_elements[j],orl+1,new_o_idx++);
+                        
+                        //the new points are inserted in bash at the end of this
+                        //iteration. For this reason, the coordinates must be passed
+                        //"manually" at this point (clipping_coords).
+                        IntersectionsVisitor iv(true);
+                        //if (o.checkIntersections(input,inter_faces,clipping_coords[j]))
+                        iv.setTriMesh(input);
+                        iv.setFaces(inter_faces);
+                        iv.setCoords(clipping_coords[j]);
+                        
+                        if (o.accept(&iv)) {
                             new_candidates.push_back(o);
                         }
-                    }
-                    else {
-                        for (unsigned int j=0; j<split_elements.size(); j++) {
-                            Octant o (split_elements[j],orl+1,new_o_idx++);
+                        else {
+                            //The element doesn't intersect any input face.
+                            //It must be checked if it's inside or outside.
+                            //Only in the first case add it to new_octants.
+                            //Test this with parent octant faces only.
                             
-                            //the new points are inserted in bash at the end of this
-                            //iteration. For this reason, the coordinates must be passed
-                            //"manually" at this point (clipping_coords).
-                            IntersectionsVisitor iv(true);
-                            //if (o.checkIntersections(input,inter_faces,clipping_coords[j]))
-                            iv.setTriMesh(input);
-                            iv.setFaces(inter_faces);
-                            iv.setCoords(clipping_coords[j]);
+                            //Comment the following lines of this 'else' if
+                            //only intersecting octants are meant to be
+                            //displayed.
                             
-                            if (o.accept(&iv)) {
+                            //note: inter_faces is quite enough to check if
+                            //element is inside input, no octant needed,
+                            //so i moved the method to mesher  --setriva
+                            
+                            if (isItIn(input,inter_faces,clipping_coords[j])) {
                                 new_candidates.push_back(o);
                             }
                             else {
-                                //The element doesn't intersect any input face.
-                                //It must be checked if it's inside or outside.
-                                //Only in the first case add it to new_octants.
-                                //Test this with parent octant faces only.
-                                
-                                //Comment the following lines of this 'else' if
-                                //only intersecting octants are meant to be
-                                //displayed.
-                                
-                                //note: inter_faces is quite enough to check if
-                                //element is inside input, no octant needed,
-                                //so i moved the method to mesher  --setriva
-                                
-                                if (isItIn(input,inter_faces,clipping_coords[j])) {
-                                    new_candidates.push_back(o);
-                                }
-                                else {
-                                    //we must update neighbor information at the edges
-                                    EdgeVisitor::removeOctFromEdges(&o, MapEdges);
-                                }
+                                //we must update neighbor information at the edges
+                                EdgeVisitor::removeOctFromEdges(&o, MapEdges);
                             }
                         }
                     }
                 }
-                qua_pos++;
             }
+
+            //Erase the list to refine
+            refine_tmp.erase(refine_tmp.begin(),refine_tmp.end());
+            
             while (!toBalance.empty()) {
                 
                 list<pair<unsigned int, unsigned int> > tmp_toBalance;
@@ -461,13 +474,7 @@ namespace Clobscode
                 //add the new points to the vector
                 points.reserve(points.size() + new_pts.size());
                 points.insert(points.end(),new_pts.begin(),new_pts.end());
-                
-                //cout << "new points inserted\n";
-                //cout << "processed size " << processed.size() << endl;
-                //cout << "map size " << idx_pos_map.size() << endl;
             }
-            
-            //unsigned int pro_Octs = 0;
             
             //clean non used Octs.
             for (auto used_Oct: idx_pos_map) {
@@ -489,9 +496,9 @@ namespace Clobscode
             candidates.erase(candidates.begin(),candidates.end());
             octants.insert(octants.end(),make_move_iterator(clean_processed.begin()),make_move_iterator(clean_processed.end()));
             clean_processed.erase(clean_processed.begin(),clean_processed.end());
-
+            
             //Continue with the rest of the refinement and apply transition patterns
-            generateOctreeMesh(rl,input,all_reg,name,minrl,omaxrl);
+            generateOctreeMesh(rl,input,all_reg,name,minrl,givenmaxrl);
             return;
         }
         
@@ -501,12 +508,15 @@ namespace Clobscode
         //----------------------------------------------------------
         // apply transition patterns
         //----------------------------------------------------------
+        //clear the new points in case Transition add some.
+        new_pts.clear();
         
         //TransitionPatternVisitor section
         TransitionPatternVisitor tpv;
+        tpv.setPoints(points);
+        tpv.setNewPoints(new_pts);
         tpv.setMapEdges(MapEdges);
-        tpv.setMaxRefLevel(omaxrl);
-        new_pts.clear();
+        tpv.setMaxRefLevel(max_rl);
         
         //Apply transition patterns to remaining Octs
         for (auto &to: clean_processed) {
@@ -544,7 +554,7 @@ namespace Clobscode
 		
         //The list of candidate Octs to refine and the tmp version of
         //adding those how are still candidates for the next iteration.
-        list<Octant> candidates, new_candidates, clean_processed;
+        list<Octant> candidates, new_candidates, clean_processed, refine_tmp;
         
         //The Octs that don't need further refinement.
         vector<Octant> processed;
@@ -556,16 +566,9 @@ namespace Clobscode
         //list of the points added at this refinement iteration:
         list<Point3D> new_pts;
         
-        //list<Octrant>::iterator iter;
-        
         //A set containing the index of Octs to be refined to
         //maintain balancing
         list<pair<unsigned int,unsigned int> > toBalance;
-        
-        //for (auto te: Octrants) {
-        //    cout << te.getIndex() << " ";
-        //}
-        //cout << endl;
         
         //initialising the vector and the map
         candidates.assign(make_move_iterator(octants.begin()),
@@ -603,21 +606,16 @@ namespace Clobscode
         //the starting refinement level will not be 0, but the min rl
         //among the Octrants in the starting mesh.
         for (unsigned short i=minrl; i<rl; i++) {
-            //the new_pts is a list that holds the coordinates of
-            //new points inserted at this iteration. At the end of
-            //this bucle, they are inserted in the point vector
-            new_pts.clear();
-            
             list<RefinementRegion *>::const_iterator reg_iter;
             
-            //split the Octrants as needed
+            //detect Octants to refine
             while (!candidates.empty()) {
                 Octant oct = *(candidates.begin());
                 candidates.pop_front();
                 
                 bool to_refine = false;
                 
-                for (reg_iter=all_reg.begin(),reg_iter++; reg_iter!=all_reg.end(); ++reg_iter) {
+                for (reg_iter=all_reg.begin(); reg_iter!=all_reg.end(); ++reg_iter) {
                     
                     unsigned short region_rl = (*reg_iter)->getRefinementLevel();
                     if (region_rl<i) {
@@ -640,71 +638,80 @@ namespace Clobscode
                 if (!to_refine) {
                     idx_pos_map[oct.getIndex()] = processed.size();
                     processed.push_back(oct);
-                    continue;
                 }
                 else {
+                    refine_tmp.push_back(oct);
+                }
+            }
+            
+            //cout << "* Octants to refine " << refine_tmp.size() << "\n";
+            
+            //now we can start to refine those needing it.
+            for (auto oct: refine_tmp) {
                     
-                    list<unsigned int> &inter_faces = oct.getIntersectedFaces();
-                    unsigned short qrl = oct.getRefinementLevel();
-                    
-                    vector<vector<Point3D> > clipping_coords;
-                    sv.setClipping(clipping_coords);
-                    
-                    vector<vector<unsigned int> > split_elements;
-                    sv.setNewEles(split_elements);
-                    sv.setStartIndex(new_o_idx);
-                    
-                    oct.accept(&sv);
-                    
-                    //bool reg_state = Oct.isInRegion();
-                    
-                    if (inter_faces.empty()) {
-                        for (unsigned int j=0; j<split_elements.size(); j++) {
-                            Octant o (split_elements[j], qrl+1, new_o_idx++);
+                list<unsigned int> &inter_faces = oct.getIntersectedFaces();
+                unsigned short orl = oct.getRefinementLevel();
+                
+                vector<vector<Point3D> > clipping_coords;
+                sv.setClipping(clipping_coords);
+                
+                vector<vector<unsigned int> > split_elements;
+                sv.setNewEles(split_elements);
+                sv.setStartIndex(new_o_idx);
+                
+                oct.accept(&sv);
+                
+                //bool reg_state = Oct.isInRegion();
+                
+                if (inter_faces.empty()) {
+                    for (unsigned int j=0; j<split_elements.size(); j++) {
+                        Octant o (split_elements[j], orl+1, new_o_idx++);
+                        //o.setInRegionState(reg_state);
+                        new_candidates.push_back(o);
+                    }
+                }
+                else {
+                    for (unsigned int j=0; j<split_elements.size(); j++) {
+                        Octant o (split_elements[j],orl+1,new_o_idx++);
+                        //the new points are inserted in bash at the end of this
+                        //iteration. For this reason, the coordinates must be passed
+                        //"manually" at this point (clipping_coords).
+                        
+                        //select_faces = true
+                        IntersectionsVisitor iv(true);
+                        //if (o.checkIntersections(input,inter_edges,clipping_coords[j]))
+                        iv.setTriMesh(input);
+                        iv.setFaces(inter_faces);
+                        iv.setCoords(clipping_coords[j]);
+                        
+                        if (o.accept(&iv)) {
                             //o.setInRegionState(reg_state);
                             new_candidates.push_back(o);
                         }
-                    }
-                    else {
-                        for (unsigned int j=0; j<split_elements.size(); j++) {
-                            Octant o (split_elements[j],qrl+1,new_o_idx++);
-                            //the new points are inserted in bash at the end of this
-                            //iteration. For this reason, the coordinates must be passed
-                            //"manually" at this point (clipping_coords).
-                            
-                            //select_faces = true
-                            IntersectionsVisitor iv(true);
-                            //if (o.checkIntersections(input,inter_edges,clipping_coords[j]))
-                            iv.setTriMesh(input);
-                            iv.setFaces(inter_faces);
-                            iv.setCoords(clipping_coords[j]);
-                            
-                            if (o.accept(&iv)) {
+                        else {
+                            //The element doesn't intersect any input edge.
+                            //It must be checked if it's inside or outside.
+                            //Only in the first case add it to new_Octrants.
+                            //Test this with parent Octrant faces only.
+                            if (isItIn(input,inter_faces,clipping_coords[j])) {
                                 //o.setInRegionState(reg_state);
                                 new_candidates.push_back(o);
                             }
                             else {
-                                //The element doesn't intersect any input edge.
-                                //It must be checked if it's inside or outside.
-                                //Only in the first case add it to new_Octrants.
-                                //Test this with parent Octrant faces only.
-                                if (isItIn(input,inter_faces,clipping_coords[j])) {
-                                    //o.setInRegionState(reg_state);
-                                    new_candidates.push_back(o);
-                                }
-                                else {
-                                    //we must update neighbor information at the edges
-                                    EdgeVisitor::removeOctFromEdges(&o, MapEdges);
-
-                                }
+                                //we must update neighbor information at the edges
+                                EdgeVisitor::removeOctFromEdges(&o, MapEdges);
+                                
                             }
                         }
                     }
                 }
-            } // while
+            }
+        
+            //Erase the list to refine
+            refine_tmp.erase(refine_tmp.begin(),refine_tmp.end());
             
-            //unsigned int tbiter = 0;
-            
+            //cout << "* To balance " << toBalance.size() << "\n";
+        
             //Refine non balanced Octs
             while (!toBalance.empty()) {
                 
@@ -802,18 +809,53 @@ namespace Clobscode
                 cout << "warning at Mesher::generateOcttreeMesh no new points!!!\n";
                 break;
             }
+            
+            //add the new points to the vector
+            points.reserve(points.size() + new_pts.size());
+            points.insert(points.end(),new_pts.begin(),new_pts.end());
+            
+            //the new_pts is a list that holds the coordinates of
+            //new points inserted at this iteration. At the end of
+            //this bucle, they are inserted in the point vector
+            //new_pts.erase(new_pts.begin(),new_pts.end());
+            new_pts.clear();
+            
+            
+            auto bug = MapEdges.find(OctreeEdge (933,987));
+            
+            if (bug!=MapEdges.end()) {
+                cout << " State of (933,987)";
+                for (unsigned int m=0;m<5;m++) {
+                    cout << " " << bug->second[m];
+                }
+                cout << "\n";
+            }
+            
+            //Check incorrect balancing.
+            OneIrregularVisitor oiv;
+            oiv.setMapEdges(MapEdges);
+            oiv.setMaxRefLevel(i);
+            
+            cout << "  * checking balance at iteration " << i << "\n";
+            
+            for (auto used_Oct: idx_pos_map) {
+                Octant oe = processed[used_Oct.second];
+                //Check balancing
+                oe.accept(&oiv);
+            }
+            for (auto oe: candidates) {
+                if (oe.getIndex()==82 || oe.getIndex()==158) {
+                    cout << "for octant " << oe.getIndex();
+                    for (unsigned int m=0; m<8; m++) {
+                        cout << " " << oe.getPoints()[m];
+                    }
+                    cout << "\n";
+                }
+            }
+            
+            
+            
         }
-        
-        
-        //----------------------------------------------------------
-        // apply transition patterns
-        //----------------------------------------------------------
-        
-        //TransitionPatternVisitor section
-        TransitionPatternVisitor tpv;
-        tpv.setMapEdges(MapEdges);
-        tpv.setMaxRefLevel(max_rl);
-        new_pts.clear();
         
         //clean non used Octs.
         for (auto used_Oct: idx_pos_map) {
@@ -821,6 +863,18 @@ namespace Clobscode
         }
         
         processed.erase(processed.begin(),processed.end());
+        
+        //----------------------------------------------------------
+        // apply transition patterns
+        //----------------------------------------------------------
+        
+        //TransitionPatternVisitor section
+        TransitionPatternVisitor tpv;
+        tpv.setPoints(points);
+        tpv.setNewPoints(new_pts);
+        tpv.setMapEdges(MapEdges);
+        tpv.setMaxRefLevel(max_rl);
+
 
         //Apply transition patterns to remaining Octs
         for (auto &to: clean_processed) {

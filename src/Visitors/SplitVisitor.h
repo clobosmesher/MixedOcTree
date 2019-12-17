@@ -23,6 +23,7 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <limits>
 
 #include "../MeshPoint.h"
 #include "../Point3D.h"
@@ -47,12 +48,6 @@ namespace Clobscode
 
     public:
         SplitVisitor();
-        /*void VisitOctant(Octant *o,
-                         vector<MeshPoint> &points,
-                         list<Point3D> &new_pts,
-                         set<OctreeEdge> &edges,
-                         vector< vector<unsigned int> > &new_eles,
-                         vector<vector<Point3D> > &clipping);*/
 
         bool visit(Octant *o);
 
@@ -80,17 +75,21 @@ namespace Clobscode
         unsigned int idx;
         
 
-        bool splitEdge(const unsigned int &idx1,
-                       const unsigned int &idx2,
-                       unsigned int &c_n_pts,
-                       unsigned int &mid_idx);
+        bool splitEdge(const unsigned int &idx1, const unsigned int &idx2,
+                       const unsigned int &sub1, const unsigned int &sub2,
+                       const unsigned int &pos, const unsigned int &myrl,
+                       unsigned int &c_n_pts, unsigned int &mid_idx,
+                       unsigned int &o_idx);
 
-        bool splitFace(const unsigned int &idx1,
-                       const unsigned int &idx2,
-                       const unsigned int &idx3,
-                       const unsigned int &idx4,
-                       unsigned int &c_n_pts,
-                       unsigned int &mid_idx);
+        bool splitFaceType1(const vector<unsigned int> &fpts,
+                            const vector<unsigned int> &sons,
+                            const unsigned int &neighbor,
+                            unsigned int &c_n_pts, unsigned int &mid_idx);
+        
+        bool splitFaceType2(const vector<unsigned int> &fpts,
+                            const vector<unsigned int> &sons,
+                            const unsigned int &neighbor,
+                            unsigned int &c_n_pts, unsigned int &mid_idx);
 
 
     };

@@ -34,6 +34,7 @@
 #include "Visitors/TransitionPatternVisitor.h"
 #include "Visitors/SurfaceTemplatesVisitor.h"
 #include "Visitors/RemoveSubElementsVisitor.h"
+#include "Visitors/OneIrregularVisitor.h"
 
 #include <list>
 #include <vector>

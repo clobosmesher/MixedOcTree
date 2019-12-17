@@ -46,12 +46,19 @@ namespace Clobscode
 	public:
         
 		EdgeInfo();
+        
+        EdgeInfo(const vector<unsigned int> &info);
 		
-        EdgeInfo(const unsigned int &mid_idx, const unsigned int &q1, const unsigned int &q2);
+        EdgeInfo(const unsigned int &mid_idx, const unsigned int &q1, const unsigned int &q2,
+                 const unsigned int &q3, const unsigned int &q4);
         
         EdgeInfo(const unsigned int &pos, const unsigned int &value);
         
 		virtual ~EdgeInfo();
+        
+        virtual void update(const unsigned int &pos, const unsigned int &value);
+        
+        virtual vector<unsigned int> &getNeighborOcts();
 		
         virtual unsigned int operator[](const unsigned int &pos) const;
         
@@ -62,16 +69,24 @@ namespace Clobscode
 		
 	protected:
 		
-        unsigned int info [3];
+        vector<unsigned int> info;
 
 	};
 
+    inline void EdgeInfo::update(const unsigned int &pos, const unsigned int &value) {
+        info[pos] = value;
+    }
+    
     inline unsigned int EdgeInfo::operator[](const unsigned int &pos) const{
         return info[pos];
     }
 	
     inline unsigned int &EdgeInfo::operator[](const unsigned int &pos){
         return info[pos];
+    }
+    
+    inline vector<unsigned int> &EdgeInfo::getNeighborOcts() {
+        return info;
     }
 }
 #endif

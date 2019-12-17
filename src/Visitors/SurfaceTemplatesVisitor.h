@@ -24,8 +24,6 @@
 #include "../MeshPoint.h"
 #include "../TriMesh.h"
 
-//#include "../TransitionTemplate.h"
-
 #include "../SurfTemplate1.h"
 #include "../SurfTemplate2.h"
 #include "../SurfTemplate3.h"

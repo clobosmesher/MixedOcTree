@@ -23,16 +23,14 @@
 namespace Clobscode
 {
 
-    RemoveSubElementsVisitor::RemoveSubElementsVisitor() {
-        points = NULL;
-    }
+    RemoveSubElementsVisitor::RemoveSubElementsVisitor():points(NULL)
+    { }
 
     void RemoveSubElementsVisitor::setPoints(vector<MeshPoint> &points) {
         this->points = &points;
     }
 
     bool RemoveSubElementsVisitor::visit(Octant *o) {
-        //cout << "RemoveElements" << endl;
         vector<vector<unsigned int>> &sub_elements = o->sub_elements;
 
         list<vector<unsigned int> > still_in;
