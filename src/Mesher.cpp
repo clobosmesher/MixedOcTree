@@ -246,6 +246,29 @@ namespace Clobscode
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
     
+    void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
+                                 map<OctreeEdge, EdgeInfo> &medgs) {
+        
+        octants.assign(make_move_iterator(eocts.begin()),
+                       make_move_iterator(eocts.end()));
+        
+        //Erase previous quadrants to save memory
+        eocts.erase(eocts.begin(),eocts.end());
+        
+        points.assign(make_move_iterator(epts.begin()),make_move_iterator(epts.end()));
+        epts.erase(epts.begin(),epts.end());
+        
+        MapEdges = medgs;
+        EdgeVisitor ev;
+        //recompute Octant indexes and update edges with those indexes
+        for (unsigned int i=0;i<octants.size();i++) {
+            
+        }
+    }
+    
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+    
     void Mesher::splitOctants(const unsigned short &rl, TriMesh &input,
                               list<unsigned int> &roctli,
                               list<RefinementRegion *> &all_reg, const string &name,

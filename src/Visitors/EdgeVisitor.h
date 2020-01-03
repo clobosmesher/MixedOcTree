@@ -41,8 +41,17 @@ namespace Clobscode
     class EdgeVisitor : public Visitor{
     
     public:
+        
+        //This method create/update this octant edges with the index information.
+        //It does not check or update sub-edges.
         static void insertEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
+
+        //This method create/update this octant edges and sub-edges with the index
+        //information. It is used when starting from a previous mesh.
+        static void insertAllEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
+        
         static void removeOctFromEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
+        
         static void getEdge(Octant *o, const unsigned int &idx, OctreeEdge &e);
     };
 

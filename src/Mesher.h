@@ -129,12 +129,12 @@ namespace Clobscode
 
 	};
     
-    inline void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
+    /*inline void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
                                         map<OctreeEdge, EdgeInfo> &edge_map) {
         octants = eocts;
         points = epts;
         MapEdges = edge_map;
-    }
+    }*/
 	
 	
 }
