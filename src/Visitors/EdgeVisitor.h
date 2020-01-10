@@ -53,6 +53,10 @@ namespace Clobscode
         static void removeOctFromEdges(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
         
         static void getEdge(Octant *o, const unsigned int &idx, OctreeEdge &e);
+        
+        //For debugging:
+        static void printInfo(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges);
+        
     };
 
 }

@@ -259,10 +259,9 @@ namespace Clobscode
         epts.erase(epts.begin(),epts.end());
         
         MapEdges = medgs;
-        EdgeVisitor ev;
         //recompute Octant indexes and update edges with those indexes
         for (unsigned int i=0;i<octants.size();i++) {
-            
+            EdgeVisitor::insertAllEdges(&octants[i], MapEdges);
         }
     }
     
@@ -526,7 +525,7 @@ namespace Clobscode
         }
         
         //If there are no more refinement regions, we must apply transition patterns
-        //at this moment and the finish the process.
+        //at this moment and then finish the process.
         
         //----------------------------------------------------------
         // apply transition patterns
@@ -620,6 +619,11 @@ namespace Clobscode
             max_rl = givenmaxrl;
         }
         
+        
+        //unsigned int oct_ref = 0, oct_bal = 0;
+        
+        //cout << "Refining octants:";
+        
         //----------------------------------------------------------
         //refine each Octrant until the Refinement Level is reached
         //----------------------------------------------------------
@@ -653,6 +657,12 @@ namespace Clobscode
                     //in the case of a Region Refinement (a surface) this will change
                     //the state of inregion = true.
                     if ((*reg_iter)->intersectsOctant(points,oct)) {
+                        
+                        
+                        //oct_ref++;
+                        //cout << " " << oct.getIndex() << "\n";
+                        //EdgeVisitor::printInfo(&oct,MapEdges);
+                        
                         to_refine = true;
                     }
                 }
@@ -666,6 +676,10 @@ namespace Clobscode
                     refine_tmp.push_back(oct);
                 }
             }
+            
+            //cout << "\n";
+            
+            
             
             //now we can start to refine those needing it.
             for (auto oct: refine_tmp) {
@@ -754,6 +768,11 @@ namespace Clobscode
                         //once more in the mesh. Therefore, this if avoids this case.
                         continue;
                     }
+                    
+                    
+                    //oct_bal++;
+                    
+                    
                     
                     Octant oct = processed[val];
                     list<unsigned int> &inter_faces = oct.getIntersectedFaces();
@@ -871,10 +890,12 @@ namespace Clobscode
                     cout << "\n";
                 }
             }*/
-            
-            
-            
         }
+        
+        
+        //cout << "Refined octants: " << oct_ref << "\n";
+        //cout << "Balanced octants: " << oct_ref << "\n";
+        
         
         //clean non used Octs.
         for (auto used_Oct: idx_pos_map) {

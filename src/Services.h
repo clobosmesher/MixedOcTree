@@ -359,6 +359,8 @@ namespace Clobscode
                                    unsigned short &minrl,
                                    unsigned short &maxrl) {
             
+            unsigned int non = std::numeric_limits<unsigned int>::max();
+            
             char word [256];
             double x,y,z;
             int e1,e2,e3,elem;
@@ -396,7 +398,7 @@ namespace Clobscode
                 std::fscanf(file,"%u",&e1);
                 std::fscanf(file,"%u",&e2);
                 std::fscanf(file,"%u",&e3);
-                edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,0,0,0,0));
+                edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,non,non,non,non));
             }
             
             //read the element octant link

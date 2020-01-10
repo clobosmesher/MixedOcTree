@@ -24,6 +24,28 @@
 namespace Clobscode
 {
     
+    
+    void EdgeVisitor::printInfo(Octant *o, map<OctreeEdge, EdgeInfo> &MapEdges) {
+        for (unsigned int i=0; i<12; i++) {
+            cout << " > Edge " << i;
+            OctreeEdge main;
+            getEdge(o,i,main);
+            auto me = MapEdges.find(main);
+            unsigned int mid = me->second[0];
+            if (mid==0) {
+                cout << " " << me->second << "\n";
+            }
+            else {
+                cout << " (" << me->second << ") was split into:\n";
+                auto sub1 = MapEdges.find(OctreeEdge (main[0],mid));
+                auto sub2 = MapEdges.find(OctreeEdge (main[1],mid));
+                cout << "   > " << sub1->second << "\n";
+                cout << "   > " << sub2->second << "\n";
+            }
+            
+        }
+    }
+    
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
     
@@ -39,6 +61,7 @@ namespace Clobscode
         
         //This array counts the number of edges split for each octant's face.
         unsigned int faces [] = {0,0,0,0,0,0};
+        unsigned int midpt [] = {0,0,0,0,0,0,0,0,0,0,0,0};
         
         //X axis
         
@@ -51,6 +74,7 @@ namespace Clobscode
                 found->second.update(1,oi);
             }
             else {
+                midpt [3] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[3],mid))->second[1] = oi;
                 MapEdges.find(OctreeEdge (pidxs[0],mid))->second[1] = oi;
@@ -72,6 +96,7 @@ namespace Clobscode
                 found->second.update(2,oi);
             }
             else {
+                midpt [11] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[7],mid))->second[2] = oi;
                 MapEdges.find(OctreeEdge (pidxs[4],mid))->second[2] = oi;
@@ -93,6 +118,7 @@ namespace Clobscode
                 found->second.update(3,oi);
             }
             else {
+                midpt [9] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[5],mid))->second[3] = oi;
                 MapEdges.find(OctreeEdge (pidxs[6],mid))->second[3] = oi;
@@ -114,6 +140,7 @@ namespace Clobscode
                 found->second.update(4,oi);
             }
             else {
+                midpt [1] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[1],mid))->second[4] = oi;
                 MapEdges.find(OctreeEdge (pidxs[2],mid))->second[4] = oi;
@@ -137,6 +164,7 @@ namespace Clobscode
                 found->second.update(1,oi);
             }
             else {
+                midpt [4] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[0],mid))->second[1] = oi;
                 MapEdges.find(OctreeEdge (pidxs[4],mid))->second[1] = oi;
@@ -158,6 +186,7 @@ namespace Clobscode
                 found->second.update(2,oi);
             }
             else {
+                midpt [5] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[1],mid))->second[2] = oi;
                 MapEdges.find(OctreeEdge (pidxs[5],mid))->second[2] = oi;
@@ -179,6 +208,7 @@ namespace Clobscode
                 found->second.update(3,oi);
             }
             else {
+                midpt [6] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[2],mid))->second[3] = oi;
                 MapEdges.find(OctreeEdge (pidxs[6],mid))->second[3] = oi;
@@ -200,6 +230,7 @@ namespace Clobscode
                 found->second.update(4,oi);
             }
             else {
+                midpt [7] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[3],mid))->second[4] = oi;
                 MapEdges.find(OctreeEdge (pidxs[7],mid))->second[4] = oi;
@@ -223,6 +254,7 @@ namespace Clobscode
                 found->second.update(1,oi);
             }
             else {
+                midpt [0] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[0],mid))->second[1] = oi;
                 MapEdges.find(OctreeEdge (pidxs[1],mid))->second[1] = oi;
@@ -244,6 +276,7 @@ namespace Clobscode
                 found->second.update(2,oi);
             }
             else {
+                midpt [2] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[2],mid))->second[2] = oi;
                 MapEdges.find(OctreeEdge (pidxs[3],mid))->second[2] = oi;
@@ -265,6 +298,7 @@ namespace Clobscode
                 found->second.update(3,oi);
             }
             else {
+                midpt [10] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[6],mid))->second[3] = oi;
                 MapEdges.find(OctreeEdge (pidxs[7],mid))->second[3] = oi;
@@ -286,6 +320,7 @@ namespace Clobscode
                 found->second.update(4,oi);
             }
             else {
+                midpt [8] = mid;
                 //only update two mid-edges. The big one is already deprecated
                 MapEdges.find(OctreeEdge (pidxs[4],mid))->second[4] = oi;
                 MapEdges.find(OctreeEdge (pidxs[5],mid))->second[4] = oi;
@@ -306,14 +341,88 @@ namespace Clobscode
         
         if (faces[0]==4) {
             
-            //Verificar que el arco con los indices 8-16 y 12-13 fueron almacenados en
-            //el archivo .oct. Esto es necesario para obtener el vertice central de la
-            //cara y lo mismo para el resto de las caras.
-            
+            found = MapEdges.find(OctreeEdge (midpt[0],midpt[2]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[0],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[2],mid))->second[1] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[1],midpt[3]));
+                MapEdges.find(OctreeEdge (midpt[1],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[3],mid))->second[1] = oi;
+            }
             
         }
         
+        if (faces[1]==4) {
+            
+            found = MapEdges.find(OctreeEdge (midpt[0],midpt[8]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[0],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[8],mid))->second[1] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[4],midpt[5]));
+                MapEdges.find(OctreeEdge (midpt[4],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[5],mid))->second[1] = oi;
+            }
+        }
         
+        if (faces[2]==4) {
+            
+            found = MapEdges.find(OctreeEdge (midpt[1],midpt[9]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[1],mid))->second[2] = oi;
+                MapEdges.find(OctreeEdge (midpt[9],mid))->second[2] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[5],midpt[6]));
+                MapEdges.find(OctreeEdge (midpt[5],mid))->second[3] = oi;
+                MapEdges.find(OctreeEdge (midpt[6],mid))->second[3] = oi;
+            }
+        }
+        
+        if (faces[3]==4) {
+            
+            found = MapEdges.find(OctreeEdge (midpt[2],midpt[10]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[2],mid))->second[3] = oi;
+                MapEdges.find(OctreeEdge (midpt[10],mid))->second[3] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[6],midpt[7]));
+                MapEdges.find(OctreeEdge (midpt[6],mid))->second[2] = oi;
+                MapEdges.find(OctreeEdge (midpt[7],mid))->second[2] = oi;
+            }
+        }
+        
+        if (faces[4]==4) {
+            
+            found = MapEdges.find(OctreeEdge (midpt[3],midpt[11]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[3],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[11],mid))->second[1] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[7],midpt[4]));
+                MapEdges.find(OctreeEdge (midpt[7],mid))->second[1] = oi;
+                MapEdges.find(OctreeEdge (midpt[4],mid))->second[1] = oi;
+            }
+        }
+        
+        if (faces[5]==4) {
+            
+            found = MapEdges.find(OctreeEdge (midpt[8],midpt[10]));
+            if (found!=MapEdges.end()) {
+                unsigned int mid = found->second[0];
+                MapEdges.find(OctreeEdge (midpt[8],mid))->second[2] = oi;
+                MapEdges.find(OctreeEdge (midpt[10],mid))->second[2] = oi;
+                
+                found = MapEdges.find(OctreeEdge (midpt[9],midpt[11]));
+                MapEdges.find(OctreeEdge (midpt[9],mid))->second[3] = oi;
+                MapEdges.find(OctreeEdge (midpt[11],mid))->second[3] = oi;
+            }
+        }
         
     }
 
