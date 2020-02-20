@@ -338,6 +338,9 @@ namespace Clobscode
             max_rl = givenmaxrl;
         }
         
+        
+        bool localmax = false;
+        
         //----------------------------------------------------------
         //refine once each Octrant in the list
         //----------------------------------------------------------
@@ -371,6 +374,10 @@ namespace Clobscode
                 //start refinement process for current Octant.
                 list<unsigned int> inter_faces = oct.getIntersectedFaces();
                 unsigned short orl = oct.getRefinementLevel();
+                
+                if (orl==max_rl) {
+                    localmax = true;
+                }
                 
                 vector<vector<Point3D> > clipping_coords;
                 sv.setClipping(clipping_coords);
@@ -526,25 +533,6 @@ namespace Clobscode
             
         }
         
-        //If there are more refinement regions, continue with the process
-        //were the Octs positions will change in the final vector due to
-        //map indexing that allows to optimize the research of neighbors.
-        if (!all_reg.empty()) {
-            //insert will reserve space as well
-            octants.insert(octants.end(),make_move_iterator(candidates.begin()),make_move_iterator(candidates.end()));
-            // better to erase as let in a indeterminate state by move
-            candidates.erase(candidates.begin(),candidates.end());
-            octants.insert(octants.end(),make_move_iterator(clean_processed.begin()),make_move_iterator(clean_processed.end()));
-            clean_processed.erase(clean_processed.begin(),clean_processed.end());
-            
-            //Continue with the rest of the refinement and apply transition patterns
-            generateOctreeMesh(rl,input,all_reg,name,minrl,givenmaxrl);
-            return;
-        }
-        
-        //If there are no more refinement regions, we must apply transition patterns
-        //at this moment and then finish the process.
-        
         //----------------------------------------------------------
         // apply transition patterns
         //----------------------------------------------------------
@@ -556,7 +544,13 @@ namespace Clobscode
         tpv.setPoints(points);
         tpv.setNewPoints(new_pts);
         tpv.setMapEdges(MapEdges);
-        tpv.setMaxRefLevel(max_rl);
+        if (localmax) {
+            tpv.setMaxRefLevel(max_rl+1);
+        }
+        else {
+            tpv.setMaxRefLevel(max_rl);
+        }
+        
         
         //Apply transition patterns to remaining Octs
         for (auto &to: clean_processed) {
@@ -581,6 +575,12 @@ namespace Clobscode
         candidates.erase(candidates.begin(),candidates.end());
         octants.insert(octants.end(),make_move_iterator(clean_processed.begin()),make_move_iterator(clean_processed.end()));
         clean_processed.erase(clean_processed.begin(),clean_processed.end());
+        
+        //If there are more refinement regions now treat them
+        if (!all_reg.empty()) {
+            generateOctreeMesh(rl,input,all_reg,name,minrl,givenmaxrl);
+        }
+        
     }
     
     
