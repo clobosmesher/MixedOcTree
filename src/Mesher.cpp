@@ -108,17 +108,6 @@ namespace Clobscode
         //save the data of the mesh
         saveOutputMesh(mesh);
         
-        //Now we must update the .oct file with information linking
-        //elements to octants. To this purpose we update the removedoct map
-        //setting to false any octant remaining in the octant vector.
-        //We also need a map from octant index -> octant position in vector
-        map<unsigned int, unsigned int> octpos;
-        for (unsigned int i=0;i<octants.size();i++) {
-            unsigned int oi = octants[i].getIndex();
-            removedoct[oi] = false;
-            octpos[oi] = i;
-        }
-        
         //Write element-octant info the file
         Services::addOctElemntInfo(name,octants,removedoct,octmeshidx);
         
@@ -199,18 +188,6 @@ namespace Clobscode
         
 		//save the data of the mesh in its final state
 		saveOutputMesh(mesh);
-		
-        
-        //Now we must update the .oct file with information linking
-        //elements to octants. To this purpose we update the removedoct map
-        //setting to false any octant remaining in the octant vector.
-        //We also need a map from octant index -> octant position in vector
-        map<unsigned int, unsigned int> octpos;
-        for (unsigned int i=0;i<octants.size();i++) {
-            unsigned int oi = octants[i].getIndex();
-            removedoct[oi] = false;
-            octpos[oi] = i;
-        }
         
         //Write element-octant info the file
         Services::addOctElemntInfo(name,octants,removedoct,octmeshidx);
