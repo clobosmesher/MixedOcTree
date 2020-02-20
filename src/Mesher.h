@@ -109,10 +109,19 @@ namespace Clobscode
 		virtual void shrinkToBoundary(TriMesh &input);
 
 		virtual unsigned int saveOutputMesh(FEMesh &mesh);
+        
+        virtual unsigned int saveOutputMesh(const shared_ptr<FEMesh> &mesh);
 		
-		virtual unsigned int saveOutputMesh(FEMesh &mesh,
-									vector<MeshPoint> &points, 
-									list<Octant> &elements);
+		virtual unsigned int saveOutputMesh(FEMesh &mesh, vector<MeshPoint> &points,
+                                            list<Octant> &elements);
+        
+        virtual unsigned int saveOutputMesh(const shared_ptr<FEMesh> &mesh,
+                                            vector<MeshPoint> &tmp_points,
+                                            list<Octant> &tmp_octants, vector<Octant> &rest_octs);
+        
+        virtual unsigned int saveOutputMesh(const shared_ptr<FEMesh> &mesh,
+                                            vector<MeshPoint> &tmp_points,
+                                            list<Octant> &tmp_octants, list<Octant> &rest_octs);
         
         virtual void projectCloseToBoundaryNodes(TriMesh &input);
 
@@ -124,6 +133,7 @@ namespace Clobscode
 		vector<Octant> octants;
 		map<OctreeEdge, EdgeInfo> MapEdges;
 		list<RefinementRegion *> regions;
+        list<unsigned int> deb;
 
 
 

@@ -62,10 +62,19 @@ namespace Clobscode
         //The output will be a one-irregular mesh.
         splitOctants(rl,input,roctli,all_reg,name,minrl,omaxrl);
         
-        //The points of the octant mesh must be saved at this point, otherwise node are
-        //projected onto the surface and causes further problems with knowing if nodes
-        //are inside, outside or projected.
-        vector<MeshPoint> oct_points = points;
+        //Now that we have all the elements, we can save the octant mesh.
+        Services::WriteOctreeMesh(name,points,octants,MapEdges,gt);
+        //Some Octants will be then removed due to proximity with the surface.
+        //However we must preserve them if the oct mesh to avoid congruency
+        //problems. For this reason we will keep track of removed octants
+        //so we can easily link elements to octant index when reading an oct
+        //mesh.
+        map<unsigned int, bool> removedoct;
+        list<unsigned int> octmeshidx;
+        for (auto o: octants) {
+            removedoct[o.getIndex()] = true;
+            octmeshidx.push_back(o.getIndex());
+        }
         
         //link element and node info for code optimization.
         linkElementsToNodes();
@@ -74,13 +83,10 @@ namespace Clobscode
         projectCloseToBoundaryNodes(input);
         removeOnSurface();
         
+        //linkElementsToNodes();
         //apply the surface Patterns
         applySurfacePatterns(input);
         removeOnSurface();
-        
-        //Now that we have all the elements, we can save the octant mesh.
-        unsigned int nels = octants.size();
-        Services::WriteOctreeMesh(name,oct_points,octants,MapEdges,nels,gt);
         
         detectInsideNodes(input);
         
@@ -96,11 +102,25 @@ namespace Clobscode
             }
         }
         
-        //the almighty output mesh
+        //the allmighty output mesh
         FEMesh mesh;
         
         //save the data of the mesh
         saveOutputMesh(mesh);
+        
+        //Now we must update the .oct file with information linking
+        //elements to octants. To this purpose we update the removedoct map
+        //setting to false any octant remaining in the octant vector.
+        //We also need a map from octant index -> octant position in vector
+        map<unsigned int, unsigned int> octpos;
+        for (unsigned int i=0;i<octants.size();i++) {
+            unsigned int oi = octants[i].getIndex();
+            removedoct[oi] = false;
+            octpos[oi] = i;
+        }
+        
+        //Write element-octant info the file
+        Services::addOctElemntInfo(name,octants,removedoct,octmeshidx);
         
         return mesh;
     }
@@ -130,11 +150,21 @@ namespace Clobscode
 		//split octants until the refinement level (rl) is achieved.
 		//The output will be a one-irregular mesh.
 		generateOctreeMesh(rl,input,all_reg,name,0);
-		
-        //The points of the octant mesh must be saved at this point, otherwise node are
-        //projected onto the surface and causes further problems with knowing if nodes
-        //are inside, outside or projected.
-        vector<MeshPoint> oct_points = points;
+        
+        //Any mesh generated from this one will start from the same
+        //Octants as the current state.
+        Services::WriteOctreeMesh(name,points,octants,MapEdges,gt);
+        //Some Octants will be then removed due to proximity with the surface.
+        //However we must preserve them if the oct mesh to avoid congruency
+        //problems. For this reason we will keep track of removed octants
+        //so we can easily link elements to octant index when reading an oct
+        //mesh.
+        map<unsigned int, bool> removedoct;
+        list<unsigned int> octmeshidx;
+        for (auto o: octants) {
+            removedoct[o.getIndex()] = true;
+            octmeshidx.push_back(o.getIndex());
+        }
         
 		//link element and node info for code optimization.
 		linkElementsToNodes();
@@ -146,10 +176,6 @@ namespace Clobscode
 		//apply the surface Patterns
 		applySurfacePatterns(input);
         removeOnSurface();
-        
-        //Now that we have all the elements, we can save the octant mesh.
-        unsigned int nels = octants.size();
-        Services::WriteOctreeMesh(name,points,octants,MapEdges,nels,gt);
 
         
         //projectCloseToBoundaryNodes(input);
@@ -174,6 +200,21 @@ namespace Clobscode
 		//save the data of the mesh in its final state
 		saveOutputMesh(mesh);
 		
+        
+        //Now we must update the .oct file with information linking
+        //elements to octants. To this purpose we update the removedoct map
+        //setting to false any octant remaining in the octant vector.
+        //We also need a map from octant index -> octant position in vector
+        map<unsigned int, unsigned int> octpos;
+        for (unsigned int i=0;i<octants.size();i++) {
+            unsigned int oi = octants[i].getIndex();
+            removedoct[oi] = false;
+            octpos[oi] = i;
+        }
+        
+        //Write element-octant info the file
+        Services::addOctElemntInfo(name,octants,removedoct,octmeshidx);
+        
 		return mesh;
 	}
     
@@ -619,10 +660,14 @@ namespace Clobscode
             max_rl = givenmaxrl;
         }
         
+        //cout << "minrl " << minrl << " maxrl " << max_rl << "\n";
+        
+        
+        //list<unsigned int> ref_octs, bal_octs;
+        
+        
         
         //unsigned int oct_ref = 0, oct_bal = 0;
-        
-        //cout << "Refining octants:";
         
         //----------------------------------------------------------
         //refine each Octrant until the Refinement Level is reached
@@ -662,7 +707,6 @@ namespace Clobscode
                         //oct_ref++;
                         //cout << " " << oct.getIndex() << "\n";
                         //EdgeVisitor::printInfo(&oct,MapEdges);
-                        
                         to_refine = true;
                     }
                 }
@@ -676,10 +720,6 @@ namespace Clobscode
                     refine_tmp.push_back(oct);
                 }
             }
-            
-            //cout << "\n";
-            
-            
             
             //now we can start to refine those needing it.
             for (auto oct: refine_tmp) {
@@ -768,11 +808,7 @@ namespace Clobscode
                         //once more in the mesh. Therefore, this if avoids this case.
                         continue;
                     }
-                    
-                    
-                    //oct_bal++;
-                    
-                    
+
                     
                     Octant oct = processed[val];
                     list<unsigned int> &inter_faces = oct.getIntersectedFaces();
@@ -904,6 +940,7 @@ namespace Clobscode
         
         processed.erase(processed.begin(),processed.end());
         
+        
         //----------------------------------------------------------
         // apply transition patterns
         //----------------------------------------------------------
@@ -938,7 +975,6 @@ namespace Clobscode
         candidates.erase(candidates.begin(),candidates.end());
         octants.insert(octants.end(),make_move_iterator(clean_processed.begin()),make_move_iterator(clean_processed.end()));
         clean_processed.erase(clean_processed.begin(),clean_processed.end());
-        
 	}
 
     //--------------------------------------------------------------------------------
@@ -1017,32 +1053,158 @@ namespace Clobscode
         mesh.setElements(out_els);
         return out_els.size();
 	}
+    
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+    
+    unsigned int Mesher::saveOutputMesh(const shared_ptr<FEMesh> &mesh){
+        
+        vector<Point3D> out_pts;
+        vector<vector<unsigned int> > out_els;
+        list<vector<unsigned int> >tmp_els;
+        
+        //new_idxs will hold the index of used nodes in the outside vector for points.
+        //If the a node is not used by any element, its index will be 0 in this vector,
+        //therefore the actual index is shiffted in 1. In other words, node 0 is node 1,
+        //and node n is node n+1.
+        vector<unsigned int> new_idxs (points.size(),0);
+        unsigned int out_node_count = 0;
+        list<Point3D> out_points_tmp;
+        
+        //recompute node indexes and update elements with them.
+        for (unsigned int i=0; i<octants.size(); i++) {
+            vector<vector<unsigned int> > sub_els= octants[i].getSubElements();
+            for (unsigned int j=0; j<sub_els.size(); j++) {
+                
+                vector<unsigned int> sub_ele_new_idxs = sub_els[j];
+                for (unsigned int k=0; k<sub_ele_new_idxs.size();k++) {
+                    
+                    unsigned int p_idx = sub_ele_new_idxs[k];
+                    
+                    if (new_idxs[p_idx]==0) {
+                        sub_ele_new_idxs[k] = out_node_count++;
+                        new_idxs[p_idx]=out_node_count;
+                        out_points_tmp.push_back(points[p_idx].getPoint());
+                    }
+                    else {
+                        sub_ele_new_idxs[k] = new_idxs[p_idx]-1;
+                    }
+                }
+                tmp_els.push_back(sub_ele_new_idxs);
+            }
+        }
+        
+        //write output elements
+        out_els.reserve(tmp_els.size());
+        list<vector<unsigned int> >::iterator iter;
+        for (iter=tmp_els.begin(); iter!=tmp_els.end(); iter++) {
+            out_els.push_back(*iter);
+        }
+        
+        //write output points
+        list<Point3D>::iterator opi;
+        out_pts.reserve(out_points_tmp.size());
+        for (opi=out_points_tmp.begin(); opi!=out_points_tmp.end(); opi++) {
+            out_pts.push_back(*opi);
+        }
+        
+        mesh->setPoints(out_pts);
+        mesh->setElements(out_els);
+        return out_els.size();
+    }
+    
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+    
+    unsigned int Mesher::saveOutputMesh(FEMesh &mesh,vector<MeshPoint> &tmp_points,
+                                        list<Octant> &tmp_octants){
+        
+        vector<Point3D> out_pts;
+        list<vector<unsigned int> > tmp_elements;
+        vector<vector<unsigned int> > out_els;
+        
+        unsigned int n = tmp_points.size();
+        out_pts.reserve(n);
+        for (unsigned int i=0; i<n; i++) {
+            out_pts.push_back(points[i].getPoint());
+        }
+        
+        list<Octant>::iterator o_iter;
+        
+        for (o_iter=tmp_octants.begin(); o_iter!=tmp_octants.end(); o_iter++) {
+            
+            vector<vector<unsigned int> > sub_els= o_iter->getSubElements();
+            for (unsigned int j=0; j<sub_els.size(); j++) {
+                tmp_elements.push_back(sub_els[j]);
+            }
+        }
+        
+        out_els.reserve(tmp_elements.size());
+        list<vector<unsigned int> >::iterator e_iter;
+        
+        for (e_iter=tmp_elements.begin(); e_iter!=tmp_elements.end(); e_iter++) {
+            out_els.push_back(*e_iter);
+        }
+        
+        mesh.setPoints(out_pts);
+        mesh.setElements(out_els);
+        return out_els.size();
+    }
 	
 	//--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 	
-	unsigned int Mesher::saveOutputMesh(FEMesh &mesh,vector<MeshPoint> &tmp_points,
-								list<Octant> &tmp_octants){
+	unsigned int Mesher::saveOutputMesh(const shared_ptr<FEMesh> &mesh,
+                                        vector<MeshPoint> &tmp_points,
+                                        list<Octant> &tmp_octants, vector<Octant> &rest_octs){
 		
 		vector<Point3D> out_pts;
         list<vector<unsigned int> > tmp_elements;
 		vector<vector<unsigned int> > out_els;
+        
+        unsigned int tne = tmp_octants.size() + rest_octs.size();
+        
+        vector<unsigned short > deco_rl, deco_surf, deco_deb (tne,0);
+        
+        deco_surf.reserve(tne);
+        deco_rl.reserve(tne);
+        deco_deb.assign(tmp_octants.size(),1);
 		
 		unsigned int n = tmp_points.size();
 		out_pts.reserve(n);
 		for (unsigned int i=0; i<n; i++) {
 			out_pts.push_back(points[i].getPoint());
 		}
-        
-		list<Octant>::iterator o_iter;
 		
-		for (o_iter=tmp_octants.begin(); o_iter!=tmp_octants.end(); o_iter++) {
-            
-            vector<vector<unsigned int> > sub_els= o_iter->getSubElements();
+        //Write the elements of the list first.
+        for (auto oct: tmp_octants) {
+            vector<vector<unsigned int> > sub_els= oct.getSubElements();
             for (unsigned int j=0; j<sub_els.size(); j++) {
                 tmp_elements.push_back(sub_els[j]);
             }
+            if (oct.getIntersectedFaces().size()!=0) {
+                deco_surf.push_back(1);
+            }
+            else {
+                deco_surf.push_back(0);
+            }
+            deco_rl.push_back(oct.getRefinementLevel());
 		}
+        
+        //Now continue with the rest
+        for (auto oct: rest_octs) {
+            vector<vector<unsigned int> > sub_els= oct.getSubElements();
+            for (unsigned int j=0; j<sub_els.size(); j++) {
+                tmp_elements.push_back(sub_els[j]);
+            }
+            if (oct.getIntersectedFaces().size()!=0) {
+                deco_surf.push_back(1);
+            }
+            else {
+                deco_surf.push_back(0);
+            }
+            deco_rl.push_back(oct.getRefinementLevel());
+        }
         
         out_els.reserve(tmp_elements.size());
         list<vector<unsigned int> >::iterator e_iter;
@@ -1051,10 +1213,86 @@ namespace Clobscode
             out_els.push_back(*e_iter);
         }
         
-		mesh.setPoints(out_pts);
-		mesh.setElements(out_els);
+		mesh->setPoints(out_pts);
+		mesh->setElements(out_els);
+        mesh->setRefLevels(deco_rl);
+        mesh->setSurfState(deco_surf);
+        mesh->setDebugging(deco_deb);
+        
         return out_els.size();
 	}
+    
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+    
+    unsigned int Mesher::saveOutputMesh(const shared_ptr<FEMesh> &mesh,
+                                        vector<MeshPoint> &tmp_points,
+                                        list<Octant> &tmp_octants, list<Octant> &rest_octs){
+        
+        vector<Point3D> out_pts;
+        list<vector<unsigned int> > tmp_elements;
+        vector<vector<unsigned int> > out_els;
+        
+        unsigned int tne = tmp_octants.size() + rest_octs.size();
+        
+        vector<unsigned short > deco_rl, deco_surf, deco_deb (tne,0);
+        
+        deco_surf.reserve(tne);
+        deco_rl.reserve(tne);
+        deco_deb.assign(tmp_octants.size(),1);
+        
+        unsigned int n = tmp_points.size();
+        out_pts.reserve(n);
+        for (unsigned int i=0; i<n; i++) {
+            out_pts.push_back(points[i].getPoint());
+        }
+        
+        //Write the elements of the list first.
+        for (auto oct: tmp_octants) {
+            vector<vector<unsigned int> > sub_els= oct.getSubElements();
+            for (unsigned int j=0; j<sub_els.size(); j++) {
+                tmp_elements.push_back(sub_els[j]);
+            }
+            if (oct.getIntersectedFaces().size()!=0) {
+                deco_surf.push_back(1);
+            }
+            else {
+                deco_surf.push_back(0);
+            }
+            deco_rl.push_back(oct.getRefinementLevel());
+        }
+        
+        //Now continue with the rest
+        for (auto oct: rest_octs) {
+            vector<vector<unsigned int> > sub_els= oct.getSubElements();
+            for (unsigned int j=0; j<sub_els.size(); j++) {
+                tmp_elements.push_back(sub_els[j]);
+            }
+            if (oct.getIntersectedFaces().size()!=0) {
+                deco_surf.push_back(1);
+            }
+            else {
+                deco_surf.push_back(0);
+            }
+            deco_rl.push_back(oct.getRefinementLevel());
+        }
+        
+        out_els.reserve(tmp_elements.size());
+        list<vector<unsigned int> >::iterator e_iter;
+        
+        for (e_iter=tmp_elements.begin(); e_iter!=tmp_elements.end(); e_iter++) {
+            out_els.push_back(*e_iter);
+        }
+        
+        mesh->setPoints(out_pts);
+        mesh->setElements(out_els);
+        mesh->setRefLevels(deco_rl);
+        mesh->setSurfState(deco_surf);
+        mesh->setDebugging(deco_deb);
+        
+        return out_els.size();
+    }
+    
 	
 	//--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
@@ -1064,6 +1302,8 @@ namespace Clobscode
 		for (unsigned int i=0; i<points.size(); i++) {
 			points.at(i).clearElements();
 		}
+        
+        //cout << "number of octants " << octants.size() << "\n";
 		
 		//link element info to nodes
 		for (unsigned int i=0; i<octants.size(); i++) {
@@ -1182,6 +1422,15 @@ namespace Clobscode
 
 		for (unsigned int i=0; i<octants.size(); i++) {
 			
+            
+            
+            //El siguiente if debe estar activo al final. Problema
+            //con que nuevos Octantes internos y sub-divididos no
+            //son considerados como de superficie.
+            
+            
+            
+            
 			if (octants[i].isSurface()) {
                 stv.setNewPoints(tmppts);
                 stv.setIdx(i);
@@ -1386,6 +1635,7 @@ namespace Clobscode
         }
         
         for (unsigned int i=0; i<octants.size(); i++) {
+
             if (octants[i].isInside()) {
                 continue;
             }
@@ -1430,7 +1680,6 @@ namespace Clobscode
             //mixed-elements due to transition patterns, avoid the
             //displacement.
             
-            
             //get the faces of octants sharing this node
             list<unsigned int> o_faces,p_faces, p_eles = points.at(*piter).getElements();
             list<unsigned int>::iterator peiter,oct_fcs;
@@ -1458,10 +1707,28 @@ namespace Clobscode
                 //points.at(*piter).setOutside();
                 points.at(*piter).setProjected();
                 points.at(*piter).setPoint(projected);
+
                 for (peiter=p_eles.begin(); peiter!=p_eles.end(); peiter++) {
                     octants[*peiter].setSurface();
                 }
             }
         }
+        
+        /*insurf.sort();
+        insurf.unique();
+        
+        //CL Debbuging
+        {
+            //save pure octree mesh
+            std::shared_ptr<FEMesh> toref = make_shared<FEMesh>();
+            vector<Octant> vvoid;
+            list<Octant> inmov;
+            for (auto inidx: insurf) {
+                inmov.push_back(octants[inidx]);
+            }
+            saveOutputMesh(toref,points,inmov,vvoid);
+            string tmp_name = "inregsurf";
+            Services::WriteVTK(tmp_name,toref);
+        }*/
     }
 }

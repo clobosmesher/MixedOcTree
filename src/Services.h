@@ -364,7 +364,7 @@ namespace Clobscode
             char word [256];
             double x,y,z;
             int e1,e2,e3,elem;
-            int np=0, ne=0, no=0, nl=0;
+            int np=0, ne=0, no=0;
             
             FILE *file = fopen(name.c_str(),"r");
             
@@ -377,7 +377,6 @@ namespace Clobscode
             std::fscanf(file,"%u",&np);
             std::fscanf(file,"%u",&ne);
             std::fscanf(file,"%u",&no);
-            std::fscanf(file,"%u",&nl);
             
             //read each node
             points.reserve(np);
@@ -399,16 +398,6 @@ namespace Clobscode
                 std::fscanf(file,"%u",&e2);
                 std::fscanf(file,"%u",&e3);
                 edge_map.emplace(OctreeEdge (e1,e2),EdgeInfo ((unsigned int)e3,non,non,non,non));
-            }
-            
-            //read the element octant link
-            ele_oct_ref.reserve(nl);
-            unsigned int checksum = 0;
-            for (unsigned int i=0; i<no; i++) {
-                std::fscanf(file,"%u",&elem);
-                for (unsigned int j=0; j<elem; j++) {
-                    ele_oct_ref.push_back(i);
-                }
             }
             
             //read the octants, its refinement level and
@@ -456,6 +445,7 @@ namespace Clobscode
                 }
             }
             
+            //read the geometric transform
             std::fscanf(file,"%s %s",word,word);
             std::fscanf(file,"%s",word);
             x=atof(word);
@@ -475,6 +465,15 @@ namespace Clobscode
             gt.setYAxis(y);
             gt.setZAxis(z);
             
+            //read the element octant link
+            ele_oct_ref.reserve(no);
+            for (unsigned int i=0; i<no; i++) {
+                std::fscanf(file,"%u",&elem);
+                for (unsigned int j=0; j<elem; j++) {
+                    ele_oct_ref.push_back(i);
+                }
+            }
+            
 			fclose(file);
             return true;
         }
@@ -484,7 +483,6 @@ namespace Clobscode
         static bool WriteOctreeMesh(std::string name, vector<MeshPoint> &points,
                                     vector<Octant> &octants,
                                     map<OctreeEdge, EdgeInfo> &edges,
-                                    const unsigned int &nels,
                                     GeometricTransform &gt){
             
             OctreeEdge oe;
@@ -498,7 +496,7 @@ namespace Clobscode
             unsigned int no = octants.size();
             unsigned int ne = edges.size();
             
-            fprintf(f,"%u %u %u %u\n\n", np, ne, no, nels);
+            fprintf(f,"%u %u %u\n\n", np, ne, no);
 
             //write points
             for(unsigned int i=0;i<np;i++){
@@ -520,11 +518,11 @@ namespace Clobscode
             //this info is printed per octant and the elements are
             //printed in order in the mesh file so we can compute
             //for each element to which octant it belongs.
-            for (unsigned int i=0; i<octants.size(); i++) {
+            /*for (unsigned int i=0; i<octants.size(); i++) {
                 unsigned int nse = octants[i].getSubElements().size();
                 fprintf(f,"%u ",nse);
             }
-            fprintf(f,"\n\n");
+            fprintf(f,"\n\n");*/
             
             for (unsigned int i=0; i<octants.size(); i++) {
                 vector<unsigned int> opts = octants[i].getPoints();
@@ -555,7 +553,60 @@ namespace Clobscode
             fprintf(f,"\nGeometric Transform\n");
             Point3D c = gt.getCentroid();
             fprintf(f,"%f %f %f\n",c[0],c[1],c[2]);
-            fprintf(f,"%f %f %f\n",gt.getXAxis(),gt.getYAxis(),gt.getZAxis());
+            fprintf(f,"%f %f %f\n\n",gt.getXAxis(),gt.getYAxis(),gt.getZAxis());
+            
+            fclose(f);
+            
+            return true;
+        }
+        
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        static bool addOctElemntInfo(std::string name, vector<Octant> &octants,
+                                     map<unsigned, bool> &removedoct,
+                                     list<unsigned int> &octmeshidx){
+            
+            string vol_name = name+".oct";
+            
+            //write the volume mesh
+            FILE *f = fopen(vol_name.c_str(),"a");
+            unsigned int no = octants.size();
+            
+            
+            
+            
+            //Now we must update the .oct file with information linking
+            //elements to octants. To this purpose we update the removedoct map
+            //setting to false any octant remaining in the octant vector.
+            //We also need a map from octant index -> octant position in vector
+            map<unsigned int, unsigned int> octpos;
+            for (unsigned int i=0;i<octants.size();i++) {
+                unsigned int oi = octants[i].getIndex();
+                removedoct[oi] = false;
+                octpos[oi] = i;
+            }
+            
+            
+            
+            //pair sub-elements with octant index.
+            //this info is printed per octant and the elements are
+            //printed in order in the mesh file so we can compute
+            //for each element to which octant it belongs.
+            //If 0 is printed means that the octant has 0 sub-elements.
+            //This octant was later removed in the mesh generation process
+            //due to proximity to the boundary. However, to refine a mesh
+            //from an existing one, it is still necessary.
+            for (auto o: octmeshidx) {
+                if (removedoct[o]) {
+                    fprintf(f,"%u ",0);
+                }
+                else {
+                    unsigned int nse = octants[octpos[o]].getSubElements().size();
+                    fprintf(f,"%u ",nse);
+                }
+            }
+
+            fprintf(f,"\n");
             
             fclose(f);
             
@@ -810,6 +861,7 @@ namespace Clobscode
             
             fprintf(f,"\nCELL_TYPES %i\n",(int)elements.size());
             for (unsigned int i=0; i<elements.size(); i++) {
+                if (i%30==0) {fprintf(f,"\n"); }
                 unsigned int np = elements[i].size();
                 if (np == 4) {
                     fprintf(f,"10\n");
@@ -829,6 +881,159 @@ namespace Clobscode
             
             return true;
         }
+        
+        
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        static bool WriteVTK(std::string name, const shared_ptr<FEMesh> &output){
+            
+            vector<Point3D> points = output->getPoints();
+            vector<vector<unsigned int> > elements = output->getElements();
+            
+            if (elements.empty()) {
+                std::cout << "no output elements\n";
+                return false;
+            }
+            
+            string vol_name = name+".vtk";
+            
+            //write the volume mesh
+            FILE *f = fopen(vol_name.c_str(),"wt");
+            
+            fprintf(f,"# vtk DataFile Version 2.0\nvtk file: 2D Unstructured Grid %s\nASCII",name.c_str());
+            fprintf(f,"\n\nDATASET UNSTRUCTURED_GRID\nPOINTS %i float",(int)points.size());
+            
+            //write points
+            for(unsigned int i=0;i<points.size();i++){
+                if (i%2==0) {
+                    fprintf(f,"\n");
+                }
+                fprintf(f," %+1.8E",points[i][0]);
+                fprintf(f," %+1.8E",points[i][1]);
+                fprintf(f," %+1.8E",points[i][2]);
+            }
+            
+            //count conectivity index.
+            unsigned int conectivity = 0;
+            for (unsigned int i=0; i<elements.size(); i++) {
+                conectivity+=elements[i].size()+1;
+            }
+            
+            fprintf(f,"\n\nCELLS %i %i\n",(int)elements.size(),conectivity);
+            
+            //get all the elements in a std::vector
+            for (unsigned int i=0; i<elements.size(); i++) {
+                std::vector<unsigned int> epts = elements[i];
+                unsigned int np = epts.size();
+                fprintf(f,"%i", np);
+                
+                for (unsigned int j= 0; j<np; j++) {
+                    fprintf(f," %i", epts[j]);
+                }
+                
+                fprintf(f,"\n");
+            }
+            
+            fprintf(f,"\nCELL_TYPES %i",(int)elements.size());
+            for (unsigned int i=0; i<elements.size(); i++) {
+                if (i%30==0) {fprintf(f,"\n"); }
+                unsigned int np = elements[i].size();
+                if (np == 4) {
+                    fprintf(f,"10 ");
+                }
+                else if (np == 5){
+                    fprintf(f,"14 ");
+                }
+                else if (np == 6){
+                    fprintf(f,"13 ");
+                }
+                else if (np == 8){
+                    fprintf(f,"12 ");
+                }
+            }
+            
+            fprintf(f,"\n\nCELL_DATA %i\n",(int)elements.size());
+            fprintf(f,"SCALARS elementType int 1\n");
+            fprintf(f,"LOOKUP_TABLE default");
+            for (unsigned int i=0; i<elements.size(); i++) {
+                if (i%30==0) {fprintf(f,"\n");}
+                /*unsigned int etype = 0;
+                switch (elements[i].size()) {
+                    case 4:
+                        etype = 0;
+                        break;
+                    case 5:
+                        etype = 1;
+                        break;
+                    case 6:
+                        etype = 2;
+                        break;
+                    default:
+                        etype = 3;
+                        break;
+                }*/
+                fprintf(f," %i",(int)elements[i].size());
+            }
+            
+            /*fprintf(f,"\n\nLOOKUP_TABLE colEType 4\n");
+            fprintf(f,"1.0 0.0 0.0 1.0\n");
+            fprintf(f,"0.0 1.0 0.0 1.0\n");
+            fprintf(f,"0.0 0.0 1.0 1.0\n");
+            fprintf(f,"0.0 1.0 1.0 1.0\n");*/
+            
+            
+            //write surface state if computed before (-q option, decoration==true)
+            const vector <unsigned short> &surfele= output->getSurfState();
+            if (surfele.size()>0) {
+                fprintf(f,"\nSCALARS surfState int 1");
+                fprintf(f,"\nLOOKUP_TABLE default");
+                for (unsigned int i=0; i<surfele.size(); i++) {
+                    if (i%30==0) {fprintf(f,"\n");}
+                    fprintf(f," %u",surfele[i]);
+                }
+            }
+            
+            //write refinement levels if computed before (-q option, decoration==true)
+            const vector <unsigned short> &reflevels= output->getRefLevels();
+            if (reflevels.size()>0) {
+                fprintf(f,"\nSCALARS refLevel int 1");
+                fprintf(f,"\nLOOKUP_TABLE default");
+                for (unsigned int i=0; i<reflevels.size(); i++) {
+                    if (i%30==0) {fprintf(f,"\n");}
+                    fprintf(f," %u",reflevels[i]);
+                }
+            }
+            
+            //write minAngles if computed before (-q option, decoration==true)
+            /*const vector <double> &minAngles= output->getMinAngles();
+            if (minAngles.size()>0) {
+                fprintf(f,"\n\nSCALARS minAngle int 1");
+                fprintf(f,"\nLOOKUP_TABLE min");
+                for (unsigned int i=0; i<minAngles.size(); i++) {
+                    if (i%30==0) {fprintf(f,"\n");}
+                    if (elements[i].size()==3) //triangle
+                        fprintf(f," %d", (int) (60.-minAngles[i]));
+                    else //quad
+                        fprintf(f," %d", (int) (90.-minAngles[i]));
+                }
+            }*/
+            
+            //write debugging state if computed before (-q option, decoration==true)
+            const vector <unsigned short> &debugging= output->getDebugging();
+            if (debugging.size()>0) {
+                fprintf(f,"\nSCALARS debugging int 1");
+                fprintf(f,"\nLOOKUP_TABLE default");
+                for (unsigned int i=0; i<surfele.size(); i++) {
+                    if (i%30==0) {fprintf(f,"\n");}
+                    fprintf(f," %u",debugging[i]);
+                }
+            }
+            
+            fclose(f);
+            
+            return true;
+        }
+        
         
         
         //-------------------------------------------------------------------

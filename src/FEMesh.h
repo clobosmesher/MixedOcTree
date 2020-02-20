@@ -44,14 +44,54 @@ namespace Clobscode
 		virtual vector<vector<unsigned int> > &getElements();
 		
 		virtual list<unsigned int> &getOutsideNodes();
+        
+        //For debugging:
+        virtual void setColoredCells(const vector<unsigned int> &colored);
+        
+        virtual const vector<unsigned int> &getColoredCells();
+        
+        //For decoration
+        virtual const vector<unsigned short> &getRefLevels() const;
+        virtual void setRefLevels(const vector<unsigned short> &rl);
+        
+        //virtual const vector <double> &getMinAngles() const;
+        //virtual void setMinAngles(const vector<double> &ma);
+        
+        virtual const vector<unsigned short> &getSurfState() const;
+        virtual void setSurfState(const vector<unsigned short> &surf);
+        
+        virtual const vector<unsigned short> &getDebugging() const;
+        virtual void setDebugging(const vector<unsigned short> &deb);
+        
 		
 	protected:
 		
 		vector<Point3D> points;
 		vector<vector<unsigned int> > elements;
 		list<unsigned int> outpts;
+        
+        vector <unsigned short> ref_levels, surf_state, deb_state;
+        //vector <double> min_angles;
+        vector<unsigned int> color;
 		
 	};
+    
+    
+    inline const vector<unsigned short> &FEMesh::getRefLevels() const {return ref_levels;}
+    inline void FEMesh::setRefLevels(const vector<unsigned short> &rl) {ref_levels=rl;}
+    
+    //inline const vector<double> &FEMesh::getMinAngles() const {return min_angles;}
+    //inline void FEMesh::setMinAngles(const vector<double> &ma) {min_angles=ma;}
+    
+    inline const vector<unsigned short> &FEMesh::getSurfState() const {return surf_state;}
+    inline void FEMesh::setSurfState(const vector<unsigned short> &surf) {surf_state=surf;}
+    
+    inline const vector<unsigned short> &FEMesh::getDebugging() const {return deb_state;}
+    inline void FEMesh::setDebugging(const vector<unsigned short> &deb) {deb_state=deb;}
+    
+    inline void FEMesh::setColoredCells(const vector<unsigned int> &colored) {color = colored;}
+    inline const vector<unsigned int> &FEMesh::getColoredCells() {return color;}
+    
 	
 	inline void FEMesh::setOutsideNodes(list<unsigned int> &outpts){
 		list<unsigned int>::iterator iter;
