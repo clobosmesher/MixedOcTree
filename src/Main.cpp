@@ -49,7 +49,7 @@ using Clobscode::Point3D;
 void endMsg(){
 	cout << "use: ./mesher [-d] input.mdl [-o] input.off [-u] output\n";
     cout << "              [-c] volume_mesh.oct (octant mesh to start from)\n";
-    cout << "              [-s] ref_level [-a] ref_level [-b] file.reg\n";
+    cout << "              [-s] ref_level [-a] ref_level [-b] file.reg [-l] list_file.txt\n";
     cout << "              [-r] input_surface rl [-g] [-v]\n";
 	cout << "where:\n";
 	cout << "  one of the parameters must be an input surface mesh in\n";
@@ -60,6 +60,7 @@ void endMsg(){
     cout << "    -a Refine all elements in the input domain.\n";
     cout << "       Parameter ref_level is the refinement level\n";
 	cout << "    -b Refine block regions provided in file file.reg\n";
+    cout << "    -l Refine elements provided in the file by their index\n";
     cout << "    -r Refine surface region. Will refine all the elements\n";
     cout << "       in the provided input_surface at level rl\n";
     cout << "    -g save output mesh in GetFem format (gmf)\n";
@@ -289,6 +290,7 @@ int main(int argc,char** argv){
         if (omaxrl<ref_level) {
             omaxrl = ref_level;
         }
+        
         output = mesher.refineMesh(inputs.at(0),ref_level,out_name,roctli,
                                    all_regions,gt,cminrl,omaxrl);
     }

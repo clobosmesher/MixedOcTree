@@ -60,7 +60,13 @@ namespace Clobscode
         
         //split octants until the refinement level (rl) is achieved.
         //The output will be a one-irregular mesh.
-        splitOctants(rl,input,roctli,all_reg,name,minrl,omaxrl);
+        if (!roctli.empty()) {
+            splitOctants(rl,input,roctli,all_reg,name,minrl,omaxrl);
+        }
+        else {
+            generateOctreeMesh(rl,input,all_reg,name,minrl);
+        }
+        
         
         //Now that we have all the elements, we can save the octant mesh.
         Services::WriteOctreeMesh(name,points,octants,MapEdges,gt);
@@ -551,9 +557,18 @@ namespace Clobscode
             tpv.setMaxRefLevel(max_rl);
         }
         
-        
         //Apply transition patterns to remaining Octs
         for (auto &to: clean_processed) {
+            if (!to.accept(&tpv)) {
+                std::cerr << "Error at Mesher::generateOcttreeMesh";
+                std::cerr << " Transition Pattern not found\n";
+            }
+        }
+        
+        //Apply transition patterns to candidates because if balanced
+        //neighbors were both refined, it will still be necessary to
+        //apply the transition patterns to them.
+        for (auto &to: candidates) {
             if (!to.accept(&tpv)) {
                 std::cerr << "Error at Mesher::generateOcttreeMesh";
                 std::cerr << " Transition Pattern not found\n";
@@ -857,7 +872,8 @@ namespace Clobscode
             //if no points were added at this iteration, it is no longer
             //necessary to continue the refinement.
             if (new_pts.empty()) {
-                cout << "warning at Mesher::generateOcttreeMesh no new points!!!\n";
+                //cout << "warning at Mesher::generateOcttreeMesh no new points!!!\n";
+                //cout << "i: " << i << " minrl " << minrl << " maxrl " << max_rl << "\n";
                 break;
             }
             
