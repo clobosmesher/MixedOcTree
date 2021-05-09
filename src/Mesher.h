@@ -115,7 +115,7 @@ namespace Clobscode
         
         virtual void projectCloseToBoundaryNodes(TriMesh &input);
 
-
+		virtual void deformMesh();
 		
 	protected:
 		
@@ -123,9 +123,6 @@ namespace Clobscode
 		vector<Octant> octants;
 		set<OctreeEdge> octreeEdges;
 		list<RefinementRegion *> regions;
-
-
-
 	};
     
     inline void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,

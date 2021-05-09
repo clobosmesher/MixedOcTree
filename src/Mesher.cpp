@@ -1501,4 +1501,127 @@ namespace Clobscode
             }
         }
     }
+
+	//--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+
+    void Mesher::deformMesh(){
+        vector<set<unsigned int> > points_neighboors(points.size());
+        for(int i = 0; i<octants.size();i++){
+            Octant o = octants[i];
+            vector<vector<unsigned int> > sub_elements = o.getSubElements();
+
+            for(int j = 0; j<sub_elements.size();j++){
+                vector<unsigned int> sub_element = sub_elements[j];
+                unsigned int element_size = sub_element.size();
+                if (element_size == 4){
+                    points_neighboors[sub_element[0]].insert(sub_element[1]);
+                    points_neighboors[sub_element[0]].insert(sub_element[2]);
+                    points_neighboors[sub_element[0]].insert(sub_element[3]);
+                    points_neighboors[sub_element[1]].insert(sub_element[0]);
+                    points_neighboors[sub_element[1]].insert(sub_element[2]);
+                    points_neighboors[sub_element[1]].insert(sub_element[3]);
+                    points_neighboors[sub_element[2]].insert(sub_element[0]);
+                    points_neighboors[sub_element[2]].insert(sub_element[1]);
+                    points_neighboors[sub_element[2]].insert(sub_element[3]);
+                    points_neighboors[sub_element[3]].insert(sub_element[0]);
+                    points_neighboors[sub_element[3]].insert(sub_element[1]);
+                    points_neighboors[sub_element[3]].insert(sub_element[2]);
+                } else if (element_size == 5){
+                    points_neighboors[sub_element[0]].insert(sub_element[1]);
+                    points_neighboors[sub_element[0]].insert(sub_element[3]);
+                    points_neighboors[sub_element[0]].insert(sub_element[4]);
+                    points_neighboors[sub_element[1]].insert(sub_element[0]);
+                    points_neighboors[sub_element[1]].insert(sub_element[2]);
+                    points_neighboors[sub_element[1]].insert(sub_element[4]);
+                    points_neighboors[sub_element[2]].insert(sub_element[1]);
+                    points_neighboors[sub_element[2]].insert(sub_element[3]);
+                    points_neighboors[sub_element[2]].insert(sub_element[4]);
+                    points_neighboors[sub_element[3]].insert(sub_element[0]);
+                    points_neighboors[sub_element[3]].insert(sub_element[2]);
+                    points_neighboors[sub_element[3]].insert(sub_element[4]);
+                    points_neighboors[sub_element[4]].insert(sub_element[0]);
+                    points_neighboors[sub_element[4]].insert(sub_element[1]);
+                    points_neighboors[sub_element[4]].insert(sub_element[2]);
+                    points_neighboors[sub_element[4]].insert(sub_element[3]);
+                } else if (element_size == 6){
+                    points_neighboors[sub_element[0]].insert(sub_element[1]);
+                    points_neighboors[sub_element[0]].insert(sub_element[2]);
+                    points_neighboors[sub_element[0]].insert(sub_element[3]);
+                    points_neighboors[sub_element[1]].insert(sub_element[0]);
+                    points_neighboors[sub_element[1]].insert(sub_element[2]);
+                    points_neighboors[sub_element[1]].insert(sub_element[4]);
+                    points_neighboors[sub_element[2]].insert(sub_element[0]);
+                    points_neighboors[sub_element[2]].insert(sub_element[1]);
+                    points_neighboors[sub_element[2]].insert(sub_element[5]);
+                    points_neighboors[sub_element[3]].insert(sub_element[0]);
+                    points_neighboors[sub_element[3]].insert(sub_element[4]);
+                    points_neighboors[sub_element[3]].insert(sub_element[5]);
+                    points_neighboors[sub_element[4]].insert(sub_element[1]);
+                    points_neighboors[sub_element[4]].insert(sub_element[3]);
+                    points_neighboors[sub_element[4]].insert(sub_element[5]);
+                    points_neighboors[sub_element[5]].insert(sub_element[2]);
+                    points_neighboors[sub_element[5]].insert(sub_element[3]);
+                    points_neighboors[sub_element[5]].insert(sub_element[4]);
+                } else if (element_size == 8){
+                    points_neighboors[sub_element[0]].insert(sub_element[1]);
+                    points_neighboors[sub_element[0]].insert(sub_element[3]);
+                    points_neighboors[sub_element[0]].insert(sub_element[4]);
+                    points_neighboors[sub_element[1]].insert(sub_element[0]);
+                    points_neighboors[sub_element[1]].insert(sub_element[2]);
+                    points_neighboors[sub_element[1]].insert(sub_element[5]);
+                    points_neighboors[sub_element[2]].insert(sub_element[1]);
+                    points_neighboors[sub_element[2]].insert(sub_element[3]);
+                    points_neighboors[sub_element[2]].insert(sub_element[6]);
+                    points_neighboors[sub_element[3]].insert(sub_element[0]);
+                    points_neighboors[sub_element[3]].insert(sub_element[2]);
+                    points_neighboors[sub_element[3]].insert(sub_element[7]);
+                    points_neighboors[sub_element[4]].insert(sub_element[0]);
+                    points_neighboors[sub_element[4]].insert(sub_element[5]);
+                    points_neighboors[sub_element[4]].insert(sub_element[7]);
+                    points_neighboors[sub_element[5]].insert(sub_element[1]);
+                    points_neighboors[sub_element[5]].insert(sub_element[4]);
+                    points_neighboors[sub_element[5]].insert(sub_element[6]);
+                    points_neighboors[sub_element[6]].insert(sub_element[2]);
+                    points_neighboors[sub_element[6]].insert(sub_element[5]);
+                    points_neighboors[sub_element[6]].insert(sub_element[7]);
+                    points_neighboors[sub_element[7]].insert(sub_element[3]);
+                    points_neighboors[sub_element[7]].insert(sub_element[4]);
+                    points_neighboors[sub_element[7]].insert(sub_element[6]);
+                }
+            }
+        }
+
+        int deformations = 1000;
+        double max_mov_ratio = 0.2;
+
+        //TODO Solo mover nodos internos
+        for(int i = 0; i < deformations; i++){
+            unsigned int index = rand() % points.size();
+            MeshPoint point = points[index];
+            set<unsigned int> neighboors = points_neighboors[index];
+
+            double sum = 0;
+            set<unsigned int>::iterator it_set;
+            for (it_set = neighboors.begin(); it_set != neighboors.end(); ++it_set) {
+                unsigned int neighboor_index = *it_set;
+                MeshPoint neighboor = points[neighboor_index];
+
+                double distance = point.getPoint().DistanceTo(neighboor.getPoint());
+                sum += distance;
+            }
+            if (neighboors.size()> 0)
+                sum = sum/neighboors.size();
+            
+            double translate_distance = sum * max_mov_ratio;
+            
+            double x = (rand()/(RAND_MAX/2))-1;
+            double y = (rand()/(RAND_MAX/2))-1;
+            double z = (rand()/(RAND_MAX/2))-1;
+            Point3D mov(x,y,z);
+            mov.normalize();
+
+            point.getPoint() += mov * translate_distance;
+        }
+    }
 }
