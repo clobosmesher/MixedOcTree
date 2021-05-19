@@ -1551,8 +1551,8 @@ namespace Clobscode
                     for(unsigned int z=0;z<sub_element.size();z++){
                         if(random_index == sub_element.at(z)){
                             point_index = z;
+                            break;
                         }
-                        break;
                     }
                     // tetrahedron case
                     if(sub_element_size == 4){
