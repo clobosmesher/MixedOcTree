@@ -171,6 +171,8 @@ namespace Clobscode
         //the almighty output mesh
         FEMesh mesh;
         
+        deformMesh();
+
 		//save the data of the mesh in its final state
 		saveOutputMesh(mesh);
 		
@@ -1506,122 +1508,186 @@ namespace Clobscode
     //--------------------------------------------------------------------------------
 
     void Mesher::deformMesh(){
+        
         vector<set<unsigned int> > points_neighboors(points.size());
-        for(int i = 0; i<octants.size();i++){
-            Octant o = octants[i];
-            vector<vector<unsigned int> > sub_elements = o.getSubElements();
+        
+        // define vector with inside points
+        vector<unsigned int> inside_points;
 
-            for(int j = 0; j<sub_elements.size();j++){
-                vector<unsigned int> sub_element = sub_elements[j];
-                unsigned int element_size = sub_element.size();
-                if (element_size == 4){
-                    points_neighboors[sub_element[0]].insert(sub_element[1]);
-                    points_neighboors[sub_element[0]].insert(sub_element[2]);
-                    points_neighboors[sub_element[0]].insert(sub_element[3]);
-                    points_neighboors[sub_element[1]].insert(sub_element[0]);
-                    points_neighboors[sub_element[1]].insert(sub_element[2]);
-                    points_neighboors[sub_element[1]].insert(sub_element[3]);
-                    points_neighboors[sub_element[2]].insert(sub_element[0]);
-                    points_neighboors[sub_element[2]].insert(sub_element[1]);
-                    points_neighboors[sub_element[2]].insert(sub_element[3]);
-                    points_neighboors[sub_element[3]].insert(sub_element[0]);
-                    points_neighboors[sub_element[3]].insert(sub_element[1]);
-                    points_neighboors[sub_element[3]].insert(sub_element[2]);
-                } else if (element_size == 5){
-                    points_neighboors[sub_element[0]].insert(sub_element[1]);
-                    points_neighboors[sub_element[0]].insert(sub_element[3]);
-                    points_neighboors[sub_element[0]].insert(sub_element[4]);
-                    points_neighboors[sub_element[1]].insert(sub_element[0]);
-                    points_neighboors[sub_element[1]].insert(sub_element[2]);
-                    points_neighboors[sub_element[1]].insert(sub_element[4]);
-                    points_neighboors[sub_element[2]].insert(sub_element[1]);
-                    points_neighboors[sub_element[2]].insert(sub_element[3]);
-                    points_neighboors[sub_element[2]].insert(sub_element[4]);
-                    points_neighboors[sub_element[3]].insert(sub_element[0]);
-                    points_neighboors[sub_element[3]].insert(sub_element[2]);
-                    points_neighboors[sub_element[3]].insert(sub_element[4]);
-                    points_neighboors[sub_element[4]].insert(sub_element[0]);
-                    points_neighboors[sub_element[4]].insert(sub_element[1]);
-                    points_neighboors[sub_element[4]].insert(sub_element[2]);
-                    points_neighboors[sub_element[4]].insert(sub_element[3]);
-                } else if (element_size == 6){
-                    points_neighboors[sub_element[0]].insert(sub_element[1]);
-                    points_neighboors[sub_element[0]].insert(sub_element[2]);
-                    points_neighboors[sub_element[0]].insert(sub_element[3]);
-                    points_neighboors[sub_element[1]].insert(sub_element[0]);
-                    points_neighboors[sub_element[1]].insert(sub_element[2]);
-                    points_neighboors[sub_element[1]].insert(sub_element[4]);
-                    points_neighboors[sub_element[2]].insert(sub_element[0]);
-                    points_neighboors[sub_element[2]].insert(sub_element[1]);
-                    points_neighboors[sub_element[2]].insert(sub_element[5]);
-                    points_neighboors[sub_element[3]].insert(sub_element[0]);
-                    points_neighboors[sub_element[3]].insert(sub_element[4]);
-                    points_neighboors[sub_element[3]].insert(sub_element[5]);
-                    points_neighboors[sub_element[4]].insert(sub_element[1]);
-                    points_neighboors[sub_element[4]].insert(sub_element[3]);
-                    points_neighboors[sub_element[4]].insert(sub_element[5]);
-                    points_neighboors[sub_element[5]].insert(sub_element[2]);
-                    points_neighboors[sub_element[5]].insert(sub_element[3]);
-                    points_neighboors[sub_element[5]].insert(sub_element[4]);
-                } else if (element_size == 8){
-                    points_neighboors[sub_element[0]].insert(sub_element[1]);
-                    points_neighboors[sub_element[0]].insert(sub_element[3]);
-                    points_neighboors[sub_element[0]].insert(sub_element[4]);
-                    points_neighboors[sub_element[1]].insert(sub_element[0]);
-                    points_neighboors[sub_element[1]].insert(sub_element[2]);
-                    points_neighboors[sub_element[1]].insert(sub_element[5]);
-                    points_neighboors[sub_element[2]].insert(sub_element[1]);
-                    points_neighboors[sub_element[2]].insert(sub_element[3]);
-                    points_neighboors[sub_element[2]].insert(sub_element[6]);
-                    points_neighboors[sub_element[3]].insert(sub_element[0]);
-                    points_neighboors[sub_element[3]].insert(sub_element[2]);
-                    points_neighboors[sub_element[3]].insert(sub_element[7]);
-                    points_neighboors[sub_element[4]].insert(sub_element[0]);
-                    points_neighboors[sub_element[4]].insert(sub_element[5]);
-                    points_neighboors[sub_element[4]].insert(sub_element[7]);
-                    points_neighboors[sub_element[5]].insert(sub_element[1]);
-                    points_neighboors[sub_element[5]].insert(sub_element[4]);
-                    points_neighboors[sub_element[5]].insert(sub_element[6]);
-                    points_neighboors[sub_element[6]].insert(sub_element[2]);
-                    points_neighboors[sub_element[6]].insert(sub_element[5]);
-                    points_neighboors[sub_element[6]].insert(sub_element[7]);
-                    points_neighboors[sub_element[7]].insert(sub_element[3]);
-                    points_neighboors[sub_element[7]].insert(sub_element[4]);
-                    points_neighboors[sub_element[7]].insert(sub_element[6]);
-                }
+        // save inside points
+        for(unsigned int i=0;i<points.size();i++){
+            if(points.at(i).isInside()){
+                inside_points.push_back(i);
             }
         }
 
-        int deformations = 1000;
+        int deformations = 6;
         double max_mov_ratio = 0.2;
 
-        //TODO Solo mover nodos internos
         for(int i = 0; i < deformations; i++){
-            unsigned int index = rand() % points.size();
-            MeshPoint point = points[index];
-            set<unsigned int> neighboors = points_neighboors[index];
+            unsigned int index = rand() % inside_points.size();
+            unsigned int random_index = inside_points.at(index);
+            MeshPoint selected_point = points.at(random_index);
 
+            cout << "selected point " << selected_point << endl;
+            
+            // define set to store all neighbor points
+            set<unsigned int> neighbors;
+
+            //get elements of point selected
+            list<unsigned int> p_eles = points.at(random_index).getElements();
+            list<unsigned int>::iterator piter;
+
+            for(piter=p_eles.begin(); piter!=p_eles.end();piter++){
+                vector<vector<unsigned int> > sub_elements = octants.at(*piter).getSubElements();
+
+                for (unsigned j=0;j<sub_elements.size();j++){
+                    vector<unsigned int> sub_element = sub_elements.at(j);
+                    // check in all sub element for neighbor points
+                    
+                    unsigned int sub_element_size = sub_element.size();
+                    int point_index = -1;
+                    // find position of selected point for each subelement
+                    for(unsigned int z=0;z<sub_element.size();z++){
+                        if(random_index == sub_element.at(z)){
+                            point_index = z;
+                        }
+                        break;
+                    }
+                    // tetrahedron case
+                    if(sub_element_size == 4){
+                        // any other point is a neighbor
+                        for(unsigned int z=0;z<sub_element.size();z++){
+                            if(point_index != z){
+                                neighbors.insert(sub_element.at(z));
+                            }
+                        }    
+                    }
+                    // pyramid case
+                    else if(sub_element_size == 5){
+                        if(point_index == 0 || point_index == 2){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 1 || point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                        }
+                    }
+                    // prism case
+                    else if(sub_element_size == 6){
+                        if(point_index == 0){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                        }
+                        else if(point_index == 1){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 2){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(5)); 
+                        }
+                        else if(point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(5));    
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(5));  
+                        }
+                        else if(point_index == 5){
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));  
+                        }
+                    }
+                    // hexahedron case
+                    else if(sub_element_size == 8){
+                        if(point_index == 0){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 1){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(5));
+                        }
+                        else if(point_index == 2){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4)); 
+                        }
+                        else if(point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(7));    
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(5));
+                            neighbors.insert(sub_element.at(7));  
+                        }
+                        else if(point_index == 5){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(6));  
+                        }
+                        else if(point_index == 6){
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(5));
+                            neighbors.insert(sub_element.at(7));  
+                        }
+                        else if(point_index == 7){
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(6));  
+                        }
+                    }
+                }
+            }
+            
             double sum = 0;
             set<unsigned int>::iterator it_set;
-            for (it_set = neighboors.begin(); it_set != neighboors.end(); ++it_set) {
+            for (it_set = neighbors.begin(); it_set != neighbors.end(); ++it_set) {
                 unsigned int neighboor_index = *it_set;
                 MeshPoint neighboor = points[neighboor_index];
 
-                double distance = point.getPoint().DistanceTo(neighboor.getPoint());
+                double distance = selected_point.getPoint().DistanceTo(neighboor.getPoint());
                 sum += distance;
             }
-            if (neighboors.size()> 0)
-                sum = sum/neighboors.size();
+            if (neighbors.size()> 0)
+                sum = sum/neighbors.size();
+
             
             double translate_distance = sum * max_mov_ratio;
-            
-            double x = (rand()/(RAND_MAX/2))-1;
-            double y = (rand()/(RAND_MAX/2))-1;
-            double z = (rand()/(RAND_MAX/2))-1;
+            double x = ((double)rand()/(RAND_MAX/2))-1;
+            double y = ((double)rand()/(RAND_MAX/2))-1;
+            double z = ((double)rand()/(RAND_MAX/2))-1;
             Point3D mov(x,y,z);
             mov.normalize();
 
-            point.getPoint() += mov * translate_distance;
+            Point3D movPoint = selected_point.getPoint() + mov * translate_distance;
+            selected_point.setPoint(movPoint);
+            
+            cout << "new point position " << selected_point << endl;
+
+            // clear current neighbors for use this set in the next selected point
+            neighbors.clear();
         }
     }
 }
