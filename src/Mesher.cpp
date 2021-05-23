@@ -114,7 +114,8 @@ namespace Clobscode
 	//Then split each initial element 8^rl times (where rl stands
 	//for Refinement Level).
 	FEMesh Mesher::generateMesh(TriMesh &input, const unsigned short &rl,
-								const string &name, list<RefinementRegion *> &all_reg){
+								const string &name, list<RefinementRegion *> &all_reg,
+                                const double &point_dis, const unsigned short &num_points){
         
         //ATTENTION: geometric transform causes invalid input rotation when the
         //input is a cube.
@@ -171,7 +172,8 @@ namespace Clobscode
         //the almighty output mesh
         FEMesh mesh;
         
-        deformMesh();
+        //deform inside points of mesh
+        deformMesh(point_dis, num_points);
 
 		//save the data of the mesh in its final state
 		saveOutputMesh(mesh);
@@ -1507,7 +1509,7 @@ namespace Clobscode
 	//--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
-    void Mesher::deformMesh(){
+    void Mesher::deformMesh(const double &point_dis, const unsigned short &num_points){
         
         vector<set<unsigned int> > points_neighboors(points.size());
         
@@ -1521,15 +1523,12 @@ namespace Clobscode
             }
         }
 
-        int deformations = 6;
-        double max_mov_ratio = 0.2;
-
-        for(int i = 0; i < deformations; i++){
+        for(int i = 0; i < num_points; i++){
             unsigned int index = rand() % inside_points.size();
             unsigned int random_index = inside_points.at(index);
             MeshPoint selected_point = points.at(random_index);
 
-            cout << "selected point " << selected_point << endl;
+            //cout << "selected point " << selected_point << endl;
             
             // define set to store all neighbor points
             set<unsigned int> neighbors;
@@ -1674,7 +1673,7 @@ namespace Clobscode
                 sum = sum/neighbors.size();
 
             
-            double translate_distance = sum * max_mov_ratio;
+            double translate_distance = sum * point_dis;
             double x = ((double)rand()/(RAND_MAX/2))-1;
             double y = ((double)rand()/(RAND_MAX/2))-1;
             double z = ((double)rand()/(RAND_MAX/2))-1;
@@ -1682,9 +1681,9 @@ namespace Clobscode
             mov.normalize();
 
             Point3D movPoint = selected_point.getPoint() + mov * translate_distance;
-            selected_point.setPoint(movPoint);
+            points.at(random_index).setPoint(movPoint);
             
-            cout << "new point position " << selected_point << endl;
+            //cout << "new point position " << points.at(random_index).getPoint() << endl;
 
             // clear current neighbors for use this set in the next selected point
             neighbors.clear();
