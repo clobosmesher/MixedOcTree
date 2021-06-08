@@ -49,6 +49,7 @@ void endMsg(){
     cout << "              [-c] volume_mesh.oct (octant mesh to start from)\n";
     cout << "              [-s] ref_level [-a] ref_level [-b] file.reg\n";
     cout << "              [-r] input_surface rl [-g] [-v]\n";
+    cout << "              [-f] point_dis [-n] num_points\n";
 	cout << "where:\n";
 	cout << "  one of the parameters must be an input surface mesh in\n";
     cout << "  mdl or off format. If output name is not provided it\n";
@@ -64,6 +65,10 @@ void endMsg(){
     cout << "    -v save output mesh in VTK ASCII format (vtk)\n";
     cout << "    -i save output mesh in MVM ASCII format (mvm)\n";
     cout << "    -m save output mesh in M3D ASCII format (m3d)\n";
+    cout << "    -f point displacement ratio (deform mesh feature)\n";
+    cout << "       Default value is 0.0 (no deformations)\n";
+    cout << "    -n number of points affected in deform mesh feature\n";
+    cout << "       Default value is 0 (no points selected)\n";
 }
 
 //-------------------------------------------------------------------
@@ -88,6 +93,11 @@ int main(int argc,char** argv){
     //this list contains the index of the octants previously generated that need
     //one extra level of refinement.
     
+    //save default displacement threshold per point
+    double point_dis = 0.0, pd = 0.0;
+    //save number of points affected by deformations
+    unsigned short num_points = 0, np = 0;
+
 	list<RefinementRegion *> all_regions;
     RefinementRegion *rr;
 
@@ -250,6 +260,22 @@ int main(int argc,char** argv){
                 }
                 i++;
                 break;
+            case 'f':
+                //deform mesh, read allowed point displacement
+                pd = atof(argv[i+1]);
+                if(point_dis < pd){
+                    point_dis = pd;
+                }
+                i++;
+                break;
+            case 'n':
+                //deform mesh, read number of points affected by displacement
+                np = atoi(argv[i+1]);
+                if(num_points < np){
+                    num_points = np;
+                }
+                i++;
+                break;
             default:
                 cerr << "Warning: unknown option " << argv[i] << " skipping\n";
                 break;
@@ -280,7 +306,7 @@ int main(int argc,char** argv){
     Clobscode::FEMesh output;
     
     if (!octant_start) {
-        output = mesher.generateMesh(inputs.at(0),ref_level,out_name,all_regions);
+        output = mesher.generateMesh(inputs.at(0),ref_level,out_name,all_regions, point_dis, num_points);
     }
     else {
         mesher.setInitialState(oct_points,oct_octants,oct_edges);

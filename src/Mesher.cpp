@@ -114,7 +114,8 @@ namespace Clobscode
 	//Then split each initial element 8^rl times (where rl stands
 	//for Refinement Level).
 	FEMesh Mesher::generateMesh(TriMesh &input, const unsigned short &rl,
-								const string &name, list<RefinementRegion *> &all_reg){
+								const string &name, list<RefinementRegion *> &all_reg,
+                                const double &point_dis, const unsigned short &num_points){
         
         //ATTENTION: geometric transform causes invalid input rotation when the
         //input is a cube.
@@ -171,6 +172,9 @@ namespace Clobscode
         //the almighty output mesh
         FEMesh mesh;
         
+        //deform inside points of mesh
+        deformMesh(point_dis, num_points);
+
 		//save the data of the mesh in its final state
 		saveOutputMesh(mesh);
 		
@@ -1499,6 +1503,190 @@ namespace Clobscode
                     octants[*peiter].setSurface();
                 }
             }
+        }
+    }
+
+	//--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+
+    void Mesher::deformMesh(const double &point_dis, const unsigned short &num_points){
+        
+        vector<set<unsigned int> > points_neighboors(points.size());
+        
+        // define vector with inside points
+        vector<unsigned int> inside_points;
+
+        // save inside points
+        for(unsigned int i=0;i<points.size();i++){
+            if(points.at(i).isInside()){
+                inside_points.push_back(i);
+            }
+        }
+
+        for(int i = 0; i < num_points; i++){
+            unsigned int index = rand() % inside_points.size();
+            unsigned int random_index = inside_points.at(index);
+            MeshPoint selected_point = points.at(random_index);
+
+            //cout << "selected point " << selected_point << endl;
+            
+            // define set to store all neighbor points
+            set<unsigned int> neighbors;
+
+            //get elements of point selected
+            list<unsigned int> p_eles = points.at(random_index).getElements();
+            list<unsigned int>::iterator piter;
+
+            for(piter=p_eles.begin(); piter!=p_eles.end();piter++){
+                vector<vector<unsigned int> > sub_elements = octants.at(*piter).getSubElements();
+
+                for (unsigned j=0;j<sub_elements.size();j++){
+                    vector<unsigned int> sub_element = sub_elements.at(j);
+                    // check in all sub element for neighbor points
+                    
+                    unsigned int sub_element_size = sub_element.size();
+                    int point_index = -1;
+                    // find position of selected point for each subelement
+                    for(unsigned int z=0;z<sub_element.size();z++){
+                        if(random_index == sub_element.at(z)){
+                            point_index = z;
+                            break;
+                        }
+                    }
+                    // tetrahedron case
+                    if(sub_element_size == 4){
+                        // any other point is a neighbor
+                        for(unsigned int z=0;z<sub_element.size();z++){
+                            if(point_index != z){
+                                neighbors.insert(sub_element.at(z));
+                            }
+                        }    
+                    }
+                    // pyramid case
+                    else if(sub_element_size == 5){
+                        if(point_index == 0 || point_index == 2){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 1 || point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                        }
+                    }
+                    // prism case
+                    else if(sub_element_size == 6){
+                        if(point_index == 0){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                        }
+                        else if(point_index == 1){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 2){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(5)); 
+                        }
+                        else if(point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(5));    
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(5));  
+                        }
+                        else if(point_index == 5){
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));  
+                        }
+                    }
+                    // hexahedron case
+                    else if(sub_element_size == 8){
+                        if(point_index == 0){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                        }
+                        else if(point_index == 1){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(5));
+                        }
+                        else if(point_index == 2){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4)); 
+                        }
+                        else if(point_index == 3){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(7));    
+                        }
+                        else if(point_index == 4){
+                            neighbors.insert(sub_element.at(0));
+                            neighbors.insert(sub_element.at(5));
+                            neighbors.insert(sub_element.at(7));  
+                        }
+                        else if(point_index == 5){
+                            neighbors.insert(sub_element.at(1));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(6));  
+                        }
+                        else if(point_index == 6){
+                            neighbors.insert(sub_element.at(2));
+                            neighbors.insert(sub_element.at(5));
+                            neighbors.insert(sub_element.at(7));  
+                        }
+                        else if(point_index == 7){
+                            neighbors.insert(sub_element.at(3));
+                            neighbors.insert(sub_element.at(4));
+                            neighbors.insert(sub_element.at(6));  
+                        }
+                    }
+                }
+            }
+            
+            double sum = 0;
+            set<unsigned int>::iterator it_set;
+            for (it_set = neighbors.begin(); it_set != neighbors.end(); ++it_set) {
+                unsigned int neighboor_index = *it_set;
+                MeshPoint neighboor = points[neighboor_index];
+
+                double distance = selected_point.getPoint().DistanceTo(neighboor.getPoint());
+                sum += distance;
+            }
+            if (neighbors.size()> 0)
+                sum = sum/neighbors.size();
+
+            
+            double translate_distance = sum * point_dis;
+            double x = ((double)rand()/(RAND_MAX/2))-1;
+            double y = ((double)rand()/(RAND_MAX/2))-1;
+            double z = ((double)rand()/(RAND_MAX/2))-1;
+            Point3D mov(x,y,z);
+            mov.normalize();
+
+            Point3D movPoint = selected_point.getPoint() + mov * translate_distance;
+            points.at(random_index).setPoint(movPoint);
+            
+            //cout << "new point position " << points.at(random_index).getPoint() << endl;
+
+            // clear current neighbors for use this set in the next selected point
+            neighbors.clear();
         }
     }
 }

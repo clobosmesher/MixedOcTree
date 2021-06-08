@@ -63,7 +63,8 @@ namespace Clobscode
 		virtual ~Mesher();
 				
 		virtual FEMesh generateMesh(TriMesh &input, const unsigned short &rl,
-                                    const string &name, list<RefinementRegion *> &all_reg);
+                                    const string &name, list<RefinementRegion *> &all_reg,
+									const double &point_dis, const unsigned short &num_points);
 		
         virtual FEMesh refineMesh(TriMesh &input, const unsigned short &rl,
                                   const string &name, list<unsigned int> &roctli,
@@ -115,7 +116,7 @@ namespace Clobscode
         
         virtual void projectCloseToBoundaryNodes(TriMesh &input);
 
-
+		virtual void deformMesh(const double &point_dis, const unsigned short &num_points);
 		
 	protected:
 		
@@ -123,9 +124,6 @@ namespace Clobscode
 		vector<Octant> octants;
 		set<OctreeEdge> octreeEdges;
 		list<RefinementRegion *> regions;
-
-
-
 	};
     
     inline void Mesher::setInitialState(vector<MeshPoint> &epts, vector<Octant> &eocts,
