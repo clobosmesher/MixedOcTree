@@ -2109,13 +2109,12 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,5,26}},
 				{TETRA_POINTS, {1,5,17,26}}
 			}},
-		{303616, {
+        {303616, { // Pattern 038 (TechReport), mask 9 13 15 18
 				{TETRA_POINTS, {2,3,9,15}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {2,18,15,9}},
 				{TETRA_POINTS, {2,6,18,9}},
 				{TETRA_POINTS, {4,7,18,15}},
-				{TETRA_POINTS, {9,3,0,15}},
 				{TETRA_POINTS, {0,1,9,13}},
 				{TETRA_POINTS, {0,15,4,13}},
 				{TETRA_POINTS, {13,15,4,18}},
@@ -5088,8 +5087,26 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{PYRAMID_POINTS, {19,18,17,16,13}},
 				{TETRA_POINTS, {16,17,5,13}}
-			}}
-	};
+            }},
+        {67176192, { // Pattern 270 (TechReport), mask 8 9 10 16 26
+                {PYRAMID_POINTS, {5,0,3,7,4,26}},
+                {PYRAMID_POINTS, {5,0,8,10,3,26}},
+                {PYRAMID_POINTS, {5,0,4,16,8,26}},
+                {TETRA_POINTS, {4,3,10,7,26}},
+                {TETRA_POINTS, {4,6,7,10,26}},
+                {TETRA_POINTS, {4,4,7,16,26}},
+                {TETRA_POINTS, {4,6,16,7,26}},
+                {TETRA_POINTS, {4,8,9,10,26}},
+                {TETRA_POINTS, {4,2,10,9,26}},
+                {TETRA_POINTS, {4,2,6,10,26}},
+                {TETRA_POINTS, {4,2,9,6,26}},
+                {TETRA_POINTS, {4,1,9,8,26}},
+                {PYRAMID_POINTS, {5,1,8,16,5,26}},
+                {TETRA_POINTS, {4,1,5,9,26}},
+                {TETRA_POINTS, {4,5,6,9,26}},
+                {TETRA_POINTS, {4,5,16,6,26}}
+            }}
+    };
 
 
 	bool PatternFactory::createPattern(Uint mask) {
