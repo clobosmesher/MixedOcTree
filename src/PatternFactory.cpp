@@ -22,6 +22,8 @@
 *
 *  Created on: May 18, 2012
 *      Author: jsepulve
+*  Updated on: Nov. 26,2021
+*      Author: fjaillet (patterns 38 and 270)
 */
 
 #include "PatternFactory.h"
@@ -37,22 +39,20 @@ namespace patterns {
 	//const PatternFactory::Element PatternFactory::elements [MAX_ELEMENTS] = {
 	const PatternFactory::Element PatternFactory::elements [] = {
 		{   //00 Pattern1: 4 pyramid mask: 11       
-			2048,   {
+			2048, { // Pattern 206 (TechReport), mask 11
 				{PYRAMID_POINTS, {4,5,1,0,11}},
 				{PYRAMID_POINTS, {5,6,2,1,11}},
 				{PYRAMID_POINTS, {6,7,3,2,11}},
 				{PYRAMID_POINTS, {4,7,6,5,11}}
-			}
-		},
+			}},
 		{   //01 Pattern2: 3 prisms //ARREGLADO mask: 11|19
-			526336, {
+			526336, { // Pattern 207 (TechReport), mask 11 19
 				{PRISM_POINTS, {0,1,11,4,5,19}},
 				{PRISM_POINTS, {1,2,11,5,6,19}},
 				{PRISM_POINTS, {2,3,11,6,7,19}}
-			}
-		},   
+			}},
 		{   //02 Pattern3: 6 tetrahedra - 2 pyramid  mask: 11|17  
-			133120, {
+			133120, { // Pattern 208 (TechReport), mask 11 17
 				{TETRA_POINTS, {17,2,1,11}},
 				{TETRA_POINTS, {4,11,7,17}},
 				{TETRA_POINTS, {5,17,1,11}},
@@ -61,10 +61,9 @@ namespace patterns {
 				{TETRA_POINTS, {7,6,17,11}},
 				{PYRAMID_POINTS, {4,5,1,0,11}},
 				{PYRAMID_POINTS, {6,7,3,2,11}}
-			}
-		},
+			}},
 		{   //03 Pattern4: 6 tetrahedra - 2 pyramid  mask: 11|13
-			10240,  {
+			10240,  { // Pattern 209 (TechReport), mask 11 13
 				{TETRA_POINTS, {13,1,0,11}},
 				{TETRA_POINTS, {5,13,4,11}},
 				{TETRA_POINTS, {4,13,0,11}},
@@ -73,10 +72,9 @@ namespace patterns {
 				{TETRA_POINTS, {6,2,13,11}},
 				{PYRAMID_POINTS, {6,7,3,2,11}},
 				{PYRAMID_POINTS, {7,6,5,4,11}}
-			}
-		},
+			}},
 		{   //04 Pattern4.1 (Jorge): 6 tetrahedra - 2 pyramid    11|14 ARREGLADO
-			18432, {
+			18432, { // Pattern 210 (TechReport), mask 11 14
 				{TETRA_POINTS, {11,1,14,5}},
 				{TETRA_POINTS, {11,1,2,14}},
 				{TETRA_POINTS, {11,5,14,6}},
@@ -85,10 +83,9 @@ namespace patterns {
 				{TETRA_POINTS, {11,6,14,7}},
 				{PYRAMID_POINTS, {4,5,1,0,11}},
 				{PYRAMID_POINTS, {5,4,7,6,11}}
-			}
-		},
+			}},
 		{   //05 Pattern5: 12 tetrahedra mask:11|13|18
-			272384,{
+			272384,{ // Pattern 211 (TechReport), mask 11 13 18
 				{TETRA_POINTS, {13,1,0,11}},
 				{TETRA_POINTS, {5,13,4,11}},
 				{TETRA_POINTS, {4,13,0,11}},
@@ -101,10 +98,9 @@ namespace patterns {
 				{TETRA_POINTS, {6,13,5,11}},
 				{TETRA_POINTS, {13,6,2,11}},
 				{TETRA_POINTS, {18,6,5,11}}
-			}
-		},
+			}},
 		{	//06 Pattern6: 4 tetrahedra - 2 pyramid - 1 prism  mask: 11|13|19 ARREGLADO
-			534528,{
+			534528,{ // Pattern 212 (TechReport), mask 11 13 19
 				{TETRA_POINTS, {13,1,0,11}},
 				{TETRA_POINTS, {19,5,4,13}},
 				{TETRA_POINTS, {13,2,1,11}},
@@ -112,11 +108,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {11,19,4,0,13}},
 				{PYRAMID_POINTS, {6,19,11,2,13}},
 				{PRISM_POINTS, {2,3,11,6,7,19}}
-
-			}
-		},
+			}},
 		{	//07 Pattern7: 5 tetrahedra - 3 pyramid   mask: 8|11|12
-			6400,  {
+			6400,  { // Pattern 213 (TechReport), mask 8 11 12
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {11,12,8,6}},
 				{TETRA_POINTS, {2,11,8,6}},
@@ -125,11 +119,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,6,2,1,8}},
 				{PYRAMID_POINTS, {6,7,3,2,11}},
 				{PYRAMID_POINTS, {7,6,5,4,12}}
-
-			}
-		},
+			}},
 		{	//08 Pattern8: 6 tetrahedra - 6 pyramid (Added centroid point) mask: 11|17|19
-			657408,{
+			657408,{ // Pattern 312 (TechReport), mask 11 17 19 26
 				{TETRA_POINTS, {17,2,1,26}},
 				{TETRA_POINTS, {17,6,2,26}},
 				{TETRA_POINTS, {1,5,17,26}},
@@ -142,45 +134,36 @@ namespace patterns {
 				{PYRAMID_POINTS, {6,7,3,2,26}},
 				{PYRAMID_POINTS, {19,17,5,4,26}},
 				{PYRAMID_POINTS, {19,7,6,17,26}}
-			}
-		},
+			}},
 		{	//09 Pattern9: 2 tetrahedra - 1 pyramid - 2 prism  mask: 11|12|19 ARREGLADO
-			530432,{
+			530432,{ // Pattern 214 (TechReport), mask 11 12 19
 				{TETRA_POINTS, {0,12,1,11}},
 				{TETRA_POINTS, {5,12,4,19}},
 				{PYRAMID_POINTS, {5,19,11,1,12}},
 				{PRISM_POINTS, {2,3,11,6,7,19}},
 				{PRISM_POINTS, {1,2,11,5,6,19}}
-			}
-
-		},
+			}},
 
 		{	//10 Pattern10: 2 tetrahedra - 3 pyramid - 1 prism  //mask: 8|11|19 ARREGLADO
-			526592,{
+			526592,{ // Pattern 215 (TechReport), mask 8 11 19
 				{TETRA_POINTS, {19,5,4,8}},
 				{TETRA_POINTS, {6,19,8,5}},
 				{PYRAMID_POINTS, {0,11,19,4,8}},
 				{PYRAMID_POINTS, {5,6,2,1,8}},
 				{PYRAMID_POINTS, {2,6,19,11,8}},
 				{PRISM_POINTS, {2,3,11,6,7,19}}
-
-			}
-
-		},
+			}},
 		{	//11 Pattern10.1: 2 tetrahedra - 3 pyramid - 1 prism  //mask: 10|11|19 ARREGLADO
-			527360,{
+			527360,{ // Pattern 216 (TechReport), mask 10 11 19
 				{TETRA_POINTS, {19,7,6,10}},
 				{TETRA_POINTS, {5,6,10,19}},
 				{PYRAMID_POINTS, {7,19,11,3,10}},
 				{PYRAMID_POINTS, {5,6,2,1,10}},
 				{PYRAMID_POINTS, {11,19,5,1,10}},
 				{PRISM_POINTS, {0,1,11,4,5,19}}
-			}
-
-		},
-
+			}},
 		{	//12 Pattern11 (Claudio): 4 tetrahedra - 5 pyramid //mask:11|12|15|19|24
-			17340416,{
+			17340416,{ // Pattern 217 (TechReport), mask 11 12 15 19 24
 				{TETRA_POINTS, {1,24,12,5}},
 				{TETRA_POINTS, {6,24,15,2}},
 				{TETRA_POINTS, {6,19,24,5}},
@@ -190,18 +173,14 @@ namespace patterns {
 				{PYRAMID_POINTS, {15,7,19,24,6}},
 				{PYRAMID_POINTS, {12,24,19,4,5}},
 				{PYRAMID_POINTS, {1,5,6,2,24}}
-			}
-			
-		},
+			}},
 		{	//13 Pattern12: 2 hexahedra //mask:9|11|17|19
-			657920,{
+			657920,{ // Pattern 218 (TechReport), mask 9 11 17 19
 				{HEXA_POINTS, {0,1,9,11,4,5,17,19}},
 				{HEXA_POINTS, {11,9,2,3,19,17,6,7}}
-			}
-
-		},
+			}},
 		{	//14 Pattern13 (Jorge): 5 tetrahedra - 4 pyramid //mask:11|13|14|19 ARREGLADO
-			550912,{
+			550912,{ // Pattern 219 (TechReport), mask 11 13 14 19
 				{TETRA_POINTS, {0,1,11,13}},
 				{TETRA_POINTS, {4,13,19,5}},
 				{TETRA_POINTS, {19,14,7,6}},
@@ -211,21 +190,16 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,6,14,13,19}},
 				{PYRAMID_POINTS, {3,7,19,11,14}},
 				{PYRAMID_POINTS, {11,19,4,0,13}}
-
-			}
-
-		},
+			}},
 		{	//15 Pattern14: 4 prism  mask:8|10|12|15 ARREGLADO
-			38144, {
+			38144, { // Pattern 220 (TechReport), mask 8 10 12 15
 				{PRISM_POINTS, {5,8,12,6,10,15}},
 				{PRISM_POINTS, {2,6,10,1,5,8}},
 				{PRISM_POINTS, {6,7,15,5,4,12}},
 				{PRISM_POINTS, {8,0,12,10,3,15}}
-			}
-
-		},
+			}},
 		{	//16 Pattern15 (Jorge): 3 tetrahedra - 3 pyramid - 1 prism //11|12|13|19 MODIFICADO
-			538624,{
+			538624,{ // Pattern 221 (TechReport), mask 11 12 13 19
 				{TETRA_POINTS, {11,1,2,13}},
 				{TETRA_POINTS, {11,12,13,19}},
 				{TETRA_POINTS, {19,13,6,5}},
@@ -233,11 +207,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {4,5,13,12,19}},
 				{PYRAMID_POINTS, {11,2,6,19,13}},
 				{PRISM_POINTS, {3,11,2,7,19,6}}
-			}
-
-		},
+			}},
 		{	//17 Pattern16 (Jorge):2 tetrahedra - 4 pyramis - 2 prism //9|11|12|15|19|24 ARREGLADO
-			17340928,{
+			17340928,{ // Pattern 222 (TechReport), mask 9 11 12 15 19 24
 				{TETRA_POINTS, {24,5,6,19}},
 				{TETRA_POINTS, {24,5,9,6}},
 				{PYRAMID_POINTS, {19,24,15,7,6}},
@@ -246,11 +218,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {24,9,2,15,6}},
 				{PRISM_POINTS, {0,12,1,11,24,9}},
 				{PRISM_POINTS, {11,24,9,3,15,2}}
-			}
-
-		},
+			}},
 		{	//18 Pattern17: 6 tetrahedra - 5 pyramid // 8|11|12|15|19|24
-			17340672,{
+			17340672,{ // Pattern 223 (TechReport), mask 8 11 12 15 19 24
 				{TETRA_POINTS, {5,19,6,24}},
 				{TETRA_POINTS, {6,15,2,24}},
 				{TETRA_POINTS, {5,24,8,12}},
@@ -262,12 +232,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {15,24,11,3,2}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {1,5,6,2,24}}
-
-			}
-
-		},
+			}},
 		{   //19 Pattern18 (Jorge): 4 tetrahedra - 5 pyramid - 1 prism (Added mid point) mask: 8|10|12|15|18 MODIFICADO
-			300288,{
+			300288,{ // Pattern 313 (TechReport), mask 8 10 12 15 18 26
 				{TETRA_POINTS, {1,5,26,8}},
 				{TETRA_POINTS, {26,5,6,18}},
 				{TETRA_POINTS, {26,10,15,18}},
@@ -282,10 +249,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {4,12,15,7,26}},
 				{PYRAMID_POINTS, {12,8,10,15,26}},
 				{PRISM_POINTS, {0,12,8,3,15,10}}
-			}
-		},
+			}},
 		{	//20 Pattern19(Jorge): 10 tetrahedra - 8 pyramid mask: 9|11|12|14|15|19|24 MODIFICADO
-			17357312,{
+			17357312,{ // Pattern 314 (TechReport), mask 9 11 12 14 15 19 24 26
 				{TETRA_POINTS, {2,9,14,26}},
 				{TETRA_POINTS, {7,26,6,19}},
 				{TETRA_POINTS, {26,9,14,5}},
@@ -304,21 +270,18 @@ namespace patterns {
 				{PYRAMID_POINTS, {0,1,9,11,26}},
 				{PYRAMID_POINTS, {4,12,24,19,26}},
 				{PYRAMID_POINTS, {12,0,11,24,26}}
-			}
-		},
+			}},
 		{	//21 Pattern20: 6 prism mask: 11|12|13|14|15|19|24 ARREGLADO
-			17364992,{
+			17364992,{ // Pattern 224 (TechReport), mask 11 12 13 14 15 19 24
 				{PRISM_POINTS, {0,1,11,12,13,24}},
 				{PRISM_POINTS, {2,3,11,14,15,24}},
 				{PRISM_POINTS, {14,15,24,6,7,19}},
 				{PRISM_POINTS, {12,13,24,4,5,19}},
 				{PRISM_POINTS, {1,2,11,13,14,24}},
 				{PRISM_POINTS, {13,14,24,5,6,19}}
-			}
-
-		},
+			}},
 		{	//23 Pattern22: 4 tetrahedra - 3 pyramid mask: 11|12
-			6144, {
+			6144, { // Pattern 225 (TechReport), mask 11 12
 				{TETRA_POINTS, {1,11,0,12}},
 				{TETRA_POINTS, {1,12,5,11}},
 				{TETRA_POINTS, {7,12,11,6}},
@@ -326,12 +289,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {7,6,5,4,12}},
 				{PYRAMID_POINTS, {6,7,3,2,11}},
 				{PYRAMID_POINTS, {5,6,2,1,11}}
-
-			}
-
-		},
+			}},
 		{	//24 Pattern23 (Jorge): 3 tetrahedra - 6 pyramid - 2 prism MODIFICADO mask: 8|9|10|11|12|15|19|20|24
-			18390784, {
+			18390784, { // Pattern 226 (TechReport), mask 8 9 10 11 12 15 19 20 24
 				{TETRA_POINTS, {5,20,6,9}},
 				{TETRA_POINTS, {6,24,5,19}},
 				{TETRA_POINTS, {5,24,6,20}},
@@ -343,10 +303,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {24,20,10,15,6}},
 				{PRISM_POINTS, {11,20,24,0,8,12}},
 				{PRISM_POINTS, {15,3,10,24,11,20}}
-			}
-		},
+			}},
 		{	//25 Pattern24 (Jorge): 12 tetrahedra - 12 pyramid (Added centroid point) MODIFICADO mask: 8|9|10|11|12|13|15|16|19|20|21|24
-			20561664, {
+			20561664, { // Pattern 315 (TechReport), mask 8 9 10 11 12 13 15 16 19 20 21 24 26
 				{TETRA_POINTS, {16,19,6,26}},
 				{TETRA_POINTS, {4,26,19,16}},
 				{TETRA_POINTS, {1,13,9,26}},
@@ -371,10 +330,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {24,11,3,15,26}},
 				{PYRAMID_POINTS, {19,24,15,7,26}},
 				{PYRAMID_POINTS, {20,9,2,10,26}}
-			}
-		},
+			}},
 		{	//26 Pattern25 (Jorge): 2 hexa - 5 prism NUEVO mask: 8|10|11|12|13|14|15|16|18|19|21|23|24
-			28179712, {
+			28179712, { // Pattern 227 (TechReport), mask 8 10 11 12 13 14 15 16 18 19 21 23 24
 				{PRISM_POINTS, {15,23,24,3,10,11}},
 				{PRISM_POINTS, {7,18,19,15,23,24}},
 				{PRISM_POINTS, {0,8,11,12,21,24}},
@@ -383,10 +341,9 @@ namespace patterns {
 				{PRISM_POINTS, {24,21,23,19,16,18}},
 				{HEXA_POINTS, {21,13,14,23,16,5,6,18}},
 				{HEXA_POINTS, {8,1,2,10,21,13,14,23}}
-			}
-		},
+			}},
 		{	//27 
-			63962624, {
+			63962624, { // Pattern 316 (TechReport), mask 9 10 11 12 13 14 15 16 17 18 19 22 23 24 25 26
 				{TETRA_POINTS, {12,16,13,26}},
 				{TETRA_POINTS, {16,5,13,26}},
 				{TETRA_POINTS, {4,16,12,26}},
@@ -411,10 +368,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {18,7,15,23,26}},
 				{PYRAMID_POINTS, {15,7,19,24,26}},
 				{PYRAMID_POINTS, {19,7,18,25,26}}
-			}
-		},
+			}},
 		{	//28
-			33554176, {
+			33554176, { // Pattern 317 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 26
 				{PYRAMID_POINTS, {21,13,1,8,26}},
 				{PYRAMID_POINTS, {21,16,5,13,26}},
 				{PYRAMID_POINTS, {12,21,8,0,26}},
@@ -440,11 +396,9 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,26}},
 				{TETRA_POINTS, {6,17,18,26}},
 				{TETRA_POINTS, {7,18,19,26}}
-			}
-		},
-		{
-			//29
-			3358464, {
+			}},
+		{	//29
+			3358464, { // Pattern 228 (TechReport), mask 8 9 10 11 12 13 16 17 20 21
 				{PRISM_POINTS, {0,11,12,8,20,21}},
 				{PRISM_POINTS, {8,20,21,1,9,13}},
 				{PYRAMID_POINTS, {16,21,12,4,7}},
@@ -456,11 +410,9 @@ namespace patterns {
 				{TETRA_POINTS, {7,17,16,21}},
 				{TETRA_POINTS, {7,17,21,20}},
 				{PYRAMID_POINTS, {10,20,17,6,7}}
-			}
-		},
-		{
-			//30
-			3751680, {
+			}},
+		{	//30
+			3751680, { // Pattern 229 (TechReport), mask 8 9 10 11 12 13 16 19 20 21
 				{PRISM_POINTS, {8,20,21,1,9,13}},
 				{PRISM_POINTS, {0,11,12,8,20,21}},
 				{PYRAMID_POINTS, {5,13,21,16,6}},
@@ -472,12 +424,9 @@ namespace patterns {
 				{TETRA_POINTS, {16,19,6,21}},
 				{TETRA_POINTS, {21,19,6,20}},
 				{PYRAMID_POINTS, {7,19,20,10,6}}
-
-			}
-		},
-		{
-			//31
-			67108608, {
+			}},
+		{	//31
+			67108608, { // Pattern 318 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 				{HEXA_POINTS, {0,8,20,11,12,21,26,24}},
 				{HEXA_POINTS, {8,1,9,20,21,13,22,26}},
 				{HEXA_POINTS, {12,21,26,24,4,16,25,19}},
@@ -486,11 +435,9 @@ namespace patterns {
 				{HEXA_POINTS, {24,26,23,15,19,25,18,7}},
 				{HEXA_POINTS, {20,9,2,10,26,22,14,23}},
 				{HEXA_POINTS, {26,22,14,23,25,17,6,18}}
-			}
-		},
-		{
-			//32
-			20578048, {
+			}},
+		{	//32
+			20578048, { // Pattern 319 (TechReport), mask 8 9 10 11 12 13 14 15 16 19 20 21 24 26
 				{PYRAMID_POINTS, {1,8,21,13,26}},
 				{PYRAMID_POINTS, {9,20,8,1,26}},
 				{TETRA_POINTS, {13,9,1,26}},
@@ -515,12 +462,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,13,21,16,26}},
 				{TETRA_POINTS, {16,6,5,26}},
 				{PYRAMID_POINTS, {5,6,14,13,26}}
-
-			}
-		},
-		{
-			//33
-			1064704, {
+			}},
+		{	//33
+			1064704, { // Pattern 230 (TechReport), mask 8 9 10 11 12 13 20
 				{PYRAMID_POINTS, {9,20,8,1,13}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{PYRAMID_POINTS, {10,20,9,2,6}},
@@ -531,11 +475,9 @@ namespace patterns {
 				{TETRA_POINTS, {13,20,6,9}},
 				{TETRA_POINTS, {7,20,12,11}},
 				{PRISM_POINTS, {13,5,6,12,4,7}}
-			}
-		},
-		{
-			//34
-			2192128, {
+			}},
+		{	//34
+			2192128, { // Pattern 231 (TechReport), mask 8 9 12 13 14 16 21
 				{PYRAMID_POINTS, {12,21,8,0,3}},
 				{PYRAMID_POINTS, {1,8,21,13,9}},
 				{TETRA_POINTS, {3,8,9,21}},
@@ -547,12 +489,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {21,16,6,14,7}},
 				{PRISM_POINTS, {6,5,16,14,13,21}},
 				{TETRA_POINTS, {2,9,14,3}}
-
-			}
-		},
-		{
-			//35
-			2210048, {
+			}},
+		{	//35
+			2210048, { // Pattern 232 (TechReport), mask 8 11 12 13 15 16 21
 				{PYRAMID_POINTS, {1,8,21,13,2}},
 				{PYRAMID_POINTS, {12,21,8,0,11}},
 				{TETRA_POINTS, {11,8,2,21}},
@@ -564,11 +503,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {15,7,16,21,6}},
 				{PRISM_POINTS, {15,12,21,7,4,16}},
 				{TETRA_POINTS, {15,11,3,2}}
-			}
-		},
-		{
-			//36
-			9984, {
+			}},
+		{	//36
+			9984, { // Pattern 233 (TechReport), mask 8 9 10 13
 				{TETRA_POINTS, {10,13,9,6}},
 				{TETRA_POINTS, {10,8,9,13}},
 				{TETRA_POINTS, {9,8,1,13}},
@@ -577,11 +514,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,10,7,4,13}},
 				{TETRA_POINTS, {7,10,6,13}},
 				{PYRAMID_POINTS, {7,6,5,4,13}}
-			}
-		},
-		{
-			//37
-			7424, {
+			}},
+		{	//37
+			7424, { // Pattern 234 (TechReport), mask 8 10 11 12
 				{TETRA_POINTS, {11,12,10,7}},
 				{TETRA_POINTS, {11,8,10,12}},
 				{TETRA_POINTS, {0,8,11,12}},
@@ -590,11 +525,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,6,10,8,12}},
 				{TETRA_POINTS, {7,10,6,12}},
 				{PYRAMID_POINTS, {5,4,7,6,12}}
-			}
-		},
-		{
-			//38
-			71680, {
+			}},
+		{	//38
+			71680, { // Pattern 235 (TechReport), mask 11 12 16
 				{TETRA_POINTS, {0,1,11,12}},
 				{PYRAMID_POINTS, {6,7,3,2,11}},
 				{TETRA_POINTS, {16,12,4,7}},
@@ -604,11 +537,9 @@ namespace patterns {
 				{TETRA_POINTS, {16,7,6,11}},
 				{TETRA_POINTS, {5,6,11,16}},
 				{PYRAMID_POINTS, {5,6,2,1,11}}
-			}
-		},
-		{
-			//39
-			74240, {
+			}},
+		{	//39
+			74240, { // Pattern 236 (TechReport), mask 9 13 16
 				{TETRA_POINTS, {9,0,1,13}},
 				{PYRAMID_POINTS, {3,2,6,7,9}},
 				{TETRA_POINTS, {5,13,16,6}},
@@ -618,11 +549,9 @@ namespace patterns {
 				{TETRA_POINTS, {7,6,16,9}},
 				{TETRA_POINTS, {9,7,4,16}},
 				{PYRAMID_POINTS, {0,3,7,4,9}}
-			}
-		},
-		{
-			//40
-			6520576, {
+			}},
+		{	//40
+			6520576, { // Pattern 237 (TechReport), mask 8 9 10 11 12 13 14 16 17 21 22
 				{PRISM_POINTS, {13,21,22,1,8,9}},
 				{PRISM_POINTS, {8,11,21,9,10,22}},
 				{TETRA_POINTS, {11,10,3,7}},
@@ -635,11 +564,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {16,17,22,21,7}},
 				{PYRAMID_POINTS, {6,14,22,17,7}},
 				{PRISM_POINTS, {5,16,17,13,21,22}}
-			}
-		},
-		{
-			//41
-			55573248, {
+			}},
+		{	//41
+			55573248, { // Pattern 320 (TechReport), mask 8 9 11 12 13 14 15 16 17 18 19 22 24 25 26
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {3,15,24,11,26}},
 				{PRISM_POINTS, {19,24,25,4,12,16}},
@@ -661,11 +588,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,12,16,13,26}},
 				{PRISM_POINTS, {5,13,16,17,22,25}},
 				{PRISM_POINTS, {17,22,25,6,14,18}}
-			}
-		},
-		{
-			//42
-			4420352, {
+			}},
+		{	//42
+			4420352, { // Pattern 238 (TechReport), mask 8 9 12 13 14 16 17 22
 				{TETRA_POINTS, {12,8,0,3}},
 				{TETRA_POINTS, {16,12,4,7}},
 				{PYRAMID_POINTS, {9,22,14,2,3}},
@@ -679,11 +604,9 @@ namespace patterns {
 				{TETRA_POINTS, {17,16,7,22}},
 				{PYRAMID_POINTS, {17,22,13,5,16}},
 				{PYRAMID_POINTS, {8,12,16,13,22}}
-			}
-		},
-		{
-			//43
-			31457024, {
+			}},
+		{	//43
+			31457024, { // Pattern 321 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 26
 				{TETRA_POINTS, {1,8,13,26}},
 				{PYRAMID_POINTS, {9,20,8,1,26}},
 				{PYRAMID_POINTS, {13,22,9,1,26}},
@@ -710,11 +633,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,17,22,13,16}},
 				{PYRAMID_POINTS, {12,16,13,8,26}},
 				{PYRAMID_POINTS, {19,18,17,16,26}}
-			}
-		},
-		{
-			//44
-			56622848, {
+			}},
+		{	//44
+			56622848, { // Pattern 239 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 22 24 25
 				{PRISM_POINTS, {19,24,25,4,12,16}},
 				{PRISM_POINTS, {7,15,18,19,24,25}},
 				{PRISM_POINTS, {22,17,25,13,5,16}},
@@ -725,11 +646,9 @@ namespace patterns {
 				{PRISM_POINTS, {9,20,22,2,10,14}},
 				{HEXA_POINTS, {8,12,16,13,20,24,25,22}},
 				{HEXA_POINTS, {20,24,25,22,10,15,18,14}}
-			}
-		},
-		{
-			//45
-			17602816, {
+			}},
+		{	//45
+			17602816, { // Pattern 240 (TechReport), mask 8 11 12 15 18 19 24
 				{PYRAMID_POINTS, {12,24,19,4,5}},
 				{PYRAMID_POINTS, {7,19,24,15,18}},
 				{PYRAMID_POINTS, {11,24,12,0,8}},
@@ -743,11 +662,9 @@ namespace patterns {
 				{TETRA_POINTS, {2,8,1,24}},
 				{TETRA_POINTS, {2,6,18,24}},
 				{PYRAMID_POINTS, {5,6,2,1,24}}
-			}
-		},
-		{
-			//46
-			17358336, {
+			}},
+		{	//46
+			17358336, { // Pattern 241 (TechReport), mask 9 10 11 12 14 15 19 24
 				{TETRA_POINTS, {2,9,14,10}},
 				{PYRAMID_POINTS, {15,24,11,3,10}},
 				{TETRA_POINTS, {9,10,11,24}},
@@ -759,11 +676,9 @@ namespace patterns {
 				{TETRA_POINTS, {9,14,24,5}},
 				{PYRAMID_POINTS, {1,9,24,12,5}},
 				{PYRAMID_POINTS, {19,24,14,6,5}}
-			}
-		},
-		{
-			//47
-			21691136, {
+			}},
+		{	//47
+			21691136, { // Pattern 242 (TechReport), mask 8 9 11 12 13 14 15 17 19 22 24
 				{PYRAMID_POINTS, {11,24,12,0,8}},
 				{PYRAMID_POINTS, {22,24,11,9,8}},
 				{PYRAMID_POINTS, {13,22,9,1,8}},
@@ -771,11 +686,9 @@ namespace patterns {
 				{HEXA_POINTS, {12,13,22,24,4,5,17,19}},
 				{HEXA_POINTS, {2,3,11,9,14,15,24,22}},
 				{HEXA_POINTS, {14,15,24,22,6,7,19,17}}
-			}
-		},
-		{
-			//48
-			26016768, {
+			}},
+		{	//48
+			26016768, { // Pattern 243 (TechReport), mask 10 11 12 13 14 15 18 19 23 24
 				{PRISM_POINTS, {12,13,24,4,5,19}},
 				{PRISM_POINTS, {0,1,11,12,13,24}},
 				{PRISM_POINTS, {7,18,19,15,23,24}},
@@ -784,11 +697,9 @@ namespace patterns {
 				{PRISM_POINTS, {1,10,11,13,23,24}},
 				{PRISM_POINTS, {13,14,23,5,6,18}},
 				{PRISM_POINTS, {1,2,10,13,14,23}}
-			}
-		},
-		{
-			//49
-			14155520, {
+			}},
+		{	//49
+			14155520, { // Pattern 322 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 20 22 23 26
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{PYRAMID_POINTS, {15,23,18,7,26}},
 				{TETRA_POINTS, {11,3,15,26}},
@@ -814,11 +725,9 @@ namespace patterns {
 				{TETRA_POINTS, {16,12,4,26}},
 				{TETRA_POINTS, {13,22,26,16}},
 				{TETRA_POINTS, {26,22,17,16}}
-			}
-		},
-		{
-			//50
-			623616, {
+			}},
+		{	//50
+			623616, { // Pattern 244 (TechReport), mask 10 15 16 19
 				{TETRA_POINTS, {19,16,4,0}},
 				{TETRA_POINTS, {19,15,7,6}},
 				{TETRA_POINTS, {3,10,15,0}},
@@ -830,11 +739,9 @@ namespace patterns {
 				{TETRA_POINTS, {16,5,1,10}},
 				{TETRA_POINTS, {16,6,5,10}},
 				{PYRAMID_POINTS, {5,6,2,1,10}}
-			}
-		},
-		{
-			//51
-			80128, {
+			}},
+		{	//51
+			80128, { // Pattern 245 (TechReport), mask 8 11 12 13 16
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {16,12,4,7}},
 				{TETRA_POINTS, {12,11,7,16}},
@@ -847,11 +754,9 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,13,2}},
 				{TETRA_POINTS, {13,6,2,16}},
 				{TETRA_POINTS, {5,13,16,6}}
-			}
-		},
-		{
-			//52
-			10407680, {
+			}},
+		{	//52
+			10407680, { // Pattern 246 (TechReport), mask 8 9 10 11 14 15 17 18 19 20 23
 				{PRISM_POINTS, {10,20,23,3,11,15}},
 				{PRISM_POINTS, {2,9,14,10,20,23}},
 				{PYRAMID_POINTS, {7,15,23,18,19}},
@@ -863,11 +768,9 @@ namespace patterns {
 				{PRISM_POINTS, {0,4,8,11,19,20}},
 				{PRISM_POINTS, {4,5,8,19,17,20}},
 				{PRISM_POINTS, {9,17,20,1,5,8}}
-			}
-		},
-		{
-			//53
-			983040, {
+			}},
+		{	//53
+			983040, { // Pattern 247 (TechReport), mask 16 17 18 19
 				{TETRA_POINTS, {5,16,17,1}},
 				{TETRA_POINTS, {19,16,4,0}},
 				{TETRA_POINTS, {7,18,19,3}},
@@ -878,11 +781,9 @@ namespace patterns {
 				{TETRA_POINTS, {0,3,16,17}},
 				{PYRAMID_POINTS, {0,1,2,3,17}},
 				{TETRA_POINTS, {16,1,0,17}}
-			}
-		},
-		{
-			//54
-			26147840, {
+			}},
+		{	//54
+			26147840, { // Pattern 323 (TechReport), mask 10 11 12 13 14 15 17 18 19 23 24 26
 				{PYRAMID_POINTS, {13,14,2,1,26}},
 				{TETRA_POINTS, {1,2,10,26}},
 				{PYRAMID_POINTS, {2,14,23,10,26}},
@@ -903,11 +804,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PRISM_POINTS, {15,24,23,7,19,18}},
 				{PRISM_POINTS, {3,11,10,15,24,23}}
-			}
-		},
-		{
-			//55
-			13563392, {
+			}},
+		{	//55
+			13563392, { // Pattern 324 (TechReport), mask 9 10 12 13 14 15 17 18 19 22 23 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{TETRA_POINTS, {10,3,0,26}},
 				{PYRAMID_POINTS, {10,23,15,3,26}},
@@ -928,11 +827,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,22,9,1,26}},
 				{PRISM_POINTS, {6,17,18,14,22,23}},
 				{PRISM_POINTS, {14,22,23,2,9,10}}
-			}
-		},
-		{
-			//56
-			4613888, {
+			}},
+		{	//56
+			4613888, { // Pattern 248 (TechReport), mask 8 9 10 13 14 17 18 22
 				{PYRAMID_POINTS, {0,8,10,3,22}},
 				{TETRA_POINTS, {8,9,10,22}},
 				{PYRAMID_POINTS, {10,18,7,3,22}},
@@ -946,22 +843,18 @@ namespace patterns {
 				{PYRAMID_POINTS, {17,22,13,5,4}},
 				{PYRAMID_POINTS, {13,22,9,1,8}},
 				{PYRAMID_POINTS, {6,14,22,17,18}}
-			}
-		},
-		{
-			//57
-			411136, {
+			}},
+		{	//57
+			411136, { // Pattern 249 (TechReport), mask 9 10 14 17 18
 				{PRISM_POINTS, {4,7,18,0,3,10}},
 				{PRISM_POINTS, {4,18,17,0,10,9}},
 				{PRISM_POINTS, {0,1,9,4,5,17}},
 				{PYRAMID_POINTS, {9,10,18,17,14}},
 				{TETRA_POINTS, {6,14,17,18}},
 				{TETRA_POINTS, {2,9,14,10}}
-			}
-		},
-		{
-			//58
-			34570496, {
+			}},
+		{	//58
+			34570496, { // Pattern 250 (TechReport), mask 8 15 16 17 18 19 25
 				{PYRAMID_POINTS, {7,18,25,19,15}},
 				{TETRA_POINTS, {8,3,0,15}},
 				{PYRAMID_POINTS, {19,25,8,0,15}},
@@ -972,11 +865,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,25,17,2}},
 				{PRISM_POINTS, {1,5,17,8,16,25}},
 				{PRISM_POINTS, {8,16,25,0,4,19}}
-			}
-		},
-		{
-			//59
-			34554112, {
+			}},
+		{	//59
+			34554112, { // Pattern 251 (TechReport), mask 8 14 16 17 18 19 25
 				{PYRAMID_POINTS, {17,25,18,6,14}},
 				{TETRA_POINTS, {1,2,8,14}},
 				{PYRAMID_POINTS, {1,8,25,17,14}},
@@ -987,11 +878,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {19,25,8,0,3}},
 				{PRISM_POINTS, {8,16,25,0,4,19}},
 				{PRISM_POINTS, {1,5,17,8,16,25}}
-			}
-		},
-		{
-			//60
-			26213376, {
+			}},
+		{	//60
+			26213376, { // Pattern 252 (TechReport), mask 10 11 12 13 14 15 16 17 18 19 23 24
 				{PRISM_POINTS, {0,1,11,12,13,24}},
 				{PRISM_POINTS, {1,10,11,13,23,24}},
 				{PRISM_POINTS, {1,2,10,13,14,23}},
@@ -1004,11 +893,9 @@ namespace patterns {
 				{TETRA_POINTS, {16,13,12,24}},
 				{TETRA_POINTS, {17,14,13,23}},
 				{TETRA_POINTS, {17,13,5,16}}
-			}
-		},
-		{
-			//61
-			1875712, {
+			}},
+		{	//61
+			1875712, { // Pattern 253 (TechReport), mask 8 9 10 11 12 15 18 19 20
 				{PYRAMID_POINTS, {11,20,10,3,15}},
 				{TETRA_POINTS, {7,18,19,15}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
@@ -1022,11 +909,9 @@ namespace patterns {
 				{PRISM_POINTS, {10,18,20,2,6,9}},
 				{PYRAMID_POINTS, {18,20,9,6,5}},
 				{PYRAMID_POINTS, {9,20,8,1,5}}
-			}
-		},
-		{
-			//62
-			156672, {
+			}},
+		{	//62
+			156672, { // Pattern 254 (TechReport), mask 10 13 14 17
 				{PYRAMID_POINTS, {0,3,7,4,10}},
 				{TETRA_POINTS, {0,1,10,13}},
 				{TETRA_POINTS, {0,4,13,10}},
@@ -1035,11 +920,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,14,7,4,17}},
 				{TETRA_POINTS, {17,13,5,4}},
 				{TETRA_POINTS, {6,14,17,7}}
-			}
-		},
-		{
-			//63
-			303104, {
+			}},
+		{	//63
+			303104, { // Pattern 255 (TechReport), mask 13 15 18
 				{PYRAMID_POINTS, {0,1,2,3,13}},
 				{TETRA_POINTS, {15,7,4,18}},
 				{TETRA_POINTS, {0,3,15,13}},
@@ -1051,11 +934,9 @@ namespace patterns {
 				{TETRA_POINTS, {18,15,2,13}},
 				{TETRA_POINTS, {2,6,18,13}},
 				{TETRA_POINTS, {5,6,13,18}}
-			}
-		},
-		{
-			//64
-			606208, {
+			}},
+		{	//64
+			606208, { // Pattern 256 (TechReport), mask 14 16 19
 				{TETRA_POINTS, {19,16,4,0}},
 				{PYRAMID_POINTS, {0,1,2,3,14}},
 				{TETRA_POINTS, {14,7,3,19}},
@@ -1066,11 +947,9 @@ namespace patterns {
 				{TETRA_POINTS, {1,5,14,16}},
 				{TETRA_POINTS, {16,19,6,14}},
 				{TETRA_POINTS, {16,6,5,14}}
-			}
-		},
-		{
-			//65
-			856320, {
+			}},
+		{	//65
+			856320, { // Pattern 325 (TechReport), mask 8 12 16 18 19 26
 				{TETRA_POINTS, {19,16,4,12}},
 				{TETRA_POINTS, {18,7,3,19}},
 				{TETRA_POINTS, {12,8,0,3}},
@@ -1087,11 +966,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,5,1,26}},
 				{PYRAMID_POINTS, {16,18,6,5,26}},
 				{PYRAMID_POINTS, {5,6,2,1,26}}
-			}
-		},
-		{
-			//66
-			562176, {
+			}},
+		{	//66
+			562176, { // Pattern 257 (TechReport), mask 10 12 15 19
 				{PYRAMID_POINTS, {5,6,2,1,10}},
 				{TETRA_POINTS, {10,0,1,12}},
 				{TETRA_POINTS, {12,5,1,10}},
@@ -1100,11 +977,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,6,15,12,19}},
 				{TETRA_POINTS, {4,12,19,5}},
 				{TETRA_POINTS, {19,15,7,6}}
-			}
-		},
-		{
-			//67
-			282624, {
+			}},
+		{	//67
+			282624, { // Pattern 258 (TechReport), mask 12 14 18
 				{PYRAMID_POINTS, {2,3,0,1,12}},
 				{TETRA_POINTS, {5,6,14,18}},
 				{TETRA_POINTS, {14,2,1,12}},
@@ -1116,11 +991,9 @@ namespace patterns {
 				{TETRA_POINTS, {3,14,18,12}},
 				{TETRA_POINTS, {18,7,3,12}},
 				{TETRA_POINTS, {12,7,4,18}}
-			}
-		},
-		{
-			//68
-			1470208, {
+			}},
+		{	//68
+			1470208, { // Pattern 259 (TechReport), mask 8 9 10 11 13 14 17 18 20
 				{PYRAMID_POINTS, {2,10,20,9,14}},
 				{TETRA_POINTS, {17,18,6,14}},
 				{PYRAMID_POINTS, {9,20,8,1,13}},
@@ -1134,11 +1007,9 @@ namespace patterns {
 				{PRISM_POINTS, {3,7,11,10,18,20}},
 				{PYRAMID_POINTS, {7,11,20,18,4}},
 				{PYRAMID_POINTS, {0,8,20,11,4}}
-			}
-		},
-		{
-			//69
-			967680, {
+			}},
+		{	//69
+            		967680, { // Pattern 260 (TechReport), mask 10 14 15 17 18 19
 				{TETRA_POINTS, {10,3,0,15}},
 				{TETRA_POINTS, {1,2,10,14}},
 				{TETRA_POINTS, {7,15,18,19}},
@@ -1150,9 +1021,8 @@ namespace patterns {
 				{TETRA_POINTS, {17,14,1,18}},
 				{TETRA_POINTS, {6,17,18,14}},
 				{PRISM_POINTS, {1,5,17,0,4,19}}
-			}
-		},
-		{8775168, {
+			}},
+		{8775168, { // Pattern 261 (TechReport), mask 9 10 13 14 15 16 18 23 26
 				{PYRAMID_POINTS, {3,10,23,15,26}},
 				{PYRAMID_POINTS, {10,2,14,23,26}},
 				{PYRAMID_POINTS, {15,23,18,7,26}},
@@ -1174,7 +1044,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,16,18,6,26}},
 				{PYRAMID_POINTS, {5,6,14,13,26}}
 			}},
-		{17350144, {
+		{17350144, { // Pattern 262 (TechReport), mask 9 10 11 12 13 15 19 24 26
 				{PYRAMID_POINTS, {3,15,24,11,26}},
 				{PYRAMID_POINTS, {11,24,12,0,26}},
 				{PYRAMID_POINTS, {15,7,19,24,26}},
@@ -1196,7 +1066,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,13,6,26}},
 				{TETRA_POINTS, {5,6,13,26}}
 			}},
-		{17537280, {
+		{17537280, { // Pattern 1 (TechReport), mask 8 11 12 15 16 17 19 24
 				{PRISM_POINTS, {6,7,15,17,19,24}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {3,15,24,11,2}},
@@ -1210,7 +1080,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,2,8,17}},
 				{PYRAMID_POINTS, {1,8,16,5,17}}
 			}},
-		{17734656, {
+		{17734656, { // Pattern 2 (TechReport), mask 10 11 12 15 17 18 19 24
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {7,19,24,15,18}},
 				{TETRA_POINTS, {10,18,15,24}},
@@ -1224,7 +1094,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {12,24,17,5,1}},
 				{TETRA_POINTS, {1,2,10,17}}
 			}},
-		{35626752, {
+		{35626752, { // Pattern 3 (TechReport), mask 8 9 10 11 12 15 16 17 18 19 20 25
 				{PYRAMID_POINTS, {3,11,20,10,15}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{PYRAMID_POINTS, {7,18,25,19,15}},
@@ -1237,7 +1107,7 @@ namespace patterns {
 				{HEXA_POINTS, {1,9,20,8,5,17,25,16}},
 				{HEXA_POINTS, {2,10,20,9,6,18,25,17}}
 			}},
-		{819456, {
+		{819456, { // Pattern 4 (TechReport), mask 8 15 18 19
 				{TETRA_POINTS, {0,8,3,15}},
 				{TETRA_POINTS, {7,15,18,19}},
 				{TETRA_POINTS, {0,15,19,8}},
@@ -1252,7 +1122,7 @@ namespace patterns {
 				{TETRA_POINTS, {15,18,5,1}},
 				{PYRAMID_POINTS, {1,5,6,2,18}}
 			}},
-		{9887488, {
+		{9887488, { // Pattern 5 (TechReport), mask 8 9 10 11 12 14 15 17 18 20 23
 				{PRISM_POINTS, {11,3,15,20,10,23}},
 				{PRISM_POINTS, {20,10,23,9,2,14}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
@@ -1266,7 +1136,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,5,17,20,12}},
 				{PRISM_POINTS, {1,8,5,9,20,17}}
 			}},
-		{34580480, {
+		{34580480, { // Pattern 6 (TechReport), mask 11 13 15 16 17 18 19 25
 				{PYRAMID_POINTS, {7,18,25,19,15}},
 				{TETRA_POINTS, {3,15,11,2}},
 				{TETRA_POINTS, {11,15,19,25}},
@@ -1281,7 +1151,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,25,13,17}},
 				{PYRAMID_POINTS, {5,16,25,17,13}}
 			}},
-		{51362816, {
+		{51362816, { // Pattern 7 (TechReport), mask 10 11 12 13 15 16 17 18 19 24 25
 				{PRISM_POINTS, {15,18,7,24,25,19}},
 				{PRISM_POINTS, {4,16,12,19,25,24}},
 				{PRISM_POINTS, {0,1,11,12,13,24}},
@@ -1295,7 +1165,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,17,25,10,13}},
 				{PYRAMID_POINTS, {5,16,25,17,13}}
 			}},
-		{1617664, {
+		{1617664, { // Pattern 8 (TechReport), mask 8 9 10 11 13 15 19 20
 				{PRISM_POINTS, {11,20,19,0,8,4}},
 				{PYRAMID_POINTS, {3,11,20,10,15}},
 				{TETRA_POINTS, {6,19,7,15}},
@@ -1310,7 +1180,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,13,19,20}},
 				{TETRA_POINTS, {6,19,13,5}}
 			}},
-		{44288, {
+		{44288, { // Pattern 9 (TechReport), mask 8 10 11 13 15
 				{TETRA_POINTS, {3,10,15,11}},
 				{TETRA_POINTS, {0,8,11,4}},
 				{PYRAMID_POINTS, {1,2,10,8,13}},
@@ -1324,7 +1194,7 @@ namespace patterns {
 				{TETRA_POINTS, {15,6,7,13}},
 				{PYRAMID_POINTS, {4,7,6,5,13}}
 			}},
-		{18546432, {
+		{18546432, { // Pattern 263 (TechReport), mask 8 9 10 11 12 13 14 15 17 19 20 24 26
 				{PRISM_POINTS, {24,20,11,15,10,3}},
 				{PRISM_POINTS, {0,12,8,11,24,20}},
 				{PYRAMID_POINTS, {10,15,24,20,26}},
@@ -1347,7 +1217,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,17,13,26}},
 				{PYRAMID_POINTS, {13,17,14,9,26}}
 			}},
-		{44544, {
+		{44544, { // Pattern 10 (TechReport), mask 9 10 11 13 15
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {0,11,4,13}},
 				{TETRA_POINTS, {3,10,15,11}},
@@ -1361,7 +1231,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,5,13,15}},
 				{PYRAMID_POINTS, {4,7,6,5,15}}
 			}},
-		{28311296, {
+		{28311296, { // Pattern 264 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 21 23 24 26
 				{PRISM_POINTS, {15,24,23,7,19,18}},
 				{PRISM_POINTS, {3,11,10,15,24,23}},
 				{PRISM_POINTS, {24,12,21,19,4,16}},
@@ -1386,7 +1256,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {16,19,18,17,26}},
 				{PYRAMID_POINTS, {13,17,14,9,26}}
 			}},
-		{837632, {
+		{837632, { // Pattern 11 (TechReport), mask 11 14 15 18 19
 				{PRISM_POINTS, {0,1,11,4,5,19}},
 				{PYRAMID_POINTS, {2,14,15,3,11}},
 				{TETRA_POINTS, {7,18,19,15}},
@@ -1397,7 +1267,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,19,18,14}},
 				{TETRA_POINTS, {5,18,6,14}}
 			}},
-		{17496064, {
+		{17496064, { // Pattern 265 (TechReport), mask 11 12 13 14 15 17 19 24 26
 				{PYRAMID_POINTS, {3,15,24,11,26}},
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {15,7,19,24,26}},
@@ -1416,7 +1286,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,17,14,26}},
 				{PYRAMID_POINTS, {1,13,14,2,26}}
 			}},
-		{27262720, {
+		{27262720, { // Pattern 266 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 23 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {12,24,19,4,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
@@ -1444,7 +1314,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,12,16,13,26}},
 				{TETRA_POINTS, {13,17,16,5}}
 			}},
-		{604160, {
+		{604160, { // Pattern 12 (TechReport), mask 11 12 13 16 19
 				{PYRAMID_POINTS, {0,12,13,1,11}},
 				{PRISM_POINTS, {2,3,11,6,7,19}},
 				{TETRA_POINTS, {1,2,11,13}},
@@ -1455,7 +1325,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,16,19,13}},
 				{TETRA_POINTS, {5,16,6,13}}
 			}},
-		{602880, {
+		{602880, { // Pattern 13 (TechReport), mask 8 9 12 13 16 19
 				{TETRA_POINTS, {0,12,8,3}},
 				{TETRA_POINTS, {3,19,12,8}},
 				{TETRA_POINTS, {3,7,19,8}},
@@ -1471,7 +1341,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,16,19,13}},
 				{TETRA_POINTS, {5,16,6,13}}
 			}},
-		{2225920, {
+		{2225920, { // Pattern 267 (TechReport), mask 8 9 10 12 13 14 15 16 21 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {12,15,7,4,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
@@ -1493,7 +1363,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,6,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{2995456, {
+		{2995456, { // Pattern 268 (TechReport), mask 8 10 12 13 15 16 18 19 21 26
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {1,2,10,8,26}},
@@ -1515,7 +1385,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,21,13,26}},
 				{PYRAMID_POINTS, {21,16,5,13,26}}
 			}},
-		{1269504, {
+		{1269504, { // Pattern 269 (TechReport), mask 8 9 10 11 12 14 16 17 20 26
 				{TETRA_POINTS, {3,10,7,26}},
 				{TETRA_POINTS, {3,7,11,26}},
 				{PYRAMID_POINTS, {3,11,20,10,26}},
@@ -1540,7 +1410,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,26}},
 				{PYRAMID_POINTS, {1,8,16,5,26}}
 			}},
-		{19644160, {
+		{19644160, { // Pattern 14 (TechReport), mask 8 9 10 11 12 13 15 16 17 19 21 24
 				{PRISM_POINTS, {12,21,24,4,16,19}},
 				{PRISM_POINTS, {0,8,11,12,21,24}},
 				{PRISM_POINTS, {6,7,15,17,19,24}},
@@ -1554,7 +1424,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,13,21,16,17}},
 				{PYRAMID_POINTS, {16,21,24,19,17}}
 			}},
-		{2586368, {
+		{2586368, { // Pattern 15 (TechReport), mask 8 9 10 12 13 14 16 17 18 21
 				{PRISM_POINTS, {0,3,12,8,10,21}},
 				{PRISM_POINTS, {10,21,18,3,12,7}},
 				{PRISM_POINTS, {16,18,21,4,7,12}},
@@ -1569,7 +1439,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,21,13,9}},
 				{PYRAMID_POINTS, {13,17,14,9,21}}
 			}},
-		{67328, {
+		{67328, { // Pattern 270 corrected (TechReport), mask 8 9 10 16 26
 				{PYRAMID_POINTS, {0,3,7,4,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {0,4,16,8,26}},
@@ -1585,10 +1455,9 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,26}},
 				{TETRA_POINTS, {1,5,9,26}},
 				{TETRA_POINTS, {5,6,9,26}},
-				{TETRA_POINTS, {5,16,6,26}},
-				{TETRA_POINTS, {6,10,9,26}}
+				{TETRA_POINTS, {5,16,6,26}}
 			}},
-		{75008, {
+		{75008, { // Pattern 271 (TechReport), mask 8 10 13 16 26
 				{PYRAMID_POINTS, {0,3,7,4,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {1,2,10,8,26}},
@@ -1606,7 +1475,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,13,2,26}},
 				{TETRA_POINTS, {2,13,6,26}}
 			}},
-		{18734848, {
+		{18734848, { // Pattern 272 (TechReport), mask 8 9 10 11 12 14 15 16 18 19 20 24 26
 				{PRISM_POINTS, {11,20,24,0,8,12}},
 				{PRISM_POINTS, {3,10,15,11,20,24}},
 				{PYRAMID_POINTS, {10,15,24,20,26}},
@@ -1631,7 +1500,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,14,9,26}},
 				{TETRA_POINTS, {1,5,9,26}}
 			}},
-		{826624, {
+		{826624, { // Pattern 273 (TechReport), mask 8 10 11 12 15 18 19 26
 				{TETRA_POINTS, {7,15,18,19}},
 				{TETRA_POINTS, {4,19,5,12}},
 				{TETRA_POINTS, {0,8,11,12}},
@@ -1651,7 +1520,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,5,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{21953280, {
+		{21953280, { // Pattern 16 (TechReport), mask 8 9 11 12 13 14 15 17 18 19 22 24
 				{HEXA_POINTS, {3,15,24,11,2,14,22,9}},
 				{PYRAMID_POINTS, {6,14,22,17,18}},
 				{PYRAMID_POINTS, {17,22,24,19,18}},
@@ -1663,7 +1532,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,12,24,22,8}},
 				{HEXA_POINTS, {5,17,22,13,4,19,24,12}}
 			}},
-		{1658624, {
+		{1658624, { // Pattern 274 (TechReport), mask 8 9 10 11 14 16 19 20 26
 				{PYRAMID_POINTS, {11,3,7,19,26}},
 				{PYRAMID_POINTS, {0,11,19,4,26}},
 				{PYRAMID_POINTS, {0,4,16,8,26}},
@@ -1685,7 +1554,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,14,9,26}},
 				{TETRA_POINTS, {1,5,9,26}}
 			}},
-		{51370752, {
+		{51370752, { // Pattern 275 (TechReport), mask 8 9 11 12 14 15 16 17 18 19 24 25 26
 				{PRISM_POINTS, {19,24,25,4,12,16}},
 				{PRISM_POINTS, {7,15,18,19,24,25}},
 				{PYRAMID_POINTS, {0,11,24,12,26}},
@@ -1709,7 +1578,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,26}},
 				{PYRAMID_POINTS, {1,5,17,9,26}}
 			}},
-		{929792, {
+		{929792, { // Pattern 17 (TechReport), mask 12 13 17 18 19
 				{TETRA_POINTS, {6,17,18,2}},
 				{TETRA_POINTS, {7,18,19,3}},
 				{PYRAMID_POINTS, {2,3,19,17,18}},
@@ -1717,7 +1586,7 @@ namespace patterns {
 				{PRISM_POINTS, {0,3,12,1,2,13}},
 				{PRISM_POINTS, {4,12,19,5,13,17}}
 			}},
-		{48384, {
+		{48384, { // Pattern 276 (TechReport), mask 8 10 11 12 13 15 26
 				{TETRA_POINTS, {10,15,3,11}},
 				{TETRA_POINTS, {0,11,12,8}},
 				{TETRA_POINTS, {11,10,15,26}},
@@ -1737,7 +1606,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {12,4,5,13,26}},
 				{PYRAMID_POINTS, {4,7,6,5,26}}
 			}},
-		{1388288, {
+		{1388288, { // Pattern 18 (TechReport), mask 8 9 10 11 13 16 18 20
 				{PRISM_POINTS, {0,11,4,8,20,16}},
 				{PRISM_POINTS, {4,11,7,16,20,18}},
 				{PRISM_POINTS, {11,3,7,20,10,18}},
@@ -1748,7 +1617,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,6,18,20,13}},
 				{PYRAMID_POINTS, {5,16,18,6,13}}
 			}},
-		{858368, {
+		{858368, { // Pattern 277 (TechReport), mask 8 11 12 16 18 19 26
 				{PYRAMID_POINTS, {11,3,7,19,26}},
 				{TETRA_POINTS, {3,18,7,26}},
 				{TETRA_POINTS, {7,18,19,26}},
@@ -1766,7 +1635,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,16,18,6,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{8897792, {
+		{8897792, { // Pattern 19 (TechReport), mask 8 10 14 15 16 17 18 23
 				{PRISM_POINTS, {16,18,23,4,7,15}},
 				{PRISM_POINTS, {0,15,4,8,23,16}},
 				{PRISM_POINTS, {0,3,15,8,10,23}},
@@ -1777,7 +1646,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,17}},
 				{PYRAMID_POINTS, {1,14,23,8,17}}
 			}},
-		{42981120, {
+		{42981120, { // Pattern 278 (TechReport), mask 8 9 10 12 14 15 16 17 18 19 23 25 26
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{TETRA_POINTS, {0,12,8,26}},
@@ -1801,7 +1670,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,26}},
 				{PYRAMID_POINTS, {1,5,17,9,26}}
 			}},
-		{17604352, {
+		{17604352, { // Pattern 20 (TechReport), mask 8 9 10 11 12 15 18 19 24
 				{PYRAMID_POINTS, {3,15,24,11,10}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {7,19,24,15,18}},
@@ -1817,7 +1686,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,18,6,9}},
 				{TETRA_POINTS, {1,9,8,5}}
 			}},
-		{333824, {
+		{333824, { // Pattern 21 (TechReport), mask 11 12 16 18
 				{TETRA_POINTS, {3,18,7,11}},
 				{TETRA_POINTS, {2,18,3,11}},
 				{TETRA_POINTS, {7,12,11,18}},
@@ -1828,7 +1697,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,16,18,2,11}},
 				{PRISM_POINTS, {2,6,18,1,5,16}}
 			}},
-		{233472, {
+		{233472, { // Pattern 22 (TechReport), mask 12 15 16 17
 				{PRISM_POINTS, {3,2,15,0,1,12}},
 				{PYRAMID_POINTS, {12,15,7,4,16}},
 				{TETRA_POINTS, {6,17,7,15}},
@@ -1839,7 +1708,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,12,16,17}},
 				{TETRA_POINTS, {5,16,17,1}}
 			}},
-		{9427968, {
+		{9427968, { // Pattern 23 (TechReport), mask 10 11 12 14 15 16 17 18 19 23
 				{PYRAMID_POINTS, {3,10,23,15,11}},
 				{PYRAMID_POINTS, {2,14,23,10,1}},
 				{TETRA_POINTS, {1,10,11,23}},
@@ -1856,7 +1725,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,17,14,23}},
 				{PYRAMID_POINTS, {14,6,18,23,17}}
 			}},
-		{9362432, {
+		{9362432, { // Pattern 24 (TechReport), mask 10 11 12 14 15 17 18 19 23
 				{PYRAMID_POINTS, {15,23,18,7,19}},
 				{PYRAMID_POINTS, {6,18,23,14,17}},
 				{TETRA_POINTS, {17,19,18,23}},
@@ -1872,7 +1741,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,5,17,12}},
 				{PYRAMID_POINTS, {4,19,17,5,12}}
 			}},
-		{26148608, {
+		{26148608, { // Pattern 279 (TechReport), mask 8 9 10 11 12 13 14 15 17 18 19 23 24 26
 				{PRISM_POINTS, {7,18,19,15,23,24}},
 				{PRISM_POINTS, {15,23,24,3,10,11}},
 				{PYRAMID_POINTS, {23,18,19,24,26}},
@@ -1897,7 +1766,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,17,13,26}},
 				{PYRAMID_POINTS, {13,17,14,9,26}}
 			}},
-		{108800, {
+		{108800, { // Pattern 25 (TechReport), mask 8 11 13 15 16
 				{TETRA_POINTS, {2,15,3,11}},
 				{PYRAMID_POINTS, {0,4,16,8,11}},
 				{TETRA_POINTS, {4,11,15,16}},
@@ -1911,7 +1780,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,13,6,16}},
 				{TETRA_POINTS, {5,6,13,16}}
 			}},
-		{9961216, {
+		{9961216, { // Pattern 280 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 20 23 26
 				{PRISM_POINTS, {23,20,10,14,9,2}},
 				{PRISM_POINTS, {3,15,11,10,23,20}},
 				{PYRAMID_POINTS, {9,14,23,20,26}},
@@ -1936,7 +1805,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {12,16,13,8,26}},
 				{PYRAMID_POINTS, {13,17,14,9,26}}
 			}},
-		{1879808, {
+		{1879808, { // Pattern 26 (TechReport), mask 8 9 10 11 13 15 18 19 20
 				{PYRAMID_POINTS, {11,20,10,3,15}},
 				{TETRA_POINTS, {18,19,7,15}},
 				{TETRA_POINTS, {10,18,15,20}},
@@ -1952,7 +1821,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,19,18,13}},
 				{TETRA_POINTS, {5,18,6,13}}
 			}},
-		{860672, {
+		{860672, { // Pattern 27 (TechReport), mask 9 13 16 18 19
 				{TETRA_POINTS, {9,2,3,18}},
 				{TETRA_POINTS, {2,6,18,9}},
 				{TETRA_POINTS, {0,9,3,13}},
@@ -1965,7 +1834,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,6,9,18}},
 				{PYRAMID_POINTS, {5,16,18,6,13}}
 			}},
-		{17537792, {
+		{17537792, { // Pattern 28 (TechReport), mask 8 9 11 12 15 16 17 19 24
 				{PRISM_POINTS, {9,11,24,2,3,15}},
 				{PRISM_POINTS, {9,24,17,2,15,6}},
 				{PRISM_POINTS, {6,7,15,17,19,24}},
@@ -1977,7 +1846,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,17,9,24}},
 				{PRISM_POINTS, {1,9,8,5,17,16}}
 			}},
-		{157696, {
+		{157696, { // Pattern 29 (TechReport), mask 11 13 14 17
 				{TETRA_POINTS, {0,1,11,13}},
 				{TETRA_POINTS, {2,3,11,14}},
 				{PYRAMID_POINTS, {1,13,14,2,11}},
@@ -1988,7 +1857,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,17,5,13}},
 				{TETRA_POINTS, {6,17,7,14}}
 			}},
-		{42240, {
+		{42240, { // Pattern 30 (TechReport), mask 8 10 13 15
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{TETRA_POINTS, {8,10,15,13}},
 				{TETRA_POINTS, {0,4,8,15}},
@@ -2000,7 +1869,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,6,10,13}},
 				{PYRAMID_POINTS, {4,7,6,5,13}}
 			}},
-		{942592, {
+		{942592, { // Pattern 31 (TechReport), mask 9 13 14 17 18 19
 				{TETRA_POINTS, {2,14,3,9}},
 				{TETRA_POINTS, {3,18,7,19}},
 				{TETRA_POINTS, {0,9,3,19}},
@@ -2014,7 +1883,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,4,19,17,13}},
 				{PYRAMID_POINTS, {13,17,14,9,19}}
 			}},
-		{745984, {
+		{745984, { // Pattern 32 (TechReport), mask 9 13 14 16 17 19
 				{TETRA_POINTS, {2,14,3,9}},
 				{TETRA_POINTS, {3,14,7,19}},
 				{PYRAMID_POINTS, {6,17,19,7,14}},
@@ -2028,7 +1897,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,13}},
 				{PYRAMID_POINTS, {9,13,17,14,19}}
 			}},
-		{43520, {
+		{43520, { // Pattern 33 (TechReport), mask 9 11 13 15
 				{PYRAMID_POINTS, {2,3,11,9,15}},
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {13,15,9,11}},
@@ -2040,7 +1909,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,6,13,15}},
 				{PYRAMID_POINTS, {4,7,6,5,15}}
 			}},
-		{17669376, {
+		{17669376, { // Pattern 34 (TechReport), mask 8 10 11 12 15 16 18 19 24
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {3,15,24,11,10}},
 				{PYRAMID_POINTS, {4,12,24,19,16}},
@@ -2052,7 +1921,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,18,10,24}},
 				{HEXA_POINTS, {8,10,18,16,1,2,6,5}}
 			}},
-		{877056, {
+		{877056, { // Pattern 35 (TechReport), mask 9 13 14 16 18 19
 				{TETRA_POINTS, {0,19,4,16}},
 				{TETRA_POINTS, {3,7,19,18}},
 				{PYRAMID_POINTS, {0,16,18,3,19}},
@@ -2062,7 +1931,7 @@ namespace patterns {
 				{PRISM_POINTS, {3,14,18,0,13,16}},
 				{PRISM_POINTS, {5,13,16,6,14,18}}
 			}},
-		{17472768, {
+		{17472768, { // Pattern 36 (TechReport), mask 8 10 11 12 15 17 19 24
 				{PRISM_POINTS, {4,5,12,19,17,24}},
 				{PRISM_POINTS, {19,17,24,7,6,15}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
@@ -2075,7 +1944,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,5,17,8}},
 				{PYRAMID_POINTS, {1,2,10,8,17}}
 			}},
-		{295680, {
+		{295680, { // Pattern 37 (TechReport), mask 8 9 15 18
 				{TETRA_POINTS, {0,8,3,15}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{TETRA_POINTS, {2,3,9,15}},
@@ -2090,7 +1959,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,18,6,9}},
 				{TETRA_POINTS, {1,9,8,5}}
 			}},
-		{661760, {
+		{661760, { // Pattern 281 (TechReport), mask 8 11 12 17 19 26
 				{PYRAMID_POINTS, {3,7,19,11,26}},
 				{TETRA_POINTS, {11,19,12,26}},
 				{TETRA_POINTS, {2,3,11,26}},
@@ -2109,7 +1978,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,5,26}},
 				{TETRA_POINTS, {1,5,17,26}}
 			}},
-        {303616, { // Pattern 038 (TechReport), mask 9 13 15 18
+		{303616, { // Pattern 38 corrected (TechReport), mask 9 13 15 18
 				{TETRA_POINTS, {2,3,9,15}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {2,18,15,9}},
@@ -2124,7 +1993,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,13,6,18}},
 				{TETRA_POINTS, {13,15,9,0}}
 			}},
-		{625920, {
+		{625920, { // Pattern 282 (TechReport), mask 8 10 11 15 16 19 26
 				{TETRA_POINTS, {10,15,3,11}},
 				{TETRA_POINTS, {10,15,11,26}},
 				{TETRA_POINTS, {8,10,11,26}},
@@ -2141,7 +2010,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,5,1,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{101632, {
+		{101632, { // Pattern 283 (TechReport), mask 8 10 11 15 16 26
 				{TETRA_POINTS, {10,15,3,11}},
 				{TETRA_POINTS, {10,15,11,26}},
 				{TETRA_POINTS, {4,11,15,26}},
@@ -2160,7 +2029,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,6,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{1021952, {
+		{1021952, { // Pattern 39 (TechReport), mask 11 12 15 16 17 18 19
 				{TETRA_POINTS, {2,3,11,15}},
 				{TETRA_POINTS, {0,1,11,12}},
 				{TETRA_POINTS, {15,18,7,19}},
@@ -2176,7 +2045,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,12,16,17}},
 				{TETRA_POINTS, {1,17,16,5}}
 			}},
-		{887040, {
+		{887040, { // Pattern 284 (TechReport), mask 8 11 15 16 18 19 26
 				{TETRA_POINTS, {15,18,7,19}},
 				{TETRA_POINTS, {2,3,11,15}},
 				{TETRA_POINTS, {2,15,11,26}},
@@ -2193,7 +2062,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{17627648, {
+		{17627648, { // Pattern 285 (TechReport), mask 9 11 12 13 14 15 18 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {12,24,19,4,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
@@ -2215,7 +2084,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,18,6,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{545280, {
+		{545280, { // Pattern 40 (TechReport), mask 9 12 14 19
 				{TETRA_POINTS, {6,19,7,14}},
 				{TETRA_POINTS, {3,14,7,19}},
 				{TETRA_POINTS, {2,3,9,14}},
@@ -2227,7 +2096,7 @@ namespace patterns {
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {1,12,5,9}}
 			}},
-		{17431040, {
+		{17431040, { // Pattern 286 (TechReport), mask 9 11 12 13 14 15 16 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2249,7 +2118,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,19,16,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{35618560, {
+		{35618560, { // Pattern 41 (TechReport), mask 8 9 10 11 12 13 14 16 17 18 19 20 25
 				{HEXA_POINTS, {3,11,20,10,7,19,25,18}},
 				{PYRAMID_POINTS, {10,18,25,20,14}},
 				{PYRAMID_POINTS, {2,10,20,9,14}},
@@ -2266,7 +2135,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,12,16,13,20}},
 				{PYRAMID_POINTS, {13,17,14,9,20}}
 			}},
-		{17562624, {
+		{17562624, { // Pattern 287 (TechReport), mask 10 11 12 13 14 15 16 17 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2291,7 +2160,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,17,26}},
 				{TETRA_POINTS, {5,17,13,16}}
 			}},
-		{983552, {
+		{983552, { // Pattern 42 (TechReport), mask 9 16 17 18 19
 				{TETRA_POINTS, {3,19,18,7}},
 				{TETRA_POINTS, {2,18,3,9}},
 				{TETRA_POINTS, {0,3,19,9}},
@@ -2303,7 +2172,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,16}},
 				{PYRAMID_POINTS, {2,9,17,6,18}}
 			}},
-		{154624, {
+		{154624, { // Pattern 43 (TechReport), mask 10 11 12 14 17
 				{TETRA_POINTS, {3,10,7,11}},
 				{TETRA_POINTS, {1,14,2,10}},
 				{TETRA_POINTS, {0,1,11,12}},
@@ -2318,7 +2187,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,17,5,12}},
 				{TETRA_POINTS, {1,12,5,17}}
 			}},
-		{17496832, {
+		{17496832, { // Pattern 288 (TechReport), mask 8 9 11 12 13 14 15 17 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2340,7 +2209,7 @@ namespace patterns {
 				{TETRA_POINTS, {14,17,6,26}},
 				{PYRAMID_POINTS, {13,17,14,9,26}}
 			}},
-		{1605376, {
+		{1605376, { // Pattern 44 (TechReport), mask 8 9 10 11 12 13 14 19 20
 				{PRISM_POINTS, {11,19,20,3,7,10}},
 				{PYRAMID_POINTS, {10,7,19,20,14}},
 				{TETRA_POINTS, {6,19,7,14}},
@@ -2355,7 +2224,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,14,9,20}},
 				{PYRAMID_POINTS, {13,5,6,14,19}}
 			}},
-		{854272, {
+		{854272, { // Pattern 289 (TechReport), mask 8 11 16 18 19 26
 				{PRISM_POINTS, {0,8,11,4,16,19}},
 				{PYRAMID_POINTS, {11,3,7,19,26}},
 				{TETRA_POINTS, {3,18,7,26}},
@@ -2371,7 +2240,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,16,18,6,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{17677312, {
+		{17677312, { // Pattern 45 (TechReport), mask 10 11 12 13 15 16 18 19 24
 				{PYRAMID_POINTS, {24,15,7,19,18}},
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {12,24,19,4,16}},
@@ -2386,7 +2255,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,6,18,10,13}},
 				{PYRAMID_POINTS, {5,16,18,6,13}}
 			}},
-		{827904, {
+		{827904, { // Pattern 46 (TechReport), mask 9 13 15 18 19
 				{TETRA_POINTS, {2,3,9,15}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {0,1,9,13}},
@@ -2403,7 +2272,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,6,13,18}},
 				{TETRA_POINTS, {13,6,9,18}}
 			}},
-		{17684992, {
+		{17684992, { // Pattern 290 (TechReport), mask 9 11 12 14 15 16 18 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2427,7 +2296,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,6,14,26}},
 				{TETRA_POINTS, {5,14,9,26}}
 			}},
-		{18743040, {
+		{18743040, { // Pattern 291 (TechReport), mask 8 9 10 11 12 13 14 15 16 18 19 20 24 26
 				{PRISM_POINTS, {11,20,24,0,8,12}},
 				{PRISM_POINTS, {3,10,15,11,20,24}},
 				{PYRAMID_POINTS, {8,20,24,12,26}},
@@ -2451,7 +2320,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,16,18,14,26}},
 				{PRISM_POINTS, {5,13,16,6,14,18}}
 			}},
-		{17676800, {
+		{17676800, { // Pattern 292 (TechReport), mask 9 11 12 13 15 16 18 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2475,7 +2344,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,6,13,26}},
 				{PYRAMID_POINTS, {5,16,18,6,26}}
 			}},
-		{216064, {
+		{216064, { // Pattern 47 (TechReport), mask 10 11 14 16 17
 				{TETRA_POINTS, {10,7,3,11}},
 				{TETRA_POINTS, {1,2,10,14}},
 				{TETRA_POINTS, {10,14,7,17}},
@@ -2488,7 +2357,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,17,14,10}},
 				{TETRA_POINTS, {1,5,17,16}}
 			}},
-		{1945344, {
+		{1945344, { // Pattern 293 (TechReport), mask 8 9 10 11 13 15 16 18 19 20 26
 				{PYRAMID_POINTS, {1,9,20,8,26}},
 				{PYRAMID_POINTS, {9,2,10,20,26}},
 				{PYRAMID_POINTS, {20,10,3,11,26}},
@@ -2513,7 +2382,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,6,9,26}},
 				{TETRA_POINTS, {5,6,13,26}}
 			}},
-		{337408, {
+		{337408, { // Pattern 294 (TechReport), mask 9 10 13 16 18 26
 				{PYRAMID_POINTS, {0,3,7,4,26}},
 				{TETRA_POINTS, {0,10,3,26}},
 				{PYRAMID_POINTS, {10,18,7,3,26}},
@@ -2531,7 +2400,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,6,13,26}},
 				{PYRAMID_POINTS, {5,16,18,6,26}}
 			}},
-		{271616, {
+		{271616, { // Pattern 295 (TechReport), mask 8 10 13 18 26
 				{PYRAMID_POINTS, {0,3,7,4,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {1,2,10,8,26}},
@@ -2548,7 +2417,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,13,6,26}},
 				{TETRA_POINTS, {5,6,13,26}}
 			}},
-		{2035456, {
+		{2035456, { // Pattern 296 (TechReport), mask 8 9 10 11 16 17 18 19 20 26
 				{PYRAMID_POINTS, {1,9,20,8,26}},
 				{PYRAMID_POINTS, {9,2,10,20,26}},
 				{PYRAMID_POINTS, {20,10,3,11,26}},
@@ -2567,7 +2436,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,26}},
 				{PYRAMID_POINTS, {9,17,6,2,26}}
 			}},
-		{112640, {
+		{112640, { // Pattern 48 (TechReport), mask 11 12 13 15 16
 				{PYRAMID_POINTS, {0,12,13,1,11}},
 				{TETRA_POINTS, {2,15,3,11}},
 				{TETRA_POINTS, {1,2,11,13}},
@@ -2580,7 +2449,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,6,13,15}},
 				{TETRA_POINTS, {16,13,6,5}}
 			}},
-		{330752, {
+		{330752, { // Pattern 297 (TechReport), mask 10 11 16 18 26
 				{TETRA_POINTS, {3,11,10,26}},
 				{TETRA_POINTS, {1,10,11,26}},
 				{TETRA_POINTS, {3,7,11,26}},
@@ -2597,7 +2466,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,16,18,6,26}},
 				{PYRAMID_POINTS, {1,5,6,2,26}}
 			}},
-		{869376, {
+		{869376, { // Pattern 49 (TechReport), mask 10 14 16 18 19
 				{PYRAMID_POINTS, {3,10,18,7,19}},
 				{TETRA_POINTS, {0,3,19,10}},
 				{TETRA_POINTS, {1,2,10,14}},
@@ -2610,7 +2479,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,16,5,14}},
 				{PYRAMID_POINTS, {5,16,18,6,14}}
 			}},
-		{3126528, {
+		{3126528, { // Pattern 298 (TechReport), mask 8 10 12 13 15 16 17 18 19 21 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{TETRA_POINTS, {10,15,3,26}},
@@ -2634,7 +2503,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,26}},
 				{PYRAMID_POINTS, {16,19,18,17,26}}
 			}},
-		{10485504, {
+		{10485504, { // Pattern 299 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 20 23 26
 				{PRISM_POINTS, {20,10,23,9,2,14}},
 				{PRISM_POINTS, {11,3,15,20,10,23}},
 				{PYRAMID_POINTS, {20,9,14,23,26}},
@@ -2660,7 +2529,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,17,26}},
 				{TETRA_POINTS, {13,17,16,5}}
 			}},
-		{815872, {
+		{815872, { // Pattern 50 (TechReport), mask 8 9 12 13 14 18 19
 				{TETRA_POINTS, {0,8,3,12}},
 				{TETRA_POINTS, {2,3,9,14}},
 				{TETRA_POINTS, {1,9,8,13}},
@@ -2675,7 +2544,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,19,18,13}},
 				{PYRAMID_POINTS, {13,5,6,14,18}}
 			}},
-		{623104, {
+		{623104, { // Pattern 51 (TechReport), mask 9 15 16 19
 				{TETRA_POINTS, {2,3,9,15}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {6,15,2,9}},
@@ -2689,7 +2558,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,6,9}},
 				{TETRA_POINTS, {1,5,9,16}}
 			}},
-		{632320, {
+		{632320, { // Pattern 52 (TechReport), mask 9 10 13 15 16 19
 				{TETRA_POINTS, {0,15,10,3}},
 				{TETRA_POINTS, {2,9,6,10}},
 				{TETRA_POINTS, {6,19,7,15}},
@@ -2703,7 +2572,7 @@ namespace patterns {
 				{TETRA_POINTS, {0,16,13,6}},
 				{TETRA_POINTS, {5,6,13,16}}
 			}},
-		{17431296, {
+		{17431296, { // Pattern 300 (TechReport), mask 8 9 11 12 13 14 15 16 19 24 26
 				{PYRAMID_POINTS, {0,11,24,12,26}},
 				{PYRAMID_POINTS, {11,3,15,24,26}},
 				{PYRAMID_POINTS, {24,15,7,19,26}},
@@ -2727,7 +2596,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,6,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{17628160, {
+		{17628160, { // Pattern 53 (TechReport), mask 10 11 12 13 14 15 18 19 24
 				{PRISM_POINTS, {0,1,11,12,13,24}},
 				{PRISM_POINTS, {12,13,24,4,5,19}},
 				{PYRAMID_POINTS, {7,19,24,15,18}},
@@ -2740,7 +2609,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,13,24,19,18}},
 				{PYRAMID_POINTS, {13,5,6,14,18}}
 			}},
-		{442624, {
+		{442624, { // Pattern 54 (TechReport), mask 8 14 15 17 18
 				{TETRA_POINTS, {0,8,3,15}},
 				{PYRAMID_POINTS, {2,14,15,3,8}},
 				{TETRA_POINTS, {1,2,8,14}},
@@ -2755,7 +2624,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,17,14,8}},
 				{TETRA_POINTS, {1,5,17,8}}
 			}},
-		{1400576, {
+		{1400576, { // Pattern 55 (TechReport), mask 8 9 10 11 12 14 16 18 20
 				{PRISM_POINTS, {3,7,11,10,18,20}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{PYRAMID_POINTS, {11,20,18,7,12}},
@@ -2769,7 +2638,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,20,16,5,14}},
 				{PRISM_POINTS, {8,20,16,1,9,5}}
 			}},
-		{1867520, {
+		{1867520, { // Pattern 301 (TechReport), mask 8 9 10 11 12 13 14 18 19 20 26
 				{PYRAMID_POINTS, {3,7,19,11,26}},
 				{TETRA_POINTS, {11,19,12,26}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
@@ -2793,7 +2662,7 @@ namespace patterns {
 				{TETRA_POINTS, {20,13,14,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{267008, {
+		{267008, { // Pattern 56 (TechReport), mask 8 9 12 18
 				{TETRA_POINTS, {0,8,3,12}},
 				{TETRA_POINTS, {3,7,12,18}},
 				{TETRA_POINTS, {4,7,18,12}},
@@ -2805,7 +2674,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,18,6,9}},
 				{TETRA_POINTS, {1,5,9,8}}
 			}},
-		{1670912, {
+		{1670912, { // Pattern 57 (TechReport), mask 8 9 10 11 12 13 14 16 19 20
 				{PRISM_POINTS, {3,10,7,11,20,19}},
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{TETRA_POINTS, {11,19,12,20}},
@@ -2822,7 +2691,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,14,20}},
 				{PYRAMID_POINTS, {13,5,6,14,16}}
 			}},
-		{2084608, {
+		{2084608, { // Pattern 302 (TechReport), mask 8 9 10 11 14 15 16 17 18 19 20 26
 				{TETRA_POINTS, {3,15,11,26}},
 				{TETRA_POINTS, {10,15,3,26}},
 				{TETRA_POINTS, {11,15,19,26}},
@@ -2846,7 +2715,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,26}},
 				{PYRAMID_POINTS, {1,5,17,9,26}}
 			}},
-		{17628928, {
+		{17628928, { // Pattern 58 (TechReport), mask 8 9 10 11 12 13 14 15 18 19 24
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {8,9,10,11,24}},
@@ -2863,7 +2732,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,13,24,19,18}},
 				{PYRAMID_POINTS, {13,5,6,14,18}}
 			}},
-		{138496, {
+		{138496, { // Pattern 59 (TechReport), mask 8 10 11 12 17
 				{TETRA_POINTS, {7,10,11,3}},
 				{TETRA_POINTS, {8,11,0,12}},
 				{TETRA_POINTS, {6,7,10,17}},
@@ -2878,7 +2747,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,5,17,8}},
 				{PYRAMID_POINTS, {1,2,10,8,17}}
 			}},
-		{615936, {
+		{615936, { // Pattern 60 (TechReport), mask 9 10 13 14 16 19
 				{TETRA_POINTS, {2,10,9,14}},
 				{TETRA_POINTS, {0,1,9,13}},
 				{TETRA_POINTS, {3,10,7,19}},
@@ -2893,7 +2762,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,14,9,16}},
 				{PYRAMID_POINTS, {5,6,14,13,16}}
 			}},
-		{17677056, {
+		{17677056, { // Pattern 61 (TechReport), mask 8 9 11 12 13 15 16 18 19 24
 				{PRISM_POINTS, {15,3,2,24,11,9}},
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{TETRA_POINTS, {9,24,11,8}},
@@ -2910,7 +2779,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,13,6,18}},
 				{PYRAMID_POINTS, {5,16,18,6,13}}
 			}},
-		{254976, {
+		{254976, { // Pattern 62 (TechReport), mask 10 13 14 15 16 17
 				{TETRA_POINTS, {0,10,3,15}},
 				{PYRAMID_POINTS, {7,15,14,6,17}},
 				{TETRA_POINTS, {0,4,16,15}},
@@ -2924,7 +2793,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,17,14,10}},
 				{PYRAMID_POINTS, {1,13,14,2,10}}
 			}},
-		{121856, {
+		{121856, { // Pattern 63 (TechReport), mask 10 11 12 14 15 16
 				{TETRA_POINTS, {0,1,11,12}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {1,2,10,14}},
@@ -2938,7 +2807,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {14,6,7,15,16}},
 				{TETRA_POINTS, {5,16,6,14}}
 			}},
-		{17824768, {
+		{17824768, { // Pattern 64 (TechReport), mask 10 11 12 13 14 15 16 17 18 19 24
 				{PRISM_POINTS, {24,13,12,11,1,0}},
 				{PYRAMID_POINTS, {4,12,24,19,16}},
 				{PYRAMID_POINTS, {24,15,7,19,18}},
@@ -2955,7 +2824,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,17,18,14}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{804608, {
+		{804608, { // Pattern 65 (TechReport), mask 8 9 10 14 18 19
 				{PYRAMID_POINTS, {3,10,18,7,19}},
 				{PYRAMID_POINTS, {0,8,10,3,19}},
 				{TETRA_POINTS, {0,4,8,19}},
@@ -2969,7 +2838,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,14,10,5}},
 				{TETRA_POINTS, {5,18,6,14}}
 			}},
-		{34576128, {
+		{34576128, { // Pattern 303 (TechReport), mask 8 9 10 12 15 16 17 18 19 25 26
 				{PYRAMID_POINTS, {4,19,25,16,12}},
 				{PYRAMID_POINTS, {7,18,25,19,15}},
 				{TETRA_POINTS, {12,25,15,19}},
@@ -2990,7 +2859,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,17,6,2,26}},
 				{PYRAMID_POINTS, {2,6,18,10,26}}
 			}},
-		{742400, {
+		{742400, { // Pattern 66 (TechReport), mask 10 12 14 16 17 19
 				{TETRA_POINTS, {1,2,10,14}},
 				{TETRA_POINTS, {0,10,3,12}},
 				{TETRA_POINTS, {0,1,10,12}},
@@ -3005,7 +2874,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,17,14,16}},
 				{TETRA_POINTS, {1,5,17,16}}
 			}},
-		{970240, {
+		{970240, { // Pattern 67 (TechReport), mask 9 10 11 14 15 17 18 19
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {7,18,19,15}},
 				{TETRA_POINTS, {2,10,9,14}},
@@ -3018,7 +2887,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {11,19,17,9,10}},
 				{HEXA_POINTS, {4,5,1,0,19,17,9,11}}
 			}},
-		{445184, {
+		{445184, { // Pattern 68 (TechReport), mask 8 9 11 14 15 17 18
 				{PRISM_POINTS, {14,2,9,15,3,11}},
 				{TETRA_POINTS, {7,18,4,15}},
 				{TETRA_POINTS, {15,14,18,17}},
@@ -3032,7 +2901,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,4,17,8}},
 				{PYRAMID_POINTS, {1,5,17,9,8}}
 			}},
-		{17669888, {
+		{17669888, { // Pattern 69 (TechReport), mask 8 9 10 11 12 15 16 18 19 24
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {12,24,19,4,16}},
@@ -3048,7 +2917,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {6,5,16,18,9}},
 				{PYRAMID_POINTS, {10,2,6,18,9}}
 			}},
-		{579328, {
+		{579328, { // Pattern 70 (TechReport), mask 8 9 10 12 14 15 19
 				{PRISM_POINTS, {12,8,0,15,10,3}},
 				{PYRAMID_POINTS, {12,8,10,15,19}},
 				{PYRAMID_POINTS, {15,14,6,7,19}},
@@ -3063,7 +2932,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,9,8,5}},
 				{TETRA_POINTS, {5,14,9,10}}
 			}},
-		{660480, {
+		{660480, { // Pattern 71 (TechReport), mask 10 12 17 19
 				{TETRA_POINTS, {0,10,3,12}},
 				{TETRA_POINTS, {3,7,19,10}},
 				{TETRA_POINTS, {3,19,12,10}},
@@ -3076,7 +2945,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,2,10,17}},
 				{TETRA_POINTS, {12,5,1,17}}
 			}},
-		{575232, {
+		{575232, { // Pattern 72 (TechReport), mask 8 9 10 14 15 19
 				{PYRAMID_POINTS, {15,14,6,7,19}},
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{TETRA_POINTS, {0,15,19,8}},
@@ -3091,7 +2960,7 @@ namespace patterns {
 				{TETRA_POINTS, {8,9,14,5}},
 				{TETRA_POINTS, {1,9,8,5}}
 			}},
-		{397824, {
+		{397824, { // Pattern 73 (TechReport), mask 9 12 17 18
 				{TETRA_POINTS, {0,9,3,12}},
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {7,12,3,18}},
@@ -3104,7 +2973,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,12}},
 				{PYRAMID_POINTS, {9,17,6,2,18}}
 			}},
-		{1000960, {
+		{1000960, { // Pattern 74 (TechReport), mask 9 10 14 16 17 18 19
 				{PYRAMID_POINTS, {3,10,18,7,19}},
 				{TETRA_POINTS, {19,16,4,0}},
 				{TETRA_POINTS, {0,10,3,19}},
@@ -3118,7 +2987,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{TETRA_POINTS, {9,2,10,14}}
 			}},
-		{1035264, {
+		{1035264, { // Pattern 75 (TechReport), mask 10 11 14 15 16 17 18 19
 				{TETRA_POINTS, {7,18,19,15}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{PYRAMID_POINTS, {0,11,19,4,16}},
@@ -3134,7 +3003,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,16,17,11}},
 				{TETRA_POINTS, {5,16,17,1}}
 			}},
-		{644096, {
+		{644096, { // Pattern 76 (TechReport), mask 10 12 14 15 16 19
 				{PYRAMID_POINTS, {0,3,15,12,10}},
 				{TETRA_POINTS, {1,2,10,14}},
 				{TETRA_POINTS, {0,1,10,12}},
@@ -3149,7 +3018,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,16,5,14}},
 				{TETRA_POINTS, {6,5,16,14}}
 			}},
-		{1025536, {
+		{1025536, { // Pattern 77 (TechReport), mask 9 10 13 15 16 17 18 19
 				{TETRA_POINTS, {0,10,3,15}},
 				{TETRA_POINTS, {18,19,7,15}},
 				{TETRA_POINTS, {19,16,4,0}},
@@ -3163,7 +3032,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,5,13}},
 				{PRISM_POINTS, {9,2,10,17,6,18}}
 			}},
-		{2604800, {
+		{2604800, { // Pattern 304 (TechReport), mask 8 9 10 11 12 13 15 16 17 18 21 26
 				{TETRA_POINTS, {11,15,12,26}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {15,11,10,26}},
@@ -3187,7 +3056,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,21,16,5,26}},
 				{PRISM_POINTS, {9,2,10,17,6,18}}
 			}},
-		{1761024, {
+		{1761024, { // Pattern 78 (TechReport), mask 8 9 10 11 12 14 15 17 19 20
 				{PYRAMID_POINTS, {11,20,10,3,15}},
 				{TETRA_POINTS, {15,10,14,20}},
 				{PYRAMID_POINTS, {20,9,2,10,14}},
@@ -3201,7 +3070,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,5,17,20,12}},
 				{PRISM_POINTS, {1,8,5,9,20,17}}
 			}},
-		{1026048, {
+		{1026048, { // Pattern 79 (TechReport), mask 11 13 15 16 17 18 19
 				{PYRAMID_POINTS, {4,0,11,19,16}},
 				{TETRA_POINTS, {7,19,15,18}},
 				{TETRA_POINTS, {0,16,13,11}},
@@ -3216,7 +3085,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {17,13,11,15,2}},
 				{TETRA_POINTS, {13,5,17,16}}
 			}},
-		{17538560, {
+		{17538560, { // Pattern 80 (TechReport), mask 9 10 11 12 15 16 17 19 24
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PRISM_POINTS, {24,19,17,15,7,6}},
 				{PYRAMID_POINTS, {17,24,15,6,10}},
@@ -3230,7 +3099,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,17,24,16}},
 				{PYRAMID_POINTS, {1,5,17,9,16}}
 			}},
-		{568576, {
+		{568576, { // Pattern 81 (TechReport), mask 8 10 11 13 15 19
 				{PYRAMID_POINTS, {4,0,11,19,8}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {7,6,19,15}},
@@ -3246,7 +3115,7 @@ namespace patterns {
 				{TETRA_POINTS, {15,13,6,19}},
 				{TETRA_POINTS, {19,13,6,5}}
 			}},
-		{708096, {
+		{708096, { // Pattern 82 (TechReport), mask 9 10 11 14 15 17 19
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {2,10,9,14}},
 				{PYRAMID_POINTS, {11,15,14,9,10}},
@@ -3254,7 +3123,7 @@ namespace patterns {
 				{PRISM_POINTS, {17,14,9,19,15,11}},
 				{HEXA_POINTS, {0,1,9,11,4,5,17,19}}
 			}},
-		{17799936, {
+		{17799936, { // Pattern 83 (TechReport), mask 8 9 11 12 15 16 17 18 19 24
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {12,24,19,4,16}},
 				{PYRAMID_POINTS, {24,15,7,19,18}},
@@ -3268,7 +3137,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,17,9,24}},
 				{PRISM_POINTS, {1,9,8,5,17,16}}
 			}},
-		{852736, {
+		{852736, { // Pattern 84 (TechReport), mask 8 9 16 18 19
 				{TETRA_POINTS, {0,8,3,19}},
 				{TETRA_POINTS, {19,7,18,3}},
 				{PYRAMID_POINTS, {4,16,8,0,19}},
@@ -3279,7 +3148,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {16,18,6,5,9}},
 				{PYRAMID_POINTS, {16,5,1,8,9}}
 			}},
-		{3012352, {
+		{3012352, { // Pattern 305 (TechReport), mask 8 9 10 12 13 14 15 16 18 19 21 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{TETRA_POINTS, {12,26,15,19}},
@@ -3304,7 +3173,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,16,18,6,26}},
 				{PYRAMID_POINTS, {13,5,6,14,26}}
 			}},
-		{3127040, {
+		{3127040, { // Pattern 306 (TechReport), mask 8 9 10 12 13 15 16 17 18 19 21 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{TETRA_POINTS, {3,10,15,26}},
@@ -3328,7 +3197,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,26}},
 				{TETRA_POINTS, {13,5,17,26}}
 			}},
-		{305664, {
+		{305664, { // Pattern 85 (TechReport), mask 9 11 13 15 18
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{PYRAMID_POINTS, {11,9,2,3,15}},
 				{TETRA_POINTS, {11,13,9,15}},
@@ -3343,7 +3212,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,4,18,13}},
 				{TETRA_POINTS, {5,18,6,13}}
 			}},
-		{936448, {
+		{936448, { // Pattern 86 (TechReport), mask 9 11 14 17 18 19
 				{PYRAMID_POINTS, {19,11,3,7,18}},
 				{PYRAMID_POINTS, {9,2,3,11,14}},
 				{TETRA_POINTS, {18,3,14,11}},
@@ -3353,7 +3222,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{HEXA_POINTS, {0,1,9,11,4,5,17,19}}
 			}},
-		{637952, {
+		{637952, { // Pattern 87 (TechReport), mask 10 11 12 13 15 16 19
 				{PYRAMID_POINTS, {0,12,13,1,11}},
 				{TETRA_POINTS, {11,10,3,15}},
 				{TETRA_POINTS, {19,7,6,15}},
@@ -3369,7 +3238,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,19,6,13}},
 				{TETRA_POINTS, {13,16,5,6}}
 			}},
-		{723968, {
+		{723968, { // Pattern 88 (TechReport), mask 10 11 16 17 19
 				{PYRAMID_POINTS, {19,11,3,7,10}},
 				{PYRAMID_POINTS, {4,0,11,19,16}},
 				{PYRAMID_POINTS, {19,7,6,17,10}},
@@ -3380,7 +3249,7 @@ namespace patterns {
 				{TETRA_POINTS, {10,2,6,17}},
 				{TETRA_POINTS, {1,2,10,17}}
 			}},
-		{1020928, {
+		{1020928, { // Pattern 89 (TechReport), mask 10 12 15 16 17 18 19
 				{PYRAMID_POINTS, {12,0,3,15,10}},
 				{TETRA_POINTS, {0,1,10,12}},
 				{TETRA_POINTS, {4,19,16,12}},
@@ -3396,7 +3265,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,16,17,1}},
 				{TETRA_POINTS, {1,2,10,17}}
 			}},
-		{361984, {
+		{361984, { // Pattern 90 (TechReport), mask 9 10 15 16 18
 				{TETRA_POINTS, {0,10,3,15}},
 				{TETRA_POINTS, {4,0,15,16}},
 				{PYRAMID_POINTS, {4,7,18,16,15}},
@@ -3409,7 +3278,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {6,5,16,18,9}},
 				{TETRA_POINTS, {16,5,1,9}}
 			}},
-		{843008, {
+		{843008, { // Pattern 91 (TechReport), mask 8 10 11 12 14 15 18 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -3425,7 +3294,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,5,14}},
 				{TETRA_POINTS, {5,18,6,14}}
 			}},
-		{698624, {
+		{698624, { // Pattern 92 (TechReport), mask 8 11 13 15 17 19
 				{TETRA_POINTS, {2,3,11,15}},
 				{PYRAMID_POINTS, {17,19,7,6,15}},
 				{TETRA_POINTS, {2,6,15,17}},
@@ -3438,7 +3307,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,17,15,11,19}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{684800, {
+		{684800, { // Pattern 93 (TechReport), mask 8 9 12 13 14 17 19
 				{TETRA_POINTS, {0,8,3,12}},
 				{TETRA_POINTS, {7,3,14,19}},
 				{PYRAMID_POINTS, {19,7,6,17,14}},
@@ -3451,7 +3320,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,13,17,14,3}},
 				{PRISM_POINTS, {17,13,5,19,12,4}}
 			}},
-		{943616, {
+		{943616, { // Pattern 94 (TechReport), mask 9 10 13 14 17 18 19
 				{PYRAMID_POINTS, {7,3,10,18,19}},
 				{TETRA_POINTS, {0,10,3,19}},
 				{TETRA_POINTS, {0,1,9,13}},
@@ -3466,7 +3335,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,4,19,17,13}},
 				{PYRAMID_POINTS, {9,13,17,14,10}}
 			}},
-		{3129088, {
+		{3129088, { // Pattern 95 (TechReport), mask 8 9 10 11 12 13 15 16 17 18 19 21
 				{TETRA_POINTS, {18,19,7,15}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{PYRAMID_POINTS, {0,12,21,8,11}},
@@ -3483,7 +3352,7 @@ namespace patterns {
 				{PRISM_POINTS, {9,2,10,17,6,18}},
 				{TETRA_POINTS, {15,18,19,21}}
 			}},
-		{3143424, {
+		{3143424, { // Pattern 307 (TechReport), mask 8 9 10 12 13 14 15 16 17 18 19 21 26
 				{PYRAMID_POINTS, {0,3,15,12,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{TETRA_POINTS, {15,3,10,26}},
@@ -3509,7 +3378,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,5,17,26}},
 				{TETRA_POINTS, {5,16,17,26}}
 			}},
-		{544000, {
+		{544000, { // Pattern 96 (TechReport), mask 8 10 11 14 19
 				{PYRAMID_POINTS, {4,0,11,19,8}},
 				{PYRAMID_POINTS, {19,11,3,7,10}},
 				{TETRA_POINTS, {8,10,11,19}},
@@ -3522,7 +3391,7 @@ namespace patterns {
 				{TETRA_POINTS, {8,1,14,5}},
 				{TETRA_POINTS, {5,19,6,14}}
 			}},
-		{697344, {
+		{697344, { // Pattern 97 (TechReport), mask 10 13 15 17 19
 				{TETRA_POINTS, {0,10,3,15}},
 				{PYRAMID_POINTS, {7,6,17,19,15}},
 				{TETRA_POINTS, {0,1,10,13}},
@@ -3537,7 +3406,7 @@ namespace patterns {
 				{TETRA_POINTS, {10,2,17,13}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{112128, {
+		{112128, { // Pattern 98 (TechReport), mask 9 10 12 13 15 16
 				{PYRAMID_POINTS, {4,12,15,7,16}},
 				{PYRAMID_POINTS, {0,3,15,12,10}},
 				{TETRA_POINTS, {0,9,10,12}},
@@ -3551,7 +3420,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,16,13,6}},
 				{TETRA_POINTS, {16,5,13,6}}
 			}},
-		{17678080, {
+		{17678080, { // Pattern 99 (TechReport), mask 8 9 10 11 12 13 15 16 18 19 24
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {12,24,19,4,16}},
@@ -3569,7 +3438,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {12,16,13,8,24}},
 				{PYRAMID_POINTS, {6,5,16,18,13}}
 			}},
-		{176384, {
+		{176384, { // Pattern 100 (TechReport), mask 8 12 13 15 17
 				{PYRAMID_POINTS, {0,3,15,12,8}},
 				{TETRA_POINTS, {2,3,8,15}},
 				{TETRA_POINTS, {8,2,15,13}},
@@ -3582,7 +3451,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,13,15,17}},
 				{PYRAMID_POINTS, {12,4,5,13,17}}
 			}},
-		{317952, {
+		{317952, { // Pattern 101 (TechReport), mask 9 11 12 14 15 18
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{PRISM_POINTS, {14,2,9,15,3,11}},
 				{PYRAMID_POINTS, {11,9,14,15,12}},
@@ -3594,7 +3463,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,5,9,12}},
 				{TETRA_POINTS, {14,6,18,5}}
 			}},
-		{181504, {
+		{181504, { // Pattern 102 (TechReport), mask 8 10 14 15 17
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{PYRAMID_POINTS, {1,2,10,8,14}},
 				{TETRA_POINTS, {14,15,10,8}},
@@ -3607,7 +3476,7 @@ namespace patterns {
 				{TETRA_POINTS, {8,1,17,5}},
 				{TETRA_POINTS, {5,8,4,17}}
 			}},
-		{794368, {
+		{794368, { // Pattern 103 (TechReport), mask 8 9 10 11 12 18 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {12,8,11,19}},
 				{TETRA_POINTS, {12,8,19,5}},
@@ -3619,7 +3488,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {10,2,6,18,9}},
 				{TETRA_POINTS, {5,18,6,9}}
 			}},
-		{681472, {
+		{681472, { // Pattern 104 (TechReport), mask 9 10 13 14 17 19
 				{TETRA_POINTS, {7,19,3,10}},
 				{TETRA_POINTS, {3,0,10,19}},
 				{TETRA_POINTS, {0,9,10,19}},
@@ -3633,7 +3502,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,17,14,9,19}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{612608, {
+		{612608, { // Pattern 105 (TechReport), mask 8 11 12 14 16 19
 				{TETRA_POINTS, {11,2,3,14}},
 				{TETRA_POINTS, {2,11,8,14}},
 				{TETRA_POINTS, {1,2,8,14}},
@@ -3647,7 +3516,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,6,5,14}},
 				{PYRAMID_POINTS, {16,5,1,8,14}}
 			}},
-		{164096, {
+		{164096, { // Pattern 106 (TechReport), mask 8 15 17
 				{TETRA_POINTS, {0,8,3,15}},
 				{TETRA_POINTS, {3,8,2,15}},
 				{TETRA_POINTS, {4,0,15,8}},
@@ -3660,7 +3529,7 @@ namespace patterns {
 				{TETRA_POINTS, {8,1,2,17}},
 				{TETRA_POINTS, {8,1,17,5}}
 			}},
-		{162304, {
+		{162304, { // Pattern 107 (TechReport), mask 9 11 12 13 14 17
 				{PRISM_POINTS, {1,13,9,0,12,11}},
 				{PYRAMID_POINTS, {11,9,2,3,14}},
 				{TETRA_POINTS, {3,11,14,7}},
@@ -3670,7 +3539,7 @@ namespace patterns {
 				{TETRA_POINTS, {7,4,12,17}},
 				{PYRAMID_POINTS, {12,4,5,13,17}}
 			}},
-		{830976, {
+		{830976, { // Pattern 108 (TechReport), mask 9 10 11 13 15 18 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {9,10,11,13}},
 				{PYRAMID_POINTS, {19,4,0,11,13}},
@@ -3685,7 +3554,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,9,13,18}},
 				{TETRA_POINTS, {6,5,18,13}}
 			}},
-		{111360, {
+		{111360, { // Pattern 109 (TechReport), mask 8 9 12 13 15 16
 				{PYRAMID_POINTS, {15,12,0,3,8}},
 				{TETRA_POINTS, {9,3,8,15}},
 				{TETRA_POINTS, {9,2,3,15}},
@@ -3699,7 +3568,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,6,15}},
 				{TETRA_POINTS, {16,13,6,5}}
 			}},
-		{699392, {
+		{699392, { // Pattern 110 (TechReport), mask 10 11 13 15 17 19
 				{TETRA_POINTS, {0,1,11,13}},
 				{TETRA_POINTS, {1,10,11,13}},
 				{TETRA_POINTS, {1,2,10,13}},
@@ -3715,7 +3584,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,13,17,10}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{906752, {
+		{906752, { // Pattern 111 (TechReport), mask 9 10 12 14 15 16 18 19
 				{PYRAMID_POINTS, {12,0,3,15,10}},
 				{TETRA_POINTS, {9,2,10,14}},
 				{TETRA_POINTS, {0,1,9,12}},
@@ -3730,14 +3599,14 @@ namespace patterns {
 				{TETRA_POINTS, {1,16,5,9}},
 				{PYRAMID_POINTS, {5,16,18,6,14}}
 			}},
-		{345344, {
+		{345344, { // Pattern 112 (TechReport), mask 8 10 14 16 18
 				{PYRAMID_POINTS, {5,16,18,6,14}},
 				{PYRAMID_POINTS, {16,5,1,8,14}},
 				{PYRAMID_POINTS, {8,1,2,10,14}},
 				{PYRAMID_POINTS, {18,16,8,10,14}},
 				{HEXA_POINTS, {0,8,10,3,4,16,18,7}}
 			}},
-		{967424, {
+		{967424, { // Pattern 113 (TechReport), mask 8 9 14 15 17 18 19
 				{TETRA_POINTS, {4,0,19,8}},
 				{TETRA_POINTS, {3,0,8,15}},
 				{TETRA_POINTS, {0,15,19,8}},
@@ -3752,7 +3621,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {5,4,19,17,8}},
 				{PYRAMID_POINTS, {1,5,17,9,8}}
 			}},
-		{385536, {
+		{385536, { // Pattern 114 (TechReport), mask 9 13 14 15 16 18
 				{PYRAMID_POINTS, {15,3,2,14,9}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {0,9,15,13}},
@@ -3764,7 +3633,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,16,18,14,15}},
 				{PRISM_POINTS, {16,5,13,18,6,14}}
 			}},
-		{454400, {
+		{454400, { // Pattern 115 (TechReport), mask 8 9 10 11 13 14 15 17 18
 				{TETRA_POINTS, {0,8,11,4}},
 				{TETRA_POINTS, {4,7,18,15}},
 				{TETRA_POINTS, {9,2,10,14}},
@@ -3780,7 +3649,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,4,17,13}},
 				{PYRAMID_POINTS, {13,17,14,9,10}}
 			}},
-		{1769216, {
+		{1769216, { // Pattern 116 (TechReport), mask 8 9 10 11 12 13 14 15 17 19 20
 				{PYRAMID_POINTS, {0,8,20,11,12}},
 				{PYRAMID_POINTS, {1,9,20,8,13}},
 				{PYRAMID_POINTS, {9,2,10,20,14}},
@@ -3794,7 +3663,7 @@ namespace patterns {
 				{PRISM_POINTS, {13,5,17,12,4,19}},
 				{PRISM_POINTS, {17,6,14,19,7,15}}
 			}},
-		{754432, {
+		{754432, { // Pattern 117 (TechReport), mask 8 9 15 16 17 19
 				{TETRA_POINTS, {0,8,3,15}},
 				{TETRA_POINTS, {8,9,3,15}},
 				{TETRA_POINTS, {9,2,3,15}},
@@ -3807,13 +3676,13 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,17,9,15}},
 				{PRISM_POINTS, {8,1,9,16,5,17}}
 			}},
-		{723712, {
+		{723712, { // Pattern 118 (TechReport), mask 8 9 11 16 17 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PRISM_POINTS, {11,8,9,19,16,17}},
 				{PRISM_POINTS, {8,1,9,16,5,17}},
 				{HEXA_POINTS, {9,2,3,11,17,6,7,19}}
 			}},
-		{552448, {
+		{552448, { // Pattern 119 (TechReport), mask 9 10 11 13 14 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {9,2,10,14}},
 				{PYRAMID_POINTS, {7,19,11,3,10}},
@@ -3827,7 +3696,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,4,19,13}},
 				{PYRAMID_POINTS, {13,5,6,14,19}}
 			}},
-		{169216, {
+		{169216, { // Pattern 120 (TechReport), mask 8 10 12 15 17
 				{TETRA_POINTS, {17,7,6,15}},
 				{TETRA_POINTS, {6,15,10,17}},
 				{TETRA_POINTS, {6,10,2,17}},
@@ -3839,7 +3708,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,2,10,8,17}},
 				{TETRA_POINTS, {5,1,8,17}}
 			}},
-		{759296, {
+		{759296, { // Pattern 121 (TechReport), mask 9 10 12 15 16 17 19
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{PYRAMID_POINTS, {15,12,0,3,10}},
@@ -3855,7 +3724,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,12,16,9}},
 				{PYRAMID_POINTS, {9,1,5,17,16}}
 			}},
-		{124672, {
+		{124672, { // Pattern 122 (TechReport), mask 8 9 10 13 14 15 16
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{PYRAMID_POINTS, {0,4,16,8,15}},
 				{TETRA_POINTS, {4,7,16,15}},
@@ -3868,7 +3737,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,2,10,14}},
 				{PYRAMID_POINTS, {8,10,14,13,9}}
 			}},
-		{957696, {
+		{957696, { // Pattern 123 (TechReport), mask 8 10 11 12 15 17 18 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {11,10,3,15}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -3884,7 +3753,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,8,12,17}},
 				{TETRA_POINTS, {8,5,1,17}}
 			}},
-		{661248, {
+		{661248, { // Pattern 124 (TechReport), mask 8 9 10 12 17 19
 				{PYRAMID_POINTS, {0,8,10,3,12}},
 				{TETRA_POINTS, {3,7,19,10}},
 				{TETRA_POINTS, {3,19,12,10}},
@@ -3897,7 +3766,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,8}},
 				{PYRAMID_POINTS, {9,17,6,2,10}}
 			}},
-		{988672, {
+		{988672, { // Pattern 125 (TechReport), mask 9 10 12 16 17 18 19
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{TETRA_POINTS, {0,10,3,12}},
@@ -3910,7 +3779,7 @@ namespace patterns {
 				{PRISM_POINTS, {9,2,10,17,6,18}},
 				{PYRAMID_POINTS, {1,5,17,9,16}}
 			}},
-		{774912, {
+		{774912, { // Pattern 126 (TechReport), mask 8 9 12 14 15 16 17 19
 				{PYRAMID_POINTS, {0,3,15,12,8}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -3923,7 +3792,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {8,16,17,9,19}},
 				{PRISM_POINTS, {1,9,8,5,17,16}}
 			}},
-		{259072, {
+		{259072, { // Pattern 127 (TechReport), mask 10 12 13 14 15 16 17
 				{PYRAMID_POINTS, {15,12,0,3,10}},
 				{PYRAMID_POINTS, {1,0,12,13,10}},
 				{PYRAMID_POINTS, {15,14,13,12,10}},
@@ -3936,7 +3805,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,16,13,17}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{941568, {
+		{941568, { // Pattern 128 (TechReport), mask 9 10 11 12 14 17 18 19
 				{PRISM_POINTS, {19,7,18,11,3,10}},
 				{PRISM_POINTS, {19,18,17,11,10,9}},
 				{TETRA_POINTS, {9,2,10,14}},
@@ -3947,7 +3816,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{PYRAMID_POINTS, {11,9,17,19,12}}
 			}},
-		{896512, {
+		{896512, { // Pattern 129 (TechReport), mask 9 10 11 13 15 16 18 19
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {18,19,7,15}},
 				{PYRAMID_POINTS, {10,11,19,18,15}},
@@ -3963,7 +3832,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,6,9,18}},
 				{PYRAMID_POINTS, {16,18,6,5,13}}
 			}},
-		{834816, {
+		{834816, { // Pattern 130 (TechReport), mask 8 10 11 12 13 15 18 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -3979,7 +3848,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,5,18,13}},
 				{PYRAMID_POINTS, {13,12,4,5,19}}
 			}},
-		{431360, {
+		{431360, { // Pattern 131 (TechReport), mask 8 10 12 15 17 18
 				{PRISM_POINTS, {8,0,12,10,3,15}},
 				{PYRAMID_POINTS, {7,4,12,15,18}},
 				{TETRA_POINTS, {18,15,10,17}},
@@ -3992,7 +3861,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,5,8,17}},
 				{TETRA_POINTS, {8,5,1,17}}
 			}},
-		{739072, {
+		{739072, { // Pattern 132 (TechReport), mask 8 9 10 14 16 17 19
 				{TETRA_POINTS, {3,10,7,19}},
 				{TETRA_POINTS, {10,14,7,19}},
 				{PYRAMID_POINTS, {7,6,17,19,14}},
@@ -4006,7 +3875,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,14,9,10}},
 				{PRISM_POINTS, {1,9,8,5,17,16}}
 			}},
-		{515584, {
+		{515584, { // Pattern 133 (TechReport), mask 9 10 11 12 14 15 16 17 18
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {9,2,10,14}},
@@ -4021,7 +3890,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,14,9,18}},
 				{TETRA_POINTS, {18,6,17,14}}
 			}},
-		{416000, {
+		{416000, { // Pattern 134 (TechReport), mask 8 11 12 14 17 18
 				{TETRA_POINTS, {1,2,8,14}},
 				{TETRA_POINTS, {8,2,11,14}},
 				{TETRA_POINTS, {11,2,3,14}},
@@ -4039,7 +3908,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,17,14,8}},
 				{TETRA_POINTS, {5,4,17,12}}
 			}},
-		{660992, {
+		{660992, { // Pattern 135 (TechReport), mask 9 10 12 17 19
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{TETRA_POINTS, {0,10,3,12}},
@@ -4052,7 +3921,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,12}},
 				{PYRAMID_POINTS, {2,9,17,6,10}}
 			}},
-		{941824, {
+		{941824, { // Pattern 136 (TechReport), mask 8 9 10 11 12 14 17 18 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{PYRAMID_POINTS, {19,11,10,18,12}},
@@ -4067,7 +3936,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{PYRAMID_POINTS, {18,17,9,10,14}}
 			}},
-		{539904, {
+		{539904, { // Pattern 137 (TechReport), mask 8 10 11 12 13 19
 				{TETRA_POINTS, {0,8,11,12}},
 				{TETRA_POINTS, {10,11,8,13}},
 				{TETRA_POINTS, {13,8,12,11}},
@@ -4081,7 +3950,7 @@ namespace patterns {
 				{TETRA_POINTS, {6,5,19,13}},
 				{PYRAMID_POINTS, {13,12,4,5,19}}
 			}},
-		{431616, {
+		{431616, { // Pattern 138 (TechReport), mask 9 10 12 15 17 18
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{PYRAMID_POINTS, {15,12,0,3,10}},
@@ -4093,7 +3962,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,5,17,9,12}},
 				{PRISM_POINTS, {9,2,10,17,6,18}}
 			}},
-		{874240, {
+		{874240, { // Pattern 139 (TechReport), mask 8 9 10 12 14 16 18 19
 				{PYRAMID_POINTS, {0,8,10,3,12}},
 				{PYRAMID_POINTS, {3,10,18,7,19}},
 				{TETRA_POINTS, {12,3,19,10}},
@@ -4109,7 +3978,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,14,9,16}},
 				{PYRAMID_POINTS, {1,8,16,5,9}}
 			}},
-		{898304, {
+		{898304, { // Pattern 140 (TechReport), mask 8 10 12 13 15 16 18 19
 				{PRISM_POINTS, {8,0,12,10,3,15}},
 				{TETRA_POINTS, {18,19,7,15}},
 				{TETRA_POINTS, {16,4,19,12}},
@@ -4122,7 +3991,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {16,18,6,5,13}},
 				{PYRAMID_POINTS, {12,16,13,8,18}}
 			}},
-		{493312, {
+		{493312, { // Pattern 141 (TechReport), mask 8 9 10 15 16 17 18
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{PYRAMID_POINTS, {0,4,16,8,15}},
 				{PYRAMID_POINTS, {4,7,18,16,15}},
@@ -4131,7 +4000,7 @@ namespace patterns {
 				{PRISM_POINTS, {8,9,10,16,17,18}},
 				{PRISM_POINTS, {9,2,10,17,6,18}}
 			}},
-		{989696, {
+		{989696, { // Pattern 142 (TechReport), mask 9 11 12 16 17 18 19
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{PYRAMID_POINTS, {19,11,3,7,18}},
 				{PYRAMID_POINTS, {11,9,2,3,18}},
@@ -4144,7 +4013,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,9,17,6,18}},
 				{PYRAMID_POINTS, {19,18,17,16,9}}
 			}},
-		{749312, {
+		{749312, { // Pattern 143 (TechReport), mask 8 9 10 11 13 14 16 17 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PYRAMID_POINTS, {7,19,11,3,10}},
 				{TETRA_POINTS, {7,10,14,19}},
@@ -4158,7 +4027,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,13,17,14,16}},
 				{TETRA_POINTS, {17,5,16,13}}
 			}},
-		{979712, {
+		{979712, { // Pattern 144 (TechReport), mask 8 9 12 13 14 15 17 18 19
 				{PYRAMID_POINTS, {15,12,0,3,8}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
 				{TETRA_POINTS, {3,8,9,15}},
@@ -4173,7 +4042,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,9,8,13}},
 				{PRISM_POINTS, {19,4,12,17,5,13}}
 			}},
-		{859648, {
+		{859648, { // Pattern 145 (TechReport), mask 9 10 11 12 16 18 19
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{PYRAMID_POINTS, {18,19,11,10,9}},
 				{PYRAMID_POINTS, {10,2,6,18,9}},
@@ -4186,7 +4055,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,16,5,9}},
 				{PYRAMID_POINTS, {6,5,16,18,9}}
 			}},
-		{399872, {
+		{399872, { // Pattern 146 (TechReport), mask 9 11 12 17 18
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{TETRA_POINTS, {7,4,12,18}},
 				{TETRA_POINTS, {7,12,11,18}},
@@ -4199,7 +4068,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,18,17,12}},
 				{PYRAMID_POINTS, {2,9,17,6,18}}
 			}},
-		{1020416, {
+		{1020416, { // Pattern 147 (TechReport), mask 9 12 15 16 17 18 19
 				{PYRAMID_POINTS, {15,12,0,3,9}},
 				{TETRA_POINTS, {0,1,9,12}},
 				{TETRA_POINTS, {3,9,2,15}},
@@ -4214,7 +4083,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,9,17,6,18}},
 				{PYRAMID_POINTS, {1,5,17,9,16}}
 			}},
-		{584960, {
+		{584960, { // Pattern 148 (TechReport), mask 8 10 11 13 14 15 19
 				{PYRAMID_POINTS, {19,4,0,11,8}},
 				{TETRA_POINTS, {3,11,10,15}},
 				{PYRAMID_POINTS, {15,14,6,7,19}},
@@ -4227,7 +4096,7 @@ namespace patterns {
 				{TETRA_POINTS, {4,5,13,19}},
 				{PYRAMID_POINTS, {14,13,5,6,19}}
 			}},
-		{961792, {
+		{961792, { // Pattern 149 (TechReport), mask 8 10 11 13 15 17 18 19
 				{PYRAMID_POINTS, {0,11,19,4,8}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -4243,7 +4112,7 @@ namespace patterns {
 				{TETRA_POINTS, {10,13,2,17}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{880128, {
+		{880128, { // Pattern 150 (TechReport), mask 9 10 11 13 14 16 18 19
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{PYRAMID_POINTS, {19,4,0,11,16}},
 				{PYRAMID_POINTS, {0,1,9,11,13}},
@@ -4256,7 +4125,7 @@ namespace patterns {
 				{TETRA_POINTS, {10,9,14,13}},
 				{PRISM_POINTS, {16,5,13,18,6,14}}
 			}},
-		{858880, {
+		{858880, { // Pattern 151 (TechReport), mask 8 9 11 12 16 18 19
 				{TETRA_POINTS, {11,0,8,12}},
 				{TETRA_POINTS, {16,4,19,12}},
 				{PYRAMID_POINTS, {19,11,3,7,18}},
@@ -4269,7 +4138,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {6,5,16,18,9}},
 				{PYRAMID_POINTS, {1,8,16,5,9}}
 			}},
-		{438784, {
+		{438784, { // Pattern 152 (TechReport), mask 9 12 13 15 17 18
 				{TETRA_POINTS, {3,9,2,15}},
 				{PYRAMID_POINTS, {15,12,0,3,9}},
 				{PYRAMID_POINTS, {0,12,13,1,9}},
@@ -4282,7 +4151,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,9,17,6,18}},
 				{PYRAMID_POINTS, {13,12,4,5,17}}
 			}},
-		{745728, {
+		{745728, { // Pattern 153 (TechReport), mask 8 13 14 16 17 19
 				{TETRA_POINTS, {19,3,7,14}},
 				{PYRAMID_POINTS, {17,19,7,6,14}},
 				{TETRA_POINTS, {3,8,2,14}},
@@ -4296,7 +4165,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,5,13}},
 				{PYRAMID_POINTS, {1,13,14,2,8}}
 			}},
-		{355072, {
+		{355072, { // Pattern 154 (TechReport), mask 8 9 11 13 14 16 18
 				{TETRA_POINTS, {7,3,18,11}},
 				{PYRAMID_POINTS, {18,16,4,7,11}},
 				{PYRAMID_POINTS, {8,0,4,16,11}},
@@ -4309,7 +4178,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,16,18,14,11}},
 				{PRISM_POINTS, {16,5,13,18,6,14}}
 			}},
-		{673024, {
+		{673024, { // Pattern 155 (TechReport), mask 8 10 14 17 19
 				{TETRA_POINTS, {19,3,7,10}},
 				{PYRAMID_POINTS, {0,8,10,3,19}},
 				{TETRA_POINTS, {4,0,19,8}},
@@ -4322,7 +4191,7 @@ namespace patterns {
 				{TETRA_POINTS, {14,1,17,8}},
 				{TETRA_POINTS, {17,1,5,8}}
 			}},
-		{22019840, {
+		{22019840, { // Pattern 156 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 22 24
 				{PYRAMID_POINTS, {24,12,0,11,8}},
 				{PYRAMID_POINTS, {19,4,12,24,16}},
 				{PYRAMID_POINTS, {7,19,24,15,18}},
@@ -4344,7 +4213,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {22,13,5,17,16}},
 				{PYRAMID_POINTS, {12,16,13,8,24}}
 			}},
-		{184832, {
+		{184832, { // Pattern 157 (TechReport), mask 9 12 14 15 17
 				{TETRA_POINTS, {0,1,9,12}},
 				{PYRAMID_POINTS, {15,12,0,3,9}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -4355,7 +4224,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,9,15,17}},
 				{PYRAMID_POINTS, {9,1,5,17,12}}
 			}},
-		{369920, {
+		{369920, { // Pattern 158 (TechReport), mask 8 10 13 15 16 18
 				{PYRAMID_POINTS, {0,8,10,3,15}},
 				{PYRAMID_POINTS, {0,4,16,8,15}},
 				{PYRAMID_POINTS, {4,7,18,16,15}},
@@ -4365,7 +4234,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {2,6,18,10,13}},
 				{PYRAMID_POINTS, {6,5,16,18,13}}
 			}},
-		{1001216, {
+		{1001216, { // Pattern 159 (TechReport), mask 8 9 10 14 16 17 18 19
 				{PYRAMID_POINTS, {7,3,10,18,19}},
 				{PYRAMID_POINTS, {16,8,0,4,19}},
 				{PYRAMID_POINTS, {0,8,10,3,19}},
@@ -4378,7 +4247,7 @@ namespace patterns {
 				{TETRA_POINTS, {9,2,10,14}},
 				{TETRA_POINTS, {17,18,6,14}}
 			}},
-		{241152, {
+		{241152, { // Pattern 160 (TechReport), mask 9 10 11 13 15 16 17
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {4,0,11,16}},
@@ -4395,7 +4264,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,13,9,17}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{448256, {
+		{448256, { // Pattern 161 (TechReport), mask 8 9 10 12 14 15 17 18
 				{PRISM_POINTS, {8,0,12,10,3,15}},
 				{PYRAMID_POINTS, {7,4,12,15,18}},
 				{TETRA_POINTS, {12,17,15,18}},
@@ -4410,7 +4279,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,5,8,17}},
 				{PYRAMID_POINTS, {9,1,5,17,8}}
 			}},
-		{980736, {
+		{980736, { // Pattern 162 (TechReport), mask 8 9 10 12 13 14 15 17 18 19
 				{PRISM_POINTS, {8,0,12,10,3,15}},
 				{PYRAMID_POINTS, {15,12,8,10,13}},
 				{TETRA_POINTS, {8,9,10,13}},
@@ -4425,7 +4294,7 @@ namespace patterns {
 				{PRISM_POINTS, {13,5,17,12,4,19}},
 				{PYRAMID_POINTS, {9,13,17,14,10}}
 			}},
-		{749056, {
+		{749056, { // Pattern 163 (TechReport), mask 9 10 11 13 14 16 17 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{TETRA_POINTS, {9,2,10,14}},
 				{PYRAMID_POINTS, {7,19,11,3,10}},
@@ -4441,7 +4310,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,13,11}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{1045504, {
+		{1045504, { // Pattern 164 (TechReport), mask 10 12 13 14 15 16 17 18 19
 				{PYRAMID_POINTS, {15,12,0,3,10}},
 				{PYRAMID_POINTS, {0,12,13,1,10}},
 				{TETRA_POINTS, {13,12,15,10}},
@@ -4457,7 +4326,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,5,13}},
 				{PYRAMID_POINTS, {19,18,17,16,13}}
 			}},
-		{179200, {
+		{179200, { // Pattern 165 (TechReport), mask 10 11 12 13 15 17
 				{PYRAMID_POINTS, {0,12,13,1,11}},
 				{TETRA_POINTS, {11,1,10,13}},
 				{TETRA_POINTS, {10,1,2,13}},
@@ -4473,7 +4342,7 @@ namespace patterns {
 				{TETRA_POINTS, {2,6,10,17}},
 				{TETRA_POINTS, {2,13,17,10}}
 			}},
-		{739840, {
+		{739840, { // Pattern 166 (TechReport), mask 9 11 14 16 17 19
 				{PYRAMID_POINTS, {4,0,11,19,16}},
 				{PYRAMID_POINTS, {2,3,11,9,14}},
 				{PYRAMID_POINTS, {3,7,19,11,14}},
@@ -4483,7 +4352,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {0,1,9,11,16}},
 				{PYRAMID_POINTS, {1,5,17,9,16}}
 			}},
-		{261888, {
+		{261888, { // Pattern 167 (TechReport), mask 8 9 10 11 12 13 14 15 16 17
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {0,8,11,12}},
 				{PYRAMID_POINTS, {8,9,10,11,15}},
@@ -4500,7 +4369,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,17,15}},
 				{TETRA_POINTS, {17,16,13,5}}
 			}},
-		{687872, {
+		{687872, { // Pattern 168 (TechReport), mask 8 9 10 11 12 13 14 17 19
 				{PYRAMID_POINTS, {3,7,19,11,10}},
 				{TETRA_POINTS, {11,0,8,12}},
 				{TETRA_POINTS, {7,10,14,19}},
@@ -4514,7 +4383,7 @@ namespace patterns {
 				{PRISM_POINTS, {12,13,9,19,17,14}},
 				{PRISM_POINTS, {19,4,12,17,5,13}}
 			}},
-		{659200, {
+		{659200, { // Pattern 169 (TechReport), mask 8 9 10 11 17 19
 				{PYRAMID_POINTS, {4,0,11,19,8}},
 				{PYRAMID_POINTS, {3,7,19,11,10}},
 				{PYRAMID_POINTS, {8,9,10,11,19}},
@@ -4525,7 +4394,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,1,5,17,8}},
 				{PYRAMID_POINTS, {5,4,19,17,8}}
 			}},
-		{944640, {
+		{944640, { // Pattern 170 (TechReport), mask 9 11 13 14 17 18 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{PYRAMID_POINTS, {11,9,2,3,14}},
 				{PYRAMID_POINTS, {4,0,11,19,13}},
@@ -4538,7 +4407,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{PYRAMID_POINTS, {5,4,19,17,13}}
 			}},
-		{1035008, {
+		{1035008, { // Pattern 308 (TechReport), mask 8 9 11 14 15 16 17 18 19 26
 				{PRISM_POINTS, {11,3,15,9,2,14}},
 				{PYRAMID_POINTS, {11,9,14,15,26}},
 				{TETRA_POINTS, {11,15,19,26}},
@@ -4555,7 +4424,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,8,16,17,26}},
 				{PRISM_POINTS, {8,1,9,16,5,17}}
 			}},
-		{994560, {
+		{994560, { // Pattern 171 (TechReport), mask 8 10 11 13 16 17 18 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{TETRA_POINTS, {10,11,8,13}},
@@ -4568,7 +4437,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {10,2,6,18,17}},
 				{TETRA_POINTS, {17,2,13,10}}
 			}},
-		{847616, {
+		{847616, { // Pattern 172 (TechReport), mask 8 9 10 11 13 14 15 18 19
 				{PYRAMID_POINTS, {19,4,0,11,8}},
 				{PYRAMID_POINTS, {8,9,10,11,13}},
 				{TETRA_POINTS, {19,8,11,13}},
@@ -4586,7 +4455,7 @@ namespace patterns {
 				{TETRA_POINTS, {14,9,13,10}},
 				{PYRAMID_POINTS, {14,13,5,6,18}}
 			}},
-		{1038080, {
+		{1038080, { // Pattern 309 (TechReport), mask 8 9 10 12 14 15 16 17 18 19 26
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{PYRAMID_POINTS, {12,8,10,15,26}},
 				{TETRA_POINTS, {15,19,12,26}},
@@ -4606,7 +4475,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,8,16,17,26}},
 				{PRISM_POINTS, {8,1,9,16,5,17}}
 			}},
-		{1032960, {
+		{1032960, { // Pattern 173 (TechReport), mask 8 9 14 15 16 17 18 19
 				{TETRA_POINTS, {3,0,8,15}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -4620,7 +4489,7 @@ namespace patterns {
 				{PRISM_POINTS, {19,16,8,18,17,9}},
 				{PRISM_POINTS, {8,1,9,16,5,17}}
 			}},
-		{520704, {
+		{520704, { // Pattern 174 (TechReport), mask 9 12 13 14 15 16 17 18
 				{PYRAMID_POINTS, {3,2,14,15,9}},
 				{PYRAMID_POINTS, {15,12,0,3,9}},
 				{PYRAMID_POINTS, {0,12,13,1,9}},
@@ -4634,7 +4503,7 @@ namespace patterns {
 				{TETRA_POINTS, {18,17,16,13}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{685312, {
+		{685312, { // Pattern 175 (TechReport), mask 8 10 12 13 14 17 19
 				{PYRAMID_POINTS, {0,8,10,3,12}},
 				{TETRA_POINTS, {19,3,7,10}},
 				{TETRA_POINTS, {12,3,19,10}},
@@ -4646,7 +4515,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {19,17,13,12,14}},
 				{PRISM_POINTS, {19,4,12,17,5,13}}
 			}},
-		{464128, {
+		{464128, { // Pattern 176 (TechReport), mask 8 10 12 16 17 18
 				{PYRAMID_POINTS, {0,8,10,3,12}},
 				{PYRAMID_POINTS, {7,3,10,18,12}},
 				{PYRAMID_POINTS, {4,7,18,16,12}},
@@ -4656,7 +4525,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,17}},
 				{PYRAMID_POINTS, {10,2,6,18,17}}
 			}},
-		{481536, {
+		{481536, { // Pattern 177 (TechReport), mask 8 11 12 14 16 17 18
 				{TETRA_POINTS, {11,2,3,14}},
 				{TETRA_POINTS, {8,2,11,14}},
 				{TETRA_POINTS, {1,2,8,14}},
@@ -4673,7 +4542,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,17}},
 				{TETRA_POINTS, {17,18,6,14}}
 			}},
-		{17825536, {
+		{17825536, { // Pattern 178 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19 24
 				{PYRAMID_POINTS, {0,11,24,12,8}},
 				{PYRAMID_POINTS, {11,3,15,24,10}},
 				{PYRAMID_POINTS, {24,15,7,19,18}},
@@ -4692,7 +4561,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,13,17,14,24}},
 				{PYRAMID_POINTS, {19,18,17,16,24}}
 			}},
-		{871168, {
+		{871168, { // Pattern 179 (TechReport), mask 8 9 11 14 16 18 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PYRAMID_POINTS, {19,11,3,7,18}},
 				{PYRAMID_POINTS, {11,9,2,3,14}},
@@ -4706,7 +4575,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,9,14,5}},
 				{PYRAMID_POINTS, {6,5,16,18,14}}
 			}},
-		{587264, {
+		{587264, { // Pattern 180 (TechReport), mask 9 10 12 13 14 15 19
 				{PYRAMID_POINTS, {15,12,0,3,10}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{PYRAMID_POINTS, {1,0,12,13,9}},
@@ -4719,7 +4588,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {15,14,6,7,19}},
 				{PYRAMID_POINTS, {12,13,14,15,19}}
 			}},
-		{171520, {
+		{171520, { // Pattern 181 (TechReport), mask 9 10 11 12 15 17
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {9,10,11,15}},
@@ -4733,7 +4602,7 @@ namespace patterns {
 				{TETRA_POINTS, {17,5,4,12}},
 				{PYRAMID_POINTS, {1,5,17,9,12}}
 			}},
-		{724224, {
+		{724224, { // Pattern 182 (TechReport), mask 8 10 11 16 17 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PYRAMID_POINTS, {19,11,3,7,10}},
 				{PYRAMID_POINTS, {19,16,8,11,10}},
@@ -4744,7 +4613,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,2,10,8,17}},
 				{PYRAMID_POINTS, {5,1,8,16,17}}
 			}},
-		{430848, {
+		{430848, { // Pattern 183 (TechReport), mask 8 9 12 15 17 18
 				{PYRAMID_POINTS, {0,3,15,12,8}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{TETRA_POINTS, {3,9,2,15}},
@@ -4760,7 +4629,7 @@ namespace patterns {
 				{TETRA_POINTS, {12,5,8,17}},
 				{PYRAMID_POINTS, {9,1,5,17,8}}
 			}},
-		{912128, {
+		{912128, { // Pattern 184 (TechReport), mask 8 9 11 13 14 15 16 18 19
 				{PRISM_POINTS, {11,0,8,19,4,16}},
 				{PRISM_POINTS, {11,3,15,9,2,14}},
 				{TETRA_POINTS, {11,8,9,13}},
@@ -4774,7 +4643,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,16,18,14,19}},
 				{PRISM_POINTS, {14,6,18,13,5,16}}
 			}},
-		{639744, {
+		{639744, { // Pattern 185 (TechReport), mask 8 9 14 15 16 19
 				{TETRA_POINTS, {3,0,8,15}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -4790,7 +4659,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,9,16,14}},
 				{PYRAMID_POINTS, {5,1,8,16,9}}
 			}},
-		{876032, {
+		{876032, { // Pattern 186 (TechReport), mask 9 10 11 12 14 16 18 19
 				{PYRAMID_POINTS, {0,1,9,11,12}},
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{TETRA_POINTS, {16,4,19,12}},
@@ -4806,7 +4675,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,9,14,5}},
 				{TETRA_POINTS, {16,1,9,5}}
 			}},
-		{521472, {
+		{521472, { // Pattern 187 (TechReport), mask 8 10 12 13 14 15 16 17 18
 				{PRISM_POINTS, {18,7,15,16,4,12}},
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{PRISM_POINTS, {10,2,14,8,1,13}},
@@ -4815,7 +4684,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,5,13}},
 				{TETRA_POINTS, {17,18,6,14}}
 			}},
-		{879616, {
+		{879616, { // Pattern 188 (TechReport), mask 10 11 13 14 16 18 19
 				{PRISM_POINTS, {10,3,11,18,7,19}},
 				{PYRAMID_POINTS, {19,4,0,11,16}},
 				{TETRA_POINTS, {0,1,11,13}},
@@ -4827,7 +4696,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,13,14,2,10}},
 				{PRISM_POINTS, {14,6,18,13,5,16}}
 			}},
-		{250624, {
+		{250624, { // Pattern 189 (TechReport), mask 8 9 12 14 15 16 17
 				{PYRAMID_POINTS, {15,12,0,3,8}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -4839,7 +4708,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {9,8,16,17,15}},
 				{PRISM_POINTS, {8,1,9,16,5,17}}
 			}},
-		{769280, {
+		{769280, { // Pattern 190 (TechReport), mask 8 10 11 12 13 15 16 17 19
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {11,0,8,12}},
 				{PYRAMID_POINTS, {7,6,17,19,15}},
@@ -4857,7 +4726,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,17,5,13}},
 				{PYRAMID_POINTS, {16,13,8,12,17}}
 			}},
-		{1045760, {
+		{1045760, { // Pattern 191 (TechReport), mask 8 10 12 13 14 15 16 17 18 19
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{PYRAMID_POINTS, {12,8,10,15,19}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -4872,7 +4741,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,13,14,17}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{357632, {
+		{357632, { // Pattern 310 (TechReport), mask 8 10 12 13 14 16 18 26
 				{TETRA_POINTS, {7,12,3,26}},
 				{TETRA_POINTS, {12,0,3,26}},
 				{PYRAMID_POINTS, {3,10,18,7,26}},
@@ -4888,7 +4757,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {13,16,18,14,26}},
 				{PRISM_POINTS, {14,6,18,13,5,16}}
 			}},
-		{381696, {
+		{381696, { // Pattern 192 (TechReport), mask 8 9 12 14 15 16 18
 				{PYRAMID_POINTS, {15,12,0,3,8}},
 				{TETRA_POINTS, {3,8,9,15}},
 				{PYRAMID_POINTS, {3,2,14,15,9}},
@@ -4902,7 +4771,7 @@ namespace patterns {
 				{TETRA_POINTS, {16,9,14,5}},
 				{PYRAMID_POINTS, {6,5,16,18,14}}
 			}},
-		{617984, {
+		{617984, { // Pattern 193 (TechReport), mask 9 10 11 13 14 16 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{PYRAMID_POINTS, {19,11,3,7,10}},
 				{TETRA_POINTS, {7,10,14,19}},
@@ -4919,7 +4788,7 @@ namespace patterns {
 				{TETRA_POINTS, {19,6,16,14}},
 				{PYRAMID_POINTS, {14,13,5,6,16}}
 			}},
-		{652544, {
+		{652544, { // Pattern 194 (TechReport), mask 8 10 12 13 14 15 16 19
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{PYRAMID_POINTS, {12,8,10,15,19}},
 				{TETRA_POINTS, {16,4,19,12}},
@@ -4932,7 +4801,7 @@ namespace patterns {
 				{TETRA_POINTS, {19,6,16,14}},
 				{PYRAMID_POINTS, {14,13,5,6,16}}
 			}},
-		{551936, {
+		{551936, { // Pattern 195 (TechReport), mask 10 11 13 14 19
 				{TETRA_POINTS, {0,1,11,13}},
 				{TETRA_POINTS, {11,1,10,13}},
 				{PYRAMID_POINTS, {4,0,11,19,13}},
@@ -4945,7 +4814,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,4,19,13}},
 				{PYRAMID_POINTS, {14,13,5,6,19}}
 			}},
-		{584192, {
+		{584192, { // Pattern 196 (TechReport), mask 9 11 13 14 15 19
 				{PYRAMID_POINTS, {0,1,9,11,13}},
 				{PYRAMID_POINTS, {4,0,11,19,13}},
 				{TETRA_POINTS, {19,5,4,13}},
@@ -4956,7 +4825,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,14,9,19}},
 				{PYRAMID_POINTS, {14,13,5,6,19}}
 			}},
-		{846592, {
+		{846592, { // Pattern 197 (TechReport), mask 8 9 11 13 14 15 18 19
 				{PYRAMID_POINTS, {4,0,11,19,8}},
 				{PRISM_POINTS, {11,3,15,9,2,14}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -4972,7 +4841,7 @@ namespace patterns {
 				{TETRA_POINTS, {5,19,18,13}},
 				{PYRAMID_POINTS, {14,13,5,6,18}}
 			}},
-		{456192, {
+		{456192, { // Pattern 198 (TechReport), mask 9 10 12 13 14 15 17 18
 				{PYRAMID_POINTS, {15,12,0,3,10}},
 				{TETRA_POINTS, {0,9,10,12}},
 				{PYRAMID_POINTS, {1,0,12,13,9}},
@@ -4986,7 +4855,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {4,5,13,12,17}},
 				{PYRAMID_POINTS, {13,17,14,9,12}}
 			}},
-		{259584, {
+		{259584, { // Pattern 199 (TechReport), mask 9 10 12 13 14 15 16 17
 				{PYRAMID_POINTS, {15,12,0,3,10}},
 				{TETRA_POINTS, {9,2,10,14}},
 				{TETRA_POINTS, {0,9,10,12}},
@@ -5002,7 +4871,7 @@ namespace patterns {
 				{TETRA_POINTS, {13,16,17,15}},
 				{TETRA_POINTS, {16,17,5,13}}
 			}},
-		{917248, {
+		{917248, { // Pattern 311 (TechReport), mask 8 9 10 11 12 13 14 15 16 18 19 26
 				{TETRA_POINTS, {11,0,8,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {18,19,7,15}},
@@ -5024,7 +4893,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {14,13,16,18,26}},
 				{PRISM_POINTS, {14,6,18,13,5,16}}
 			}},
-		{523520, {
+		{523520, { // Pattern 200 (TechReport), mask 8 10 11 12 13 14 15 16 17 18
 				{TETRA_POINTS, {11,0,8,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{PYRAMID_POINTS, {8,12,15,10,11}},
@@ -5035,7 +4904,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {18,16,13,14,17}},
 				{PRISM_POINTS, {10,2,14,8,1,13}}
 			}},
-		{391680, {
+		{391680, { // Pattern 201 (TechReport), mask 9 11 12 13 14 15 16 18
 				{PRISM_POINTS, {12,0,11,13,1,9}},
 				{PRISM_POINTS, {11,3,15,9,2,14}},
 				{PRISM_POINTS, {14,9,13,15,11,12}},
@@ -5043,7 +4912,7 @@ namespace patterns {
 				{PRISM_POINTS, {14,18,15,13,16,12}},
 				{PRISM_POINTS, {16,5,13,18,6,14}}
 			}},
-		{964352, {
+		{964352, { // Pattern 202 (TechReport), mask 8 9 10 12 13 15 17 18 19
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{PYRAMID_POINTS, {12,8,10,15,19}},
 				{TETRA_POINTS, {8,9,10,19}},
@@ -5057,20 +4926,20 @@ namespace patterns {
 				{PYRAMID_POINTS, {12,19,17,13,8}},
 				{PRISM_POINTS, {13,5,17,12,4,19}}
 			}},
-		{390400, {
+		{390400, { // Pattern 203 (TechReport), mask 8 10 12 13 14 15 16 18
 				{PRISM_POINTS, {18,7,15,16,4,12}},
 				{PRISM_POINTS, {14,6,18,13,5,16}},
 				{PRISM_POINTS, {10,2,14,8,1,13}},
 				{PRISM_POINTS, {15,3,10,12,0,8}},
 				{HEXA_POINTS, {10,14,18,15,8,13,16,12}}
 			}},
-		{10876160, {
+		{10876160, { // Pattern 204 (TechReport), mask 8 10 12 13 14 15 16 18 21 23
 				{HEXA_POINTS, {23,10,2,14,21,8,1,13}},
 				{HEXA_POINTS, {15,3,10,23,12,0,8,21}},
 				{HEXA_POINTS, {18,23,14,6,16,21,13,5}},
 				{HEXA_POINTS, {7,15,23,18,4,12,21,16}}
 			}},
-		{1048320, {
+		{1048320, { // Pattern 205 (TechReport), mask 8 9 10 11 12 13 14 15 16 17 18 19
 				{TETRA_POINTS, {11,0,8,12}},
 				{TETRA_POINTS, {10,3,11,15}},
 				{TETRA_POINTS, {9,2,10,14}},
@@ -5087,24 +4956,6 @@ namespace patterns {
 				{TETRA_POINTS, {17,18,6,14}},
 				{PYRAMID_POINTS, {19,18,17,16,13}},
 				{TETRA_POINTS, {16,17,5,13}}
-            }},
-        {67176192, { // Pattern 270 (TechReport), mask 8 9 10 16 26
-                {PYRAMID_POINTS, {5,0,3,7,4,26}},
-                {PYRAMID_POINTS, {5,0,8,10,3,26}},
-                {PYRAMID_POINTS, {5,0,4,16,8,26}},
-                {TETRA_POINTS, {4,3,10,7,26}},
-                {TETRA_POINTS, {4,6,7,10,26}},
-                {TETRA_POINTS, {4,4,7,16,26}},
-                {TETRA_POINTS, {4,6,16,7,26}},
-                {TETRA_POINTS, {4,8,9,10,26}},
-                {TETRA_POINTS, {4,2,10,9,26}},
-                {TETRA_POINTS, {4,2,6,10,26}},
-                {TETRA_POINTS, {4,2,9,6,26}},
-                {TETRA_POINTS, {4,1,9,8,26}},
-                {PYRAMID_POINTS, {5,1,8,16,5,26}},
-                {TETRA_POINTS, {4,1,5,9,26}},
-                {TETRA_POINTS, {4,5,6,9,26}},
-                {TETRA_POINTS, {4,5,16,6,26}}
             }}
     };
 
