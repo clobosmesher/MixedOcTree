@@ -20,7 +20,6 @@
 #ifndef Services_h
 #define Services_h 1
 
-#include <string.h>
 #include "TriMesh.h"
 #include "FEMesh.h"
 #include "RefinementCubeRegion.h"
@@ -33,7 +32,9 @@
 #include "FaceContainer.h"
 #include "Visitors/EdgeVisitor.h"
 #include "EdgeInfo.h"
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
+#include <memory>
 #include <iostream>
 #include <fstream>
 #include <map>
