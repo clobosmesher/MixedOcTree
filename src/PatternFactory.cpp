@@ -1569,7 +1569,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,21,13,9}},
 				{PYRAMID_POINTS, {13,17,14,9,21}}
 			}},
-		{67328, {
+		{67328, { // Pattern 270 corrected (TechReport), mask 8 9 10 16 26
 				{PYRAMID_POINTS, {0,3,7,4,26}},
 				{PYRAMID_POINTS, {0,8,10,3,26}},
 				{PYRAMID_POINTS, {0,4,16,8,26}},
@@ -1585,8 +1585,7 @@ namespace patterns {
 				{PYRAMID_POINTS, {1,8,16,5,26}},
 				{TETRA_POINTS, {1,5,9,26}},
 				{TETRA_POINTS, {5,6,9,26}},
-				{TETRA_POINTS, {5,16,6,26}},
-				{TETRA_POINTS, {6,10,9,26}}
+				{TETRA_POINTS, {5,16,6,26}}
 			}},
 		{75008, {
 				{PYRAMID_POINTS, {0,3,7,4,26}},
@@ -2109,7 +2108,7 @@ namespace patterns {
 				{TETRA_POINTS, {1,8,5,26}},
 				{TETRA_POINTS, {1,5,17,26}}
 			}},
-        {303616, { // Pattern 038 (TechReport), mask 9 13 15 18
+		{303616, { // Pattern 38 corrected (TechReport), mask 9 13 15 18
 				{TETRA_POINTS, {2,3,9,15}},
 				{TETRA_POINTS, {0,9,3,15}},
 				{TETRA_POINTS, {2,18,15,9}},
