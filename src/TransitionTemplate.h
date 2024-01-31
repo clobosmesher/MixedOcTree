@@ -114,11 +114,11 @@ public:
         CubeMapping_t (Uint p1, Uint p2): Local(p1), External(p2) { };
 
         //Copy constructor
-        CubeMapping_t (const CubeMapping_t & m ) { *this = m; };
+        CubeMapping_t (const CubeMapping_t & m ): Local(m.Local), External(m.External) { };
 
         //Assignment operator
         CubeMapping_t & operator=( const CubeMapping_t & m ) {
-            if (*this != m) {
+            if (this != &m) {
                 Local = m.Local;
                 External = m.External;
             }
@@ -147,11 +147,11 @@ public:
         Permutations_t (Coordinate c, int s): Axis(c), Step(s) { };
 
         //Copy constructor
-        Permutations_t (const Permutations_t & p ) { *this = p; };
+        Permutations_t (const Permutations_t & p ): Axis(p.Axis), Step(p.Step) { };
 
         //Assignment operator
         Permutations_t & operator=( const Permutations_t & p ) {
-            if (*this != p) {
+            if (this != &p) {
                 Axis = p.Axis;
                 Step = p.Step;
             }

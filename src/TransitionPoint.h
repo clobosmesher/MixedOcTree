@@ -66,11 +66,13 @@ namespace patterns {
 		virtual ~TransitionPoint() {};
 		
 		/// Copy constructor
-		TransitionPoint(const TransitionPoint & TransitionPoint) { *this = TransitionPoint; };
+		TransitionPoint(const TransitionPoint & TransitionPoint): m_id(TransitionPoint.m_id),
+			m_X(TransitionPoint.m_X), m_Y(TransitionPoint.m_Y), m_Z(TransitionPoint.m_Z),
+			m_T(TransitionPoint.m_T), m_TransitionPoint(TransitionPoint.m_TransitionPoint) { };
 		
 		/// Assignment operator
 		TransitionPoint &operator =(const TransitionPoint &TransitionPoint) {
-			if (*this != TransitionPoint)
+			if (this != &TransitionPoint)
 			{
 				m_id= TransitionPoint.m_id;
 				m_X = TransitionPoint.m_X;
