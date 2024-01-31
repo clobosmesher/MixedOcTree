@@ -73,14 +73,14 @@ namespace patterns {
 		/**
 		 * Copy constructor
 		 */
-		TransitionCube(const TransitionCube & c) { *this = c; };
+		TransitionCube(const TransitionCube & c): m_MapVertices(c.m_MapVertices), m_edges(c.m_edges) { };
 		
 		/**
 		 * Assignment operator
 		 */
 		TransitionCube &operator =(const TransitionCube &c)  
 		{
-			if (*this != c) { m_MapVertices = c.m_MapVertices; m_edges = c.m_edges; }
+			if (this != &c) { m_MapVertices = c.m_MapVertices; m_edges = c.m_edges; }
 			return *this;
 		};
 		
