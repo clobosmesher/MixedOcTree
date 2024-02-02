@@ -88,7 +88,7 @@ namespace patterns {
 		 * Equals operator
 		 */ 
 		bool operator ==(const TransitionCube &c) const {
-			return ( (m_MapVertices == c.m_MapVertices) || (m_edges==c.m_edges) );
+            return ( (m_MapVertices == c.m_MapVertices) && (m_edges==c.m_edges) );
 		};
 		
 		bool operator !=(const TransitionCube &c) const {
