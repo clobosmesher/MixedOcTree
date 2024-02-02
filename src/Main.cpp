@@ -276,6 +276,7 @@ int main(int argc,char** argv){
 		out_name = in_name.substr(0,last_point);
 	}
 	
+    cout << "  Starting generation/refinement\n";
     auto start_time = chrono::high_resolution_clock::now();
     
     //Generate the mesh following the above constraints.
@@ -295,7 +296,10 @@ int main(int argc,char** argv){
                                    all_regions,gt,cminrl,omaxrl);
     }
     
-    
+    auto gen_time = chrono::high_resolution_clock::now();
+    cout << "  Generation done (#"<< output.getElements().size() << ") in " << std::chrono::duration_cast<chrono::milliseconds>(gen_time-start_time).count();
+    cout << " ms"<< endl;
+
     if (getfem) {
         Services::WriteMeshGetfem(out_name,output);
     }
@@ -313,7 +317,9 @@ int main(int argc,char** argv){
     }
 
     auto end_time = chrono::high_resolution_clock::now();
-    cout << "  All done in " << chrono::duration_cast<chrono::milliseconds>(end_time-start_time).count();
+    cout << "  Write done in " << std::chrono::duration_cast<chrono::milliseconds>(end_time-gen_time).count();
+    cout << " ms"<< endl;
+    cout << "  All done in " << std::chrono::duration_cast<chrono::milliseconds>(end_time-start_time).count();
     cout << " ms"<< endl;
 	
     list<RefinementRegion *>::iterator rriter;

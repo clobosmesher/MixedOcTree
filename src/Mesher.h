@@ -41,7 +41,8 @@
 #include <set>
 #include <cstdlib>
 #include <ctime>
-#include <string.h>
+#include <cstring>
+#include <chrono>
 
 using std::vector;
 using std::list;

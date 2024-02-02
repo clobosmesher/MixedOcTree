@@ -45,7 +45,7 @@ namespace Clobscode
     //--------------------------------------------------------------
     vector<vector<unsigned int> > Prism::getSubElements(vector<bool> &inside_state){
     
-        vector<vector<unsigned int> > sub_ele, digaonals;
+        vector<vector<unsigned int> > sub_ele;
         
         //detect diagonals over
         vector<unsigned int> f1(4,0),f2(4,0),f3(4,0);
