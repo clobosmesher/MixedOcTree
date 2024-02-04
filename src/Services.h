@@ -187,6 +187,10 @@ namespace Clobscode
             
             //read number of points
             fscanf(file,"%u",&np);
+            while (np==0) { // skipping # COMMENT lines
+                fscanf(file, "%*[^\n]");
+                fscanf(file,"%u",&np);
+            }
             //read number of faces
             fscanf(file,"%u",&nf);
             

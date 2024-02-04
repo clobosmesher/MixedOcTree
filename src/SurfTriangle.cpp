@@ -134,7 +134,7 @@ namespace SurfMesh
 		if(d==0){
 			cout << "error !!! malformed triangle\n";
 			cout << "at HexTriIntersection::";
-			cout << "edgeTriangleIntersection";
+            cout << "edgeTriangleIntersection\n";
 			return false;
 		}
 		
