@@ -31,6 +31,7 @@
 #include <cctype>
 #include <time.h>
 #include <chrono>
+#include <sys/resource.h> //rusage
 
 using std::atoi;
 using std::cout;
@@ -321,6 +322,12 @@ int main(int argc,char** argv){
     cout << " ms"<< endl;
     cout << "  All done in " << std::chrono::duration_cast<chrono::milliseconds>(end_time-start_time).count();
     cout << " ms"<< endl;
+
+    struct rusage myusage;
+      if (getrusage(RUSAGE_SELF, &myusage)==-1)
+                { cerr << "Error getrusage\n"; }
+    cout << " Memory Usage (max resident memory) " << myusage.ru_maxrss;
+    cout << " kB (" << myusage.ru_maxrss/1024 << " MB)"<< endl;
 	
     list<RefinementRegion *>::iterator rriter;
     for (rriter = all_regions.begin(); rriter!=all_regions.end(); rriter++) {
